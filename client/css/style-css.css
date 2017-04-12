@@ -1,0 +1,114 @@
+body {
+    font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin: 0;
+    background-color: #EEE;
+}
+
+.btn,
+.dropdown-menu>li>a,
+.label,
+body {
+    font-weight: 300;
+}
+
+body {
+    font-size: 16px;
+    line-height: 1.42857143;
+    color: #333;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+    display: block;
+}
+
+*,
+ :after,
+ :before {
+    box-sizing: border-box;
+}
+
+.header {
+    display: block;
+    width: 100%;
+    position: relative;
+    top: 0;
+    left: 0;
+    background-color: #28cc77;
+    overflow: visible;
+    z-index: 1;
+    padding-top: 16px;
+    height: 104px;
+}
+
+.navbar {
+    position: relative;
+    min-height: 50px;
+    box-shadow: none;
+    border: none;
+}
+
+.navbar {
+    z-index: 50;
+}
+
+.navbar-fixed-top {
+    top: 0;
+}
+
+.navbar-fixed-bottom,
+.navbar-fixed-top {
+    right: 0;
+    left: 0;
+}
+
+.navbar-fixed-top {
+    position: relative!important;
+    margin-bottom: 0;
+}
+
+#navbar a,
+.fa-inverse,
+a.navbar-brand,
+nav.navbar.navbar-fixed-top {
+    color: #fff;
+}
+
+nav.navbar.navbar-fixed-top {
+    background-color: #16bd67;
+    height: 56px!important;
+}
+
+@media screen and (max-width: 982px) {
+    .not-mobile {
+        display: none;
+    }
+}
+
+#main-container {
+    padding-top: 0!important;
+    min-height: 500px;
+}
+
+
+.container, .container-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+
+.container, .container-content {
+    margin-right: auto;
+    margin-left: auto;
+}
