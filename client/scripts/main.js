@@ -14,7 +14,7 @@ $("#register").click(function () {
             function (data, status) {
             console.log(data);
                 if (!data.status) {
-                    if (data.message.length < 20) {
+                    if (data.message.length) {
                         toastr.error(data.message);
                     }
                     else {
@@ -34,7 +34,7 @@ $("#login").click(function () {
         },
         function (data, status) {
             if (!data.status) {
-                if (data.message.length < 20) {
+                if (data.message.length) {
                     toastr.error(data.message);
                 }
                 else {
