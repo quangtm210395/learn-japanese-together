@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const app = express();
 config.settingExpress(app);
 
+app.use('/',express.static('client'));
 const routes = require('./routes')(app);
 
 mongoose.connect(config.mongoUrl, {server: {reconnectTries: Number.MAX_VALUE}});
