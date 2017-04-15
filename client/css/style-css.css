@@ -292,6 +292,24 @@ table {
     }
 }
 
+.container-content>.navbar-collapse,
+.container-content>.navbar-header,
+.container>.navbar-collapse,
+.container>.navbar-header {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+@media (min-width: 768px) {
+    .container-content>.navbar-collapse,
+    .container-content>.navbar-header,
+    .container>.navbar-collapse,
+    .container>.navbar-header {
+        margin-right: 0;
+        margin-left: 0;
+    }
+}
+
 @media screen and (max-width: 982px) {
     .not-mobile {
         display: none;
@@ -743,6 +761,111 @@ button#clear-search-text {
 .result-word {
     float:left;
 }
+
+.audio-word, .word-container {
+    position: relative;
+}
+
+@media (min-width: 641px){
+.widget-container {
+    padding: 1em;
+}}
+
+.widget-container {
+    background-color: #fff;
+    -webkit-box-shadow: 1px 1px 0 rgba(199,196,191,.62), 1px 1px 3px rgba(210,207,202,.73);
+    -moz-box-shadow: 1px 1px 0 rgba(199,196,191,.62),1px 1px 3px rgba(210,207,202,.73);
+    padding: .5em;
+    margin-bottom: 1em;
+    border-radius: 2px;
+}
+
+.widget, .widget-container {
+    box-shadow: 1px 1px 0 rgba(199,196,191,.62), 1px 1px 3px rgba(210,207,202,.73);
+}
+
+*, :after, :before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.main-word {
+    color: red;
+    font-size: larger;
+    display: inline;
+    float: left;
+    margin-right: .5em;
+}
+
+.han-viet-word, .main-word, .phonetic-word {
+    line-height: 32px;
+    height: 32px;
+}
+
+.example-title, .gr-explain-title, .gr-use-title, .main-word {
+    font-weight: 700;
+}
+
+.audio-word {
+    left: 12px;
+    top: 4px;
+    font-size: 2em;
+    color: grey;
+    cursor: pointer;
+}
+
+.mean-fr-word {
+    color: #00f;
+    padding-top: .4em;
+    font-size: large;
+}
+
+.btn-group-vertical>.btn-group:after, .btn-toolbar:after, .clearfix:after, .container-fluid:after, .container:after, .dl-horizontal dd:after, .form-horizontal .form-group:after, .links-news-title, .main-news-des, .mean-fr-word, .mean-fr-word-suggest, .modal-footer:after, .nav:after, .navbar-collapse:after, .navbar-header:after, .navbar:after, .pager:after, .panel-body:after, .phonetic-word, .row:after, .search-box-range, .type-word {
+    clear: both;
+}
+
+.example-word {
+    color: rgba(196,19,19,1);
+    padding-left: 1em;
+    padding-top: 1em;
+}
+
+.example-mean-word {
+    color: grey;
+    font-style: italic;
+    padding-left: 1em;
+    padding-top: 8px;
+}
+
+.example-container .sentence-exam {
+    display: block;
+}
+
+.japanese-char {
+    font-family: Meiryo,"MS PGothic","Hiragino Kaku Gothic Pro",Osaka,Roboto,sans-serif;
+}
+
+.phonetic-word {
+    font-style: normal;
+    font-size: medium;
+    float: left;
+}
+
+.han-viet-word, .main-word, .phonetic-word {
+    line-height: 32px;
+    height: 32px;
+}
+
+.han-viet-word {
+    font-style: normal;
+    font-size: 16px;
+    float: left;
+}
+
+
+
+
 
 
 

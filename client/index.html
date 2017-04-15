@@ -10,12 +10,15 @@
 
     <link rel="icon" href="imgs/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,700italic" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,700i,900,900i" rel="stylesheet", type="text/css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <title>Cùng nhau học tiếng Nhật</title>
 
     <script type="text/javascript" src="libs/jquery.min.js"></script>
+    <script type="text/javascript" src="libs/handlebars.js"></script>
+    <script type="text/javascript" src="scripts/index.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
 
 </head>
@@ -35,7 +38,7 @@
                         </a>
                     </li>
                     <li id="nav1" onclick="changeTab(1)">
-                        <a href="#/chat" >
+                        <a href="#/chat">
                             <i class="fa fa-snapchat fa-fw fa-lg"></i> Chat
                         </a>
                     </li>
@@ -60,12 +63,12 @@
 
                     <div class="input-group input-group-lg search-box-range col-xs-12 col-md-8 col-no-padding">
                         <input type="text" placeholder="日本, nihon, Nhật Bản" maxlength="64" id="search-text-box" class="form-control" 　focus-me="">
-                        
+
                         <button type="button" class="btn btn-link ng-scope" ng-if="queryNotNull()" ng-click="clearQuery();" id="clear-search-text">
                             <span class="fa fa-times fa-lg"></span>
                         </button>
                         <!-- ngIf: queryNotNull() -->
-                        
+
                         <div class="input-group-btn">
                             <button type="button" class="btn btn-primary" id="search-button" ng-click="inputEnter();">
                                 <span class="fa fa-search fa-lg"></span>
@@ -75,10 +78,72 @@
                 </div>
 
                 <div class="tab-container col-md-12 col-xs-12 no-padding">
+                    <!-- Tu vung -->
+                    <div class="col-md-6 col-xs-12 result-word ng-scope" id="result-content"></div>
 
+                    <script id="template-vocab-all" type="text/x-handlebars-template">
+                        {{searchResult found data}}
+                    </script>
 
+                    <!-- tu vung -->
+                    <script id="template-vocab-result" type="text/x-handlebars-template">
+                        <div class="words-list ng-scope">
+                            <div class="word-container widget-container">
+                                <!-- main word-->
+                                <div class="main-word ng-binding">
+                                    {{word}}
+                                </div>
+
+                                <!--audio-->
+                                <div class="audio-word fa fa-volume-down fa-lg">
+
+                                </div>
+
+                                <!-- -->
+                                <div class="phonetic-word japanese-char ng-binding ng-scope">
+                                    {{phonetic}}
+                                </div>
+
+                                <div class="han-viet-word ng-binding ng-scope">
+
+                                </div>
+
+                                <!--detail-->
+                                <div class="mean-detail-range ng-scope">
+                                    <!--each means-->
+                                    {{#each means}}
+                                    <div class="each-word">
+                                        <div class="mean-fr-word ng-binding">
+                                            ◆ {{mean}}
+                                        </div>
+                                        <div class="example-range">
+                                            <!--each examples-->
+                                            {{#each examples}}
+                                            <div class="example-container ng-scope">
+                                                <div class="example-word sentence-exam">
+                                                    <span>{{content}}</span>
+                                                </div>
+                                                <div class="example-mean-word sentence-exam">
+                                                    <span>{{mean}}</span>
+                                                </div>
+                                            </div>
+                                            {{/each}}
+                                        </div>
+
+                                    </div>
+                                    {{/each}}
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </script>
+
+                    <script id="template-vocab-related" type="text/x-handlebars-template">
+
+                    </script>
                 </div>
-                
+
             </div>
 
             <aside id="viewAside" class="col-lg-3 col-md-12 col-xs-12">

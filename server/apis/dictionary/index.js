@@ -3,6 +3,6 @@ var controller = require('./dictionary.controller');
 
 var router = express.Router();
 
-router.get('/search/:word', controller.search);
+router.post('/search', controller.search);
 
 module.exports = router;

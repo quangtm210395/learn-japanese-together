@@ -3,8 +3,8 @@ const axios = require('axios');
 
 module.exports = {
     search: function (req, res) {
-        if (req.params.word) {
-            axios.get('http://mazii.net/api/search/' + encodeURI(req.params.word) + '/20/1')
+        if (req.body.word) {
+            axios.get('http://mazii.net/api/search/' + encodeURI(req.body.word) + '/20/1')
                 .then(function(result){
                     res.json(result.data);
                 })
