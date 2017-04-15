@@ -1,39 +1,98 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="css/qstyle.css">
+    <link rel="stylesheet" type="text/css" href="css/col-css.css">
     <link rel="stylesheet" type="text/css" href="css/style-css.css">
+
+    <link rel="icon" href="imgs/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,700italic" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <title>Cùng nhau học tiếng Nhật</title>
 
     <script type="text/javascript" src="libs/jquery.min.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
 
 </head>
+
 <body>
     <header class="header">
-        
+
     </header>
 
-    <nav class="navbar navbar-fixed-top">
-        
+    <nav class="navbar navbar-fixed-top not-mobile">
+        <div class="container-content">
+            <div id="#navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active" id="nav0" onclick="changeTab(0)">
+                        <a href="#/search">
+                            <i class="fa fa-search fa-fw fa-lg"></i> Tra từ
+                        </a>
+                    </li>
+                    <li id="nav1" onclick="changeTab(1)">
+                        <a href="#/chat" >
+                            <i class="fa fa-snapchat fa-fw fa-lg"></i> Chat
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </nav>
 
-    <div class="container-content" id="main-container">
+    <div class="container-content2" id="main-container">
         <div class="row">
             <div id="viewContent" class="col-lg-9 col-md-12 col-xs-12">
+                <div class="search-input-container">
+                    <div class="btn-group search-option">
+                        <button class="btn btn-default search-option-word tab-active" id="tab0" onclick="changeTypeSearch(0)">
+                            <span>Từ vựng</span>
+                        </button>
+                        <button class="btn btn-default search-option-kanji" id="tab1" onclick="changeTypeSearch(1)"><span>Hán tự</span></button>
+                        <button class="btn btn-default search-option-example" id="tab2" onclick="changeTypeSearch(2)"> <span>Câu</span></button>
+                        <button class="btn btn-default search-option-grammar" id="tab3" onclick="changeTypeSearch(3)"><span>Ngữ pháp</span>
+                        </button>
+                    </div>
 
+                    <div class="input-group input-group-lg search-box-range col-xs-12 col-md-8 col-no-padding">
+                        <input type="text" placeholder="日本, nihon, Nhật Bản" maxlength="64" id="search-text-box" class="form-control" 　focus-me="">
+                        
+                        <button type="button" class="btn btn-link ng-scope" ng-if="queryNotNull()" ng-click="clearQuery();" id="clear-search-text">
+                            <span class="fa fa-times fa-lg"></span>
+                        </button>
+                        <!-- ngIf: queryNotNull() -->
+                        
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-primary" id="search-button" ng-click="inputEnter();">
+                                <span class="fa fa-search fa-lg"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-container col-md-12 col-xs-12 no-padding">
+
+
+                </div>
+                
             </div>
+
+            <aside id="viewAside" class="col-lg-3 col-md-12 col-xs-12">
+
+            </aside>
         </div>
     </div>
 
     <footer>
-        
+
     </footer>
 
     <script src="scripts/main.js"></script>
 
 </body>
+
 </html>
