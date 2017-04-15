@@ -13,13 +13,13 @@ module.exports = {
         User.findOne({username: req.body.username}, {_id: 0, __v: 0})
             .then(function (user) {
                 if (user) {
-                    res.json({status: false, message: 'Username is exist'});
+                    res.json({status: false, message: "Tài khoản đã tồn tại"});
                 } else {
                     newUser.save(function (err, user) {
                         if (err) {
                             res.json({status: false, message: err});
                         } else {
-                            res.json({status: true, message: "Register successful"});
+                            res.json({status: true, message: "Đăng kí thành công"});
                         }
                     })
                 }
@@ -36,7 +36,7 @@ module.exports = {
                 if (user) {
                     res.json({status: true, data: user});
                 } else {
-                    res.json({status: false, message: 'Username doesn\'t exist'});
+                    res.json({status: false, message: "Tài khoản chưa tồn tại"});
                 }
             });
 
