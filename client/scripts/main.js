@@ -1,11 +1,11 @@
 $("#register").click(function () {
-    if ($('#password').val() !== $('#verify_password').val()) {
+    if ($('#password_register').val() !== $('#verify_password').val()) {
         toastr.error('Mật khẩu không trùng khớp');
     } else {
         $.post('/api/user/register',
             {
-                username: $('#username').val(),
-                password: $('#password').val(),
+                username: $('#username_register').val(),
+                password: $('#password_register').val(),
                 name: $('#full_name').val(),
                 age: $('#age').val(),
                 email: $('#email').val(),
@@ -29,8 +29,8 @@ $("#register").click(function () {
 $("#login").click(function () {
     $.post('/api/user/login',
         {
-            username: $('#username').val(),
-            password: $('#password').val(),
+            username: $('#username_login').val(),
+            password: $('#password_login').val(),
         },
         function (data, status) {
             if (!data.status) {

@@ -863,6 +863,10 @@ button#clear-search-text {
     float: left;
 }
 
+.modal li a {
+    color: #16bd67;
+}
+
 
 
 
