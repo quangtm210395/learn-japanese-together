@@ -7,20 +7,21 @@ $("#register").click(function () {
                 username: $('#username_register').val(),
                 password: $('#password_register').val(),
                 name: $('#full_name').val(),
-                age: $('#age').val(),
                 email: $('#email').val(),
-                gender: $('#gender').val()
+                gender: $('#gender').val(),
+                dob: $('#dob').val()
             },
             function (data, status) {
-            console.log(data);
                 if (!data.status) {
                     if (data.message.length) {
                         toastr.error(data.message);
                     }
                     else {
+                        console.log(data.messagesss);
                         toastr.error('Đăng kí thất bại');
                     }
                 } else {
+                    $('#myModal').modal('hide');
                     toastr.success('Đăng kí thành công');
                 }
             })
@@ -41,8 +42,24 @@ $("#login").click(function () {
                     toastr.error('Đăng nhập thất bại');
                 }
             } else {
+                $('#myModal').modal('hide');
+                localStorage.setItem('token',data.token);
                 toastr.success('Đăng nhập thành công');
             }
         })
+});
+
+$('#click-register').click(function () {
+    $('#tab-signIn').removeClass('active');
+    $('#signIn').removeClass('active');
+    $('#tab-signUp').addClass('active');
+    $('#signUp').addClass('active');
+});
+
+$('#click-login').click(function () {
+    $('#tab-signIn').addClass('active');
+    $('#signIn').addClass('active');
+    $('#tab-signUp').removeClass('active');
+    $('#signUp').removeClass('active');
 });
 

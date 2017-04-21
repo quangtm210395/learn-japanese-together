@@ -41,8 +41,8 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a data-toggle="modal" data-target="#myModal">Đăng nhập</a></li>
-                <li><a href="#">Đăng kí</a></li>
+                <li><a data-toggle="modal" data-target="#myModal" id="click-login">Đăng nhập</a></li>
+                <li><a data-toggle="modal" data-target="#myModal" id="click-register">Đăng kí</a></li>
             </ul>
             </ul>
         </div>
@@ -59,58 +59,62 @@
                 <div role="tabpanel">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#signIn" aria-controls="signIn" role="tab"
+                        <li role="presentation" id="tab-signIn"><a href="#signIn" aria-controls="signIn" role="tab"
                                                                   data-toggle="tab">Đăng nhập</a>
 
                         </li>
-                        <li role="presentation"><a href="#signUp" aria-controls="signUp" role="tab" data-toggle="tab">Đăng
+                        <li role="presentation" id="tab-signUp"><a href="#signUp" aria-controls="signUp" role="tab" data-toggle="tab">Đăng
                             kí</a>
                         </li>
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane active" id="signIn">
+                        <div role="tabpanel" class="tab-pane" id="signIn">
                             <form>
-                                <div class="form-group">
-                                    <label for="username_login">Tên đăng nhập:</label>
-                                    <input type="text" class="form-control" id="username_login">
+                                <div class="form-group required">
+                                    <label for="username_login" class="control-label">Tên đăng nhập:</label>
+                                    <input type="text" class="form-control" id="username_login" required>
                                 </div>
-                                <div class="form-group">
-                                    <label for="password_login">Mật khẩu:</label>
-                                    <input type="password" class="form-control" id="password_login">
+                                <div class="form-group required">
+                                    <label for="password_login" class="control-label">Mật khẩu:</label>
+                                    <input type="password" class="form-control" id="password_login" required>
                                 </div>
                                 <button type="button" class="btn btn-primary save" id="login">Đăng nhập</button>
                             </form>
                         </div>
                         <div role="tabpanel" class="tab-pane" id="signUp">
                             <form>
-                                <div class="form-group">
-                                    <label for="username_register">Tên đăng nhập:</label>
-                                    <input type="text" class="form-control" id="username_register">
+                                <div class="form-group required">
+                                    <label for="username_register" class="control-label">Tên đăng nhập:</label>
+                                    <input type="text" class="form-control" id="username_register" required>
                                 </div>
-                                <div class="form-group">
-                                    <label for="password_register">Mật khẩu:</label>
-                                    <input type="password" class="form-control" id="password_register">
+                                <div class="form-group required">
+                                    <label for="password_register" class="control-label">Mật khẩu:</label>
+                                    <input type="password" class="form-control" id="password_register" required>
                                 </div>
-                                <div class="form-group">
-                                    <label for="verify_password">Nhâp lại mật khẩu:</label>
-                                    <input type="password" class="form-control" id="verify_password">
+                                <div class="form-group required">
+                                    <label for="verify_password" class="control-label">Nhâp lại mật khẩu:</label>
+                                    <input type="password" class="form-control" id="verify_password" required>
                                 </div>
-                                <div class="form-group">
-                                    <label for="full_name">Họ và tên:</label>
-                                    <input type="text" class="form-control" id="full_name">
+                                <div class="form-group required">
+                                    <label for="full_name" class="control-label">Họ và tên:</label>
+                                    <input type="text" class="form-control" id="full_name" required>
                                 </div>
-                                <div class="form-group">
-                                    <label for="email">Email:</label>
-                                    <input type="email" class="form-control" id="email">
+                                <div class="form-group required">
+                                    <label for="email" class="control-label">Email:</label>
+                                    <input type="email" class="form-control" id="email" required>
                                 </div>
-                                <div class="form-group">
-                                    <label for="age">Tuổi:</label>
-                                    <input type="number" class="form-control" id="age">
+                                <div class="form-group required">
+                                    <label for="dob" class="control-label">Ngày sinh:</label>
+                                    <input type="date" class="form-control" id="dob" required>
                                 </div>
-                                <div class="form-group">
-                                    <label for="gender">Giới tính:</label>
-                                    <input type="number" class="form-control" id="gender">
+                                <div class="form-group required">
+                                    <label for="gender" class="control-label">Giới tính:</label>
+                                    <select class="form-control" id="gender" required>
+                                        <option>Nam</option>
+                                        <option>Nữ</option>
+                                        <option>Khác</option>
+                                    </select>
                                 </div>
                                 <button type="button" class="btn btn-primary save" id="register">Đăng kí</button>
                             </form>

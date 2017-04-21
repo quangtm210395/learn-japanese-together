@@ -19,7 +19,8 @@ var user = mongoose.Schema({
     age: Number,
     salt: String,
     email: String,
-    gender: Number
+    gender: String,
+    dob: String
 });
 
 /**
