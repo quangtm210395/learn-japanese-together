@@ -863,6 +863,19 @@ button#clear-search-text {
     float: left;
 }
 
+.modal li a {
+    color: #16bd67;
+}
+
+.modal .tab-content{
+    padding-top: 15px;
+}
+
+.form-group.required .control-label:after {
+    content:" *";
+    color:red;
+}
+
 
 
 
