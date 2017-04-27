@@ -1,8 +1,11 @@
 const express = require('express');
 const config = require('./configs');
 const mongoose = require('mongoose');
-
 const app = express();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+const socketio = require('./socketio')(io);
+
 config.settingExpress(app);
 
 app.use('/',express.static('client'));
@@ -19,6 +22,6 @@ db.once('open', function () {
 
 const port = config.port;
 
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`Server is running at localhost:${port}`);
-})
+});

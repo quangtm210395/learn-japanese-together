@@ -60,10 +60,11 @@
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" id="tab-signIn"><a href="#signIn" aria-controls="signIn" role="tab"
-                                                                  data-toggle="tab">Đăng nhập</a>
+                                                                   data-toggle="tab">Đăng nhập</a>
 
                         </li>
-                        <li role="presentation" id="tab-signUp"><a href="#signUp" aria-controls="signUp" role="tab" data-toggle="tab">Đăng
+                        <li role="presentation" id="tab-signUp"><a href="#signUp" aria-controls="signUp" role="tab"
+                                                                   data-toggle="tab">Đăng
                             kí</a>
                         </li>
                     </ul>
@@ -125,10 +126,31 @@
         </div>
     </div>
 </div>
+<div id="users-status">
+
+</div>
+
+<script id="users-status-template" type="text/x-handlebars-template">
+    <ul>
+        {{#each users}}
+        {{#if isOnline}}
+        <li>{{username}} online</li>
+        {{/if}}
+        {{/each}}
+        {{#each users}}
+            {{#unless isOnline}}
+                <li>{{username}} offline</li>
+            {{/unless}}
+        {{/each}}
+    </ul>
+</script>
 
 <script src="libs/jquery.min.js"></script>
 <script src="libs/bootstrap/js/bootstrap.js"></script>
-<script src="js/main.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="libs/socket.io-client/dist/socket.io.js"></script>
+<script src="libs/handlebars.js"></script>
+<script src="js/main.js"></script>
+`
 </body>
 </html>
