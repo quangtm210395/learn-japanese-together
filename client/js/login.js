@@ -1,5 +1,4 @@
-$(document).ready(function()
-{
+$(document).ready(function () {
     var socket = io.connect();
 
     $("#register").click(function () {
@@ -47,34 +46,70 @@ $(document).ready(function()
                     }
                 } else {
                     $('#myModal').modal('hide');
-                    localStorage.setItem('token',data.token);
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    setStatusLoginHtml();
                     toastr.success('Đăng nhập thành công');
-                    socket.emit("login", {username: data.user.username});
                 }
             })
     });
 
-    $('#click-register').click(function () {
-        $('#tab-signIn').removeClass('active');
-        $('#signIn').removeClass('active');
-        $('#tab-signUp').addClass('active');
-        $('#signUp').addClass('active');
-    });
-
-    $('#click-login').click(function () {
-        $('#tab-signIn').addClass('active');
-        $('#signIn').addClass('active');
-        $('#tab-signUp').removeClass('active');
-        $('#signUp').removeClass('active');
-    });
-
     var sourceUsersStatus = $("#users-status-template").html();
     var usersStatusTemplate = Handlebars.compile(sourceUsersStatus);
+    socket.on("update status users", function (data) {
+        var userLogin = JSON.parse(localStorage.getItem('user'));
+        if (userLogin) {
+            data.users.forEach(function (user, index) {
+                if (user.username === userLogin.username) {
+                    data.users.splice(index, 1);
+                    console.log(data.users);
+                }
+            });
+        }
 
-    socket.on("update status users",function (data) {
         var listUser = usersStatusTemplate(data);
-        console.log(listUser);
-        $('#users-status').html(listUser);
+        $('.users-status').html(listUser);
     });
+
+    var sourceStatusLogin = $("#status-login-template").html();
+    var statusLoginTemplate = Handlebars.compile(sourceStatusLogin);
+    setStatusLoginHtml();
+
+    function setStatusLoginHtml() {
+        var dataStorage = {
+            token: localStorage.getItem('token'),
+            user: JSON.parse(localStorage.getItem('user'))
+        };
+
+        if (dataStorage.user) {
+            socket.emit("login", {username: dataStorage.user.username});
+        }
+
+        var loginStatus = statusLoginTemplate(dataStorage);
+        $('#status-login').html(loginStatus);
+
+
+        $('#click-register').click(function () {
+            $('#tab-signIn').removeClass('active');
+            $('#signIn').removeClass('active');
+            $('#tab-signUp').addClass('active');
+            $('#signUp').addClass('active');
+        });
+
+        $('#click-login').click(function () {
+            $('#tab-signIn').addClass('active');
+            $('#signIn').addClass('active');
+            $('#tab-signUp').removeClass('active');
+            $('#signUp').removeClass('active');
+        });
+
+        $('#click-logout').click(function () {
+            console.log("click");
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            socket.emit('logout');
+            setStatusLoginHtml();
+        });
+    }
 });
 

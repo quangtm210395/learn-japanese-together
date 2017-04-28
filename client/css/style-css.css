@@ -2,6 +2,7 @@ body {
     font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
     margin: 0;
     background-color: #EEE;
+    position: relative;
 }
 
 .app-bar button,
@@ -874,6 +875,57 @@ button#clear-search-text {
 .form-group.required .control-label:after {
     content:" *";
     color:red;
+}
+
+.users-status{
+    position: absolute;
+    right: 0;
+    border-left: solid #bdbdbd thin;
+    border-bottom: solid #bdbdbd thin;
+    border-radius: 5px;
+}
+
+.users-status{
+    padding: 0;
+}
+
+.users-status ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    height: 70vh;
+    overflow: hidden;
+    overflow-y:scroll;
+
+}
+
+.users-status ul li{
+    padding: 10px;
+
+}
+
+.users-status li a{
+    text-decoration:none;
+    color: #333;
+    font-size: small;
+}
+
+.users-status ul li:hover{
+    text-decoration:none;
+    color: white;
+    background-color: #27e885;
+}
+
+.users-status ul li .status-online{
+    color: #16bd67!important;
+    font-size: 0.5em;
+    text-align: center;
+}
+
+.users-status ul li .status-offline{
+    color: #acacac !important;
+    font-size: 0.5em;
+    text-align: center;
 }
 
 

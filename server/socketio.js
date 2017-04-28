@@ -10,12 +10,17 @@ module.exports = (io) => {
         updateStatusUsers(socket);
         socket.on('login', function (data) {
             socket.username = data.username;
-            updateStatusUsers(socket.broadcast);
+            updateStatusUsers(io);
         });
 
         socket.on('disconnect', function() {
             updateStatusUsers(io);
         });
+
+        socket.on('logout', function () {
+            socket.username = undefined;
+            updateStatusUsers(io);
+        })
     });
 
     function updateStatusUsers(browser) {
