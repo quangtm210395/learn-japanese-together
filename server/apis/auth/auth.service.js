@@ -2,7 +2,7 @@
  * Created by phanmduong on 22/03/2017.
  */
 var jwt = require('jsonwebtoken');
-var config = require('../../config/index');
+var config = require('../../configs/index');
 var compose = require('composable-middleware');
 
 module.exports = {

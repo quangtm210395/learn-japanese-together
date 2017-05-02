@@ -30,7 +30,6 @@ module.exports = {
 
     getUser: function (req, res) {
         User.findOne({username: req.params.username}, '-_id -__v -salt -password')
-            .populate({path: 'created_post', select: '-__v -created'})
             .exec(function (err, user) {
                 if (err) res.json({status: false, message: err});
                 if (user) {
@@ -57,10 +56,20 @@ module.exports = {
                         var token = jwt.sign({
                             data: user
                         }, config.secret, { expiresIn: '60m' });
-                        res.json({status: true, message: "Login successful", token: token});
+                        user.password = undefined;
+                        user.salt = undefined;
+                        user._v = undefined;
+                        res.json({status: true, message: "Login successful", token: token, user: user});
                     }
                 }
 
             })
+    },
+
+    getAll: function (callback) {
+        User.find().select("username name -_id").lean()
+            .exec(function (err, user) {
+                return callback(user);
+            });
     }
 };
