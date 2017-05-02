@@ -1209,7 +1209,7 @@ rt {
     font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-.col-md-6.col-xs-12.result-example.ng-scope, .col-md-6.col-xs-12.result-grammar {
+.col-md-6.col-xs-12.result-example, .col-md-6.col-xs-12.result-grammar {
     padding: 0;
 }
 
@@ -1310,7 +1310,7 @@ a {
     border-top-color: #ddd;
 }
 
-#image-holder, #list-kanji, .gr-use-synopsis {
+#image-holder, .gr-use-synopsis {
     text-align: center;
 }
 

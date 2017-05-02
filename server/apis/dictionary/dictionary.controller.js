@@ -91,12 +91,17 @@ module.exports = {
             axios.get('http://mazii.net/api/refer/' + encodeURI(req.params.word))
                 .then(function (result) {
                     var data = result.data;
-                    data.results.forEach(function(item) {
-                        var titles = item.title.split("=>");
-                        item.title = titles[0];
-                        item.desc = titles[1];
+                    if (data.results){
+                        data.results.forEach(function(item) {
+                            var titles = item.title.split("=>");
+                            item.title = titles[0];
+                            item.desc = titles[1];
+                        });
+                        res.json(data);
+                    } else res.json({
+                        status: false,
+                        message: 'Not found!'
                     });
-                    res.json(data);
                 })
                 .catch(function (err) {
                     console.log(err);
