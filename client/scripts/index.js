@@ -107,7 +107,14 @@ $(document).ready(function () {
                             .done(function (data2) {
                                 console.log(data2);
                                 if (data2.status == 200) {
-                                    $("#" + result._id).html(templates.grammarUsagesResult(data2.grammar));
+                                    var grammar = data2.grammar;
+                                    grammar.usages.forEach(function(usage) {
+                                        usage.mean = decodeHtml(usage.mean);
+                                        usage.examples.forEach(function(examp) {
+                                            examp.mean = decodeHtml(examp.mean);
+                                        })
+                                    })
+                                    $("#" + result._id).html(templates.grammarUsagesResult(grammar));
                                 }
                             }).fail(function (err) {
                                 console.log(err);
@@ -188,6 +195,12 @@ function isJapanese(a) {
             return true;
     }
     return false;
+}
+
+function decodeHtml(html) {
+    var txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
 }
 
 var capitaliseFirstLetter = function (a) {
