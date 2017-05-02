@@ -1,10 +1,14 @@
 changeTypeSearch = function (index) {
     var activeTab = parseInt($('.tab-active').attr('id').charAt(3));
-    console.log(activeTab);
+    tabSelected = index;
 
     if (index != activeTab) {
+        console.log(tabSelected);
         $(".search-input-container button").removeClass("tab-active");
         $("#tab" + index).addClass("tab-active");
+        $(".tab-container .result").addClass("dis-cont");
+        $("#result-content-" + index).removeClass("dis-cont");
+        // reloadResources(index);
         var placeholder = "";
         var o;
         switch (index) {
@@ -34,3 +38,4 @@ changeTab = function(index) {
         $("#nav" + index).addClass("active");
     }
 }
+
