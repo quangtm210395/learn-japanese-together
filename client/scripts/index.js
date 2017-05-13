@@ -12,6 +12,7 @@ $(document).ready(function () {
     templates.sentenceResult = Handlebars.compile($("#template-sentence-result").html());
     templates.grammarResult = Handlebars.compile($("#template-grammar-result").html());
     templates.grammarUsagesResult = Handlebars.compile($("#template-grammar-usages").html());
+    templates.chatTabs = Handlebars.compile($('#template-chat-tabs').html());
 
     Handlebars.registerHelper('searchResultWord', function (found, data) {
         console.log(found + ' ' + data);
@@ -128,6 +129,17 @@ $(document).ready(function () {
 
 
 });
+
+function regisChat(id) {
+    $.ajax({
+            url: "/api/conversation/get/" + id,
+            method: post
+        })
+        .done(function(data) {
+            if (data.status)
+                $('#chatTabs').append(templates.chatTabs(data.result));
+        });
+}
 
 function reloadResources(index) {
     // $("#list-kanji").html(templates.kanjiResult(resultK));

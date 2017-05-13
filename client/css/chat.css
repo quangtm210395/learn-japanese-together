@@ -282,7 +282,7 @@ td {
     justify-content: flex-start;
 }
 
-.chat-mysefl {
+.chat-myself {
     justify-content: flex-end;
 }
 
@@ -363,7 +363,7 @@ img {
     flex-direction: row-reverse;
 }
 
-.chat-mysefl .chat-unit .cuc-2 {
+.chat-myself .chat-unit .cuc-2 {
     background-color: #4080ff;
     color: white;
 }
