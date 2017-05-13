@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" class="sidebarMode">
 
 <head>
     <meta charset="UTF-8">
@@ -10,6 +10,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/style-css.css">
+    <link rel="stylesheet" type="text/css" href="css/col-css.css">
+    <link rel="stylesheet" type="text/css" href="css/chat.css">
 
     <link rel="icon" href="imgs/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,700italic" rel="stylesheet" type="text/css">
@@ -20,9 +22,9 @@
 
 <body>
 
-    <header class="header">
+    <!--<header class="header">
 
-    </header>
+    </header>-->
 
     <nav class="navbar navbar-fixed-top not-mobile">
         <div class="container-content">
@@ -178,9 +180,110 @@
 
             </div>
 
-            <aside id="viewAside" class="col-lg-3 col-md-12 col-xs-12 users-status">
 
-            </aside>
+
+        </div>
+
+        <aside id="viewAside" class="users-status chatSidebar fixed_always">
+        </aside>
+
+        <div id="viewChat">
+            <div class="dockChat dockWrapperRight ">
+                <div class="fbDock">
+                    <div class="rightNContainer nContainer">
+                        <div id="ChatTabsPageLet">
+                            <div class="fbNGroup">
+                                <div class="fbNGroup">
+                                    <div class="chatTabs">
+                                        <div class="chatTab">
+                                            <div class="fbNub left-relative opened">
+                                                <div class="fbNubFlyoutTitlebar titlebar">
+                                                    <div class="chatTitle-inside">
+                                                        <div class="titlebarTextWrapper _15p6">
+                                                            <span class="titlebarText noLink">
+                                                                    Quang
+                                                                </span>
+                                                        </div>
+                                                        <div class="close_X">
+                                                            <a class="close button" data-hover="tooltip" href="#" id="js_4s3">
+                                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="fbNubFlyoutBody chat-body">
+                                                    <div class="fbNubChatBody">
+                                                        <div class="fbNubFlyoutBodyContent">
+                                                            <table class="conversationContainer chatContent">
+                                                                <tbody>
+                                                                    <tr class="vBot">
+                                                                        <div style="height:176px">
+                                                                            <div>
+                                                                                <!--each -->
+                                                                                <div class="user-chat-unit chat-friend">
+                                                                                    <div class="user-chat-logo">
+                                                                                        <div class="chat-logo">
+                                                                                            <img src="imgs/demo.png" alt="">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="chat-content">
+                                                                                        <div class="group">
+                                                                                            <div class="chat-unit direction_ltr">
+                                                                                                <div class="chat-unit-content">
+                                                                                                    <div class="cuc-1">
+                                                                                                        <div class="cuc-2">
+                                                                                                            <div class="cuc-3">
+                                                                                                                <span>tuong no hoi may cai ha</span>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="user-chat-unit chat-mysefl">
+
+                                                                                    <div class="chat-content">
+                                                                                        <div class="group">
+                                                                                            <div class="chat-unit row-reverse direction_ltr">
+                                                                                                <div class="chat-unit-content">
+                                                                                                    <div class="cuc-1">
+                                                                                                        <div class="cuc-2">
+                                                                                                            <div class="cuc-3">
+                                                                                                                <span>tuong no hoi may cai ham sida vcl ddasd asd</span>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="fbNubChatFooter">
+                                                        <div class="_chatFooter" for="chat-input">
+                                                            <div class="chat-footer-box" style="min-height: 16px;">
+                                                                <input name="chat-input" type="text" placeholder=" Nhập tin nhắn...">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -372,8 +475,8 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a href="#{{_id}}" class="grammar-open-link collapsed" data-toggle="collapse" data-parent="#grammar-list"
-                            ng-click="loadDetail()" aria-expanded="false">
+                        <a href="#{{_id}}" class="grammar-open-link collapsed" data-toggle="collapse" data-parent="#grammar-list" ng-click="loadDetail()"
+                            aria-expanded="false">
                             <div class="grammar-item-list">
                                 {{level}}:{{title}}
                             </div>
@@ -435,24 +538,27 @@
 
     <!-- user template -->
     <script id="users-status-template" type="text/x-handlebars-template">
-        <ul>
-            {{#each users}} {{#if isOnline}}
-            <li>
-                <a class="text">{{username}}</a>
-                <span class="pull-right">
+        <div class="chatSidebar">
+            <div style="height: 56px"></div>
+            <ul>
+                {{#each users}} {{#if isOnline}}
+                <li>
+                    <a class="text">{{username}}</a>
+                    <span class="pull-right">
                 <i class="fa fa-circle status-online" aria-hidden="true">
                 </i>
             </span>
-            </li>
-            {{/if}} {{/each}} {{#each users}} {{#unless isOnline}}
-            <li><a>{{username}}</a>
-                <span class="pull-right">
+                </li>
+                {{/if}} {{/each}} {{#each users}} {{#unless isOnline}}
+                <li><a>{{username}}</a>
+                    <span class="pull-right">
                 <i class="fa fa-circle status-offline" aria-hidden="true">
                 </i>
             </span>
-            </li>
-            {{/unless}} {{/each}}
-        </ul>
+                </li>
+                {{/unless}} {{/each}}
+            </ul>
+        </div>
     </script>
 
     <script id="status-login-template" type="text/x-handlebars-template">
