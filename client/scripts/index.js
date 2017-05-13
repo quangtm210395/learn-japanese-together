@@ -12,6 +12,7 @@ $(document).ready(function () {
     templates.sentenceResult = Handlebars.compile($("#template-sentence-result").html());
     templates.grammarResult = Handlebars.compile($("#template-grammar-result").html());
     templates.grammarUsagesResult = Handlebars.compile($("#template-grammar-usages").html());
+    templates.chatTabs = Handlebars.compile($('#template-chat-tabs').html());
 
     Handlebars.registerHelper('searchResultWord', function (found, data) {
         console.log(found + ' ' + data);
@@ -128,6 +129,37 @@ $(document).ready(function () {
 
 
 });
+
+function regisChat(id) {
+    $.ajax({
+            url: "/api/conversation/get/" + id,
+            method: post
+        })
+        .done(function(data) {
+            if (data.status){
+                var result = data.result;
+                result.messages.forEach(function(item) {
+                    if (item.sender == id) {
+                        item._chatCss = "chat-friend";
+                        item._reverseCss = "";
+                        item._isFriend = true;
+                    } else {
+                        item._chatCss = "chat-myself";
+                        item._reverseCss = "row-reverse";
+                        item._isFriend = true;
+                    }
+                });
+                $('#chatTabs').html(templates.chatTabs(data.result));
+            }
+                
+        });
+}
+
+function sendMessage(id) {
+    var msg = $('#'+id).text();
+    let user = JSON.parse(localStorage.getItem('user'));
+    socket.emit('', {sendId: user._id, receiverId: });
+}
 
 function reloadResources(index) {
     // $("#list-kanji").html(templates.kanjiResult(resultK));
