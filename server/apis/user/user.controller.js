@@ -67,7 +67,7 @@ module.exports = {
     },
 
     getAll: function (callback) {
-        User.find().select("username name -_id").lean()
+        User.find().select("username name _id").lean()
             .exec(function (err, user) {
                 return callback(user);
             });
