@@ -59,7 +59,7 @@ module.exports = {
                         user.password = undefined;
                         user.salt = undefined;
                         user._v = undefined;
-                        res.json({status: true, message: "Login successful", token: token, user: user});
+                        res.json({status: true, message: "Login successful.", token: token, user: user});
                     }
                 }
 
