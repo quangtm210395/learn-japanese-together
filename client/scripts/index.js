@@ -155,6 +155,12 @@ function regisChat(id) {
         });
 }
 
+function sendMessage(id) {
+    var msg = $('#'+id).text();
+    let user = JSON.parse(localStorage.getItem('user'));
+    socket.emit('', {sendId: user._id, receiverId: });
+}
+
 function reloadResources(index) {
     // $("#list-kanji").html(templates.kanjiResult(resultK));
     $("#kanji-detail-result").html(templates.kanjiResultContent(resultK.results[index]));

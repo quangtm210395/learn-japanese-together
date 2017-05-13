@@ -36,7 +36,7 @@
                         </a>
                     </li>
                     <li id="nav1" onclick="changeTab(1)">
-                        <a href="/videocall">
+                        <a href="/videocall.html">
                             <i class="fa fa-snapchat fa-fw fa-lg"></i> Chat
                         </a>
                     </li>
@@ -219,7 +219,7 @@
                                                                     <tbody>
                                                                         <tr class="vBot">
                                                                             <div style="height:176px">
-                                                                                <div id="{{id}}">
+                                                                                <div id="chat{{id}}">
                                                                                     <!--each -->
                                                                                     {{#each messages}}
                                                                                     <div class="user-chat-unit {{_chatCss}}">
@@ -256,9 +256,9 @@
                                                             </div>
                                                         </div>
                                                         <div class="fbNubChatFooter">
-                                                            <div class="_chatFooter" for="chat-input">
+                                                            <div class="_chatFooter" >
                                                                 <div class="chat-footer-box" style="min-height: 16px;">
-                                                                    <input name="chat-input" type="text" placeholder=" Nhập tin nhắn...">
+                                                                    <input id="send{{friend._id}}" onkeypress="send{{friend._id}}" type="text" placeholder=" Nhập tin nhắn...">
                                                                 </div>
                                                             </div>
                                                         </div>
