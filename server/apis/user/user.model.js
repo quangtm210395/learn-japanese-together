@@ -20,7 +20,11 @@ var user = mongoose.Schema({
     salt: String,
     email: String,
     gender: String,
-    dob: String
+    dob: String,
+    imgUrl: {
+        type: String,
+        default: "imgs/user_male_df.png"
+    }
 });
 
 /**

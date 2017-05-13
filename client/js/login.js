@@ -50,6 +50,7 @@ $(document).ready(function () {
                     localStorage.setItem('user', JSON.stringify(data.user));
                     setStatusLoginHtml();
                     toastr.success('Đăng nhập thành công');
+                    $.ajaxSetup({headers: {"token": localStorage.getItem("token")}});
                 }
             })
     });

@@ -29,7 +29,7 @@ module.exports = {
     },
 
     getUser: function (req, res) {
-        User.findOne({username: req.params.username}, '-_id -__v -salt -password')
+        User.findOne({username: req.params.username}, '-__v -salt -password')
             .exec(function (err, user) {
                 if (err) res.json({status: false, message: err});
                 if (user) {
@@ -67,7 +67,7 @@ module.exports = {
     },
 
     getAll: function (callback) {
-        User.find().select("username name _id").lean()
+        User.find().select("username name").lean()
             .exec(function (err, user) {
                 return callback(user);
             });

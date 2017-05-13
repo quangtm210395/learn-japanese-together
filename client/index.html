@@ -200,7 +200,7 @@
                                                 <div class="fbNub left-relative">
                                                     <div class="fbNubFlyoutTitlebar titlebar">
                                                         <div class="chatTitle-inside">
-                                                            <div class="titlebarTextWrapper _15p6" onclick="showChatTab({{_id}})">
+                                                            <div class="titlebarTextWrapper _15p6" onclick="showChatTab('{{_id}}')">
                                                                 <span class="titlebarText noLink">
                                                                 {{friend.name}}
                                                             </span>
@@ -223,7 +223,7 @@
                                                                                     <!--each -->
                                                                                     {{#each messages}}
                                                                                     <div class="user-chat-unit {{_chatCss}}">
-                                                                                        {{#if isFriend}}
+                                                                                        {{#if _isFriend}}
                                                                                         <div class="user-chat-logo">
                                                                                             <div class="chat-logo">
                                                                                                 <img src="{{../friend.imgUrl}}" alt="">
@@ -258,7 +258,7 @@
                                                         <div class="fbNubChatFooter">
                                                             <div class="_chatFooter" >
                                                                 <div class="chat-footer-box" style="min-height: 16px;">
-                                                                    <input id="send{{friend._id}}" onkeypress="send{{friend._id}}" type="text" placeholder=" Nhập tin nhắn...">
+                                                                    <input id="send{{friend._id}}" onkeypress="{{friend._id}}" type="text" placeholder=" Nhập tin nhắn...">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -388,7 +388,7 @@
     <script id="template-kanji-result" type="text/x-handlebars-template">
         <div class="btn-group">
             {{#each results}}
-            <button type="button" class="btn btn-default btn-lg draw-single-kanji ng-binding ng-scope selected" id="{{@index}}" onclick="changeKanji({{@index}})">
+            <button type="button" class="btn btn-default btn-lg draw-single-kanji ng-binding ng-scope selected" id="{{@index}}" onclick="changeKanji('{{@index}}')">
                 {{kanji}}
             </button> {{/each}}
 
@@ -575,7 +575,7 @@
             <div style="height: 56px"></div>
             <ul>
                 {{#each users}} {{#if isOnline}}
-                <li id="{{_id}}" onclick="regisChat({{_id}})">
+                <li id="{{_id}}" onclick="regisChat('{{_id}}')">
                     <a class="text">{{username}}</a>
                     <span class="pull-right">
                 <i class="fa fa-circle status-online" aria-hidden="true">
@@ -583,11 +583,12 @@
             </span>
                 </li>
                 {{/if}} {{/each}} {{#each users}} {{#unless isOnline}}
-                <li><a>{{username}}</a>
+                <li id="{{_id}}" onclick="regisChat('{{_id}}')">
+                    <a>{{username}}</a>
                     <span class="pull-right">
-                <i class="fa fa-circle status-offline" aria-hidden="true">
-                </i>
-            </span>
+                        <i class="fa fa-circle status-offline" aria-hidden="true">
+                        </i>
+                    </span>
                 </li>
                 {{/unless}} {{/each}}
             </ul>
