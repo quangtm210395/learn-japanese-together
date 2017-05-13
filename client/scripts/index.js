@@ -2,7 +2,7 @@ var templates = {};
 var tabSelected = 0;
 var resultK = "";
 var collapse = 0;
-
+$.ajaxSetup({headers: {"token": localStorage.getItem("token")}});
 
 $(document).ready(function () {
     templates.vocabResult = Handlebars.compile($("#template-vocab-result").html());
@@ -131,11 +131,13 @@ $(document).ready(function () {
 });
 
 function regisChat(id) {
+    console.log('clicked!');
     $.ajax({
             url: "/api/conversation/get/" + id,
-            method: post
+            method: "get"
         })
         .done(function(data) {
+            console.log(data);
             if (data.status){
                 var result = data.result;
                 result.messages.forEach(function(item) {
@@ -146,19 +148,19 @@ function regisChat(id) {
                     } else {
                         item._chatCss = "chat-myself";
                         item._reverseCss = "row-reverse";
-                        item._isFriend = true;
+                        item._isFriend = false;
                     }
                 });
-                $('#chatTabs').html(templates.chatTabs(data.result));
+                $('#chatTabs').append(templates.chatTabs(data.result));
             }
                 
         });
 }
 
 function sendMessage(id) {
-    var msg = $('#'+id).text();
+    var msg = $('#send'+id).text();
     let user = JSON.parse(localStorage.getItem('user'));
-    socket.emit('', {sendId: user._id, receiverId: });
+    socket.emit('', {sendId: user._id, receiverId: id});
 }
 
 function reloadResources(index) {
