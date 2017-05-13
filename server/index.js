@@ -35,6 +35,6 @@ server.listen(port, () => {
     console.log(`Server is running at localhost:${port}`);
 });
 
-httpsServer.listen(httpsPort, () => {
-    console.log(`Https server is running at localhost:${httpsPort}`);
-});
+// httpsServer.listen(httpsPort, () => {
+//     console.log(`Https server is running at localhost:${httpsPort}`);
+// });
