@@ -1,10 +1,18 @@
 const express = require('express');
 const config = require('./configs');
 const mongoose = require('mongoose');
+const fs = require('fs');
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const socketio = require('./socketio')(io);
+const https = require('https');
+
+var privateKey  = fs.readFileSync('server/fakekeys/server.key', 'utf8');
+var certificate = fs.readFileSync('server/fakekeys/server.crt', 'utf8');
+var credentials = {key: privateKey, cert: certificate};
+
+const httpsServer = https.Server(credentials, app);
 
 config.settingExpress(app);
 
@@ -21,7 +29,12 @@ db.once('open', function () {
 });
 
 const port = config.port;
+const httpsPort = config.httpsPort;
 
 server.listen(port, () => {
     console.log(`Server is running at localhost:${port}`);
+});
+
+httpsServer.listen(httpsPort, () => {
+    console.log(`Https server is running at localhost:${httpsPort}`);
 });

@@ -56,6 +56,7 @@ summary {
     z-index: 1;
     padding-top: 16px;
     height: 104px;
+    z-index: 301;
 }
 
 .navbar {
@@ -66,7 +67,7 @@ summary {
 }
 
 .navbar {
-    z-index: 50;
+    z-index: 302;
 }
 
 .navbar-nav {
@@ -207,7 +208,7 @@ a {
 }
 
 .navbar-fixed-top {
-    top: 0;
+    top: 0!important;
 }
 
 .navbar-fixed-bottom,
@@ -217,7 +218,7 @@ a {
 }
 
 .navbar-fixed-top {
-    position: relative!important;
+    position: fixed!important;
     margin-bottom: 0;
 }
 
@@ -328,6 +329,40 @@ table {
 #main-container {
     padding-top: 0!important;
     min-height: 500px;
+    /*width: 1217px !important;*/
+    margin: 0 auto;
+    padding-right: 205px;
+    position: relative;
+    top:56px;
+}
+
+#viewAside {
+    
+}
+
+
+.chatSidebar {
+    background-clip: padding-box;
+    background-color: #e9ebee;
+    border-left: 1px solid rgba(0, 0, 0, .4);
+    box-shadow: inset 2px 0 2px -2px #b2b9c9;
+    display: none;
+    font-size: 12px;
+    height: 100%;
+    line-height: 16px;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 205px;
+    z-index: 300;
+}
+
+.sidebarMode .chatSidebar {
+    display: block;
+}
+
+.fixed_elem, .fixed_always {
+    position: fixed !important;
 }
 
 .container,
@@ -401,6 +436,7 @@ button.btn.tab-active {
     background-color: #16bd67;
     color: #fff;
     border-color: #16bd67;
+    outline: none;
 }
 
 .btn-group-vertical>.btn,
@@ -1026,11 +1062,11 @@ fieldset[disabled] .btn-link {
 }
 
 .users-status {
-    position: absolute;
+    position: relative;
     right: 0;
+    top: 0;
+    bottom: 0;
     border-left: solid #bdbdbd thin;
-    border-bottom: solid #bdbdbd thin;
-    border-radius: 5px;
 }
 
 .users-status {
@@ -1041,7 +1077,7 @@ fieldset[disabled] .btn-link {
     list-style: none;
     margin: 0;
     padding: 0;
-    height: 70vh;
+    height: 100%;
     overflow: hidden;
     overflow-y: scroll;
 }
