@@ -136,8 +136,22 @@ function regisChat(id) {
             method: post
         })
         .done(function(data) {
-            if (data.status)
-                $('#chatTabs').append(templates.chatTabs(data.result));
+            if (data.status){
+                var result = data.result;
+                result.messages.forEach(function(item) {
+                    if (item.sender == id) {
+                        item._chatCss = "chat-friend";
+                        item._reverseCss = "";
+                        item._isFriend = true;
+                    } else {
+                        item._chatCss = "chat-myself";
+                        item._reverseCss = "row-reverse";
+                        item._isFriend = true;
+                    }
+                });
+                $('#chatTabs').html(templates.chatTabs(data.result));
+            }
+                
         });
 }
 
