@@ -39,3 +39,14 @@ changeTab = function(index) {
     }
 }
 
+showChatTab = function(tabID) {
+    console.log('clicked!');
+    if ($('#'+tabID).hasClass("opened")) {
+        $('#'+tabID).removeClass("opened");
+    } else {
+        $('.chatTab').removeClass("opened");
+        $('#'+tabID).addClass("opened");
+    }
+    
+}
+

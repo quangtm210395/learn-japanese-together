@@ -14,7 +14,7 @@ body div {
 
 .dockWrapperRight.dockChat {
     left:auto;
-    right: 350px;
+    right: 210px;
 }
 
 .fbDock {
@@ -70,7 +70,7 @@ body div {
     box-shadow: 0 1px 4px rgba(0, 0, 0, .3);
 }
 
-.fbNub.left-relative.opened {
+.opened>.fbNub.left-relative {
     width: 260px;
 }
 
@@ -135,7 +135,7 @@ body div {
     text-decoration: none;
 }
 
-.opened.fbNub .fbNubFlyoutBody {
+.opened.chatTab .fbNubFlyoutBody {
     display: flex;
     flex-direction: column;
     height: 270px;
