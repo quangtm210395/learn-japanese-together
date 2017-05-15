@@ -13,7 +13,7 @@ function sendMessage(e, id) {
         };
         let user = JSON.parse(localStorage.getItem('user'));
         socket.emit('chat', {
-            sendId: user._id,
+            senderId: user._id,
             receiverId: id,
             message: msg
         });
