@@ -40,13 +40,16 @@ changeTab = function(index) {
 }
 
 showChatTab = function(tabID) {
-    console.log('clicked!');
     if ($('#'+tabID).hasClass("opened")) {
         $('#'+tabID).removeClass("opened");
     } else {
-        $('.chatTab').removeClass("opened");
+        // $('.chatTab').removeClass("opened");
         $('#'+tabID).addClass("opened");
     }
     
+}
+
+videoCall = function() {
+    var myWindow = window.open("/videocall.html", "", "width=1280,height=720");
 }
 

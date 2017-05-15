@@ -36,7 +36,7 @@
                         </a>
                     </li>
                     <li id="nav1" onclick="changeTab(1)">
-                        <a href="/videocall.html">
+                        <a href="" onclick="videoCall()">
                             <i class="fa fa-snapchat fa-fw fa-lg"></i> Chat
                         </a>
                     </li>
@@ -219,7 +219,7 @@
                                                                     <tbody>
                                                                         <tr class="vBot">
                                                                             <div style="height:176px">
-                                                                                <div id="chat{{id}}">
+                                                                                <div id="chat{{friend._id}}">
                                                                                     <!--each -->
                                                                                     {{#each messages}}
                                                                                     <div class="user-chat-unit {{_chatCss}}">
@@ -258,7 +258,7 @@
                                                         <div class="fbNubChatFooter">
                                                             <div class="_chatFooter" >
                                                                 <div class="chat-footer-box" style="min-height: 16px;">
-                                                                    <input id="send{{friend._id}}" onkeypress="{{friend._id}}" type="text" placeholder=" Nhập tin nhắn...">
+                                                                    <input id="send{{friend._id}}" onkeypress="sendMessage(event, '{{friend._id}}')" type="text" placeholder=" Nhập tin nhắn...">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -284,7 +284,7 @@
         <div class="user-chat-unit chat-friend">
             <div class="user-chat-logo">
                 <div class="chat-logo">
-                    <img src="imgs/user_male_df.png" alt="">
+                    <img src="{{imgUrl}}" alt="">
                 </div>
             </div>
             <div class="chat-content">
@@ -294,7 +294,7 @@
                             <div class="cuc-1">
                                 <div class="cuc-2">
                                     <div class="cuc-3">
-                                        <span>tuong no hoi may cai ha</span>
+                                        <span>{{message}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -313,7 +313,7 @@
                             <div class="cuc-1">
                                 <div class="cuc-2">
                                     <div class="cuc-3">
-                                        <span>tuong no hoi may cai ham sida vcl ddasd asd</span>
+                                        <span>{{message}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -612,6 +612,7 @@
     <script src="libs/handlebars.js"></script>
     <script src="js/login.js"></script>
     <script type="text/javascript" src="scripts/index.js"></script>
+    <script type="text/javascript" src="scripts/chat.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
 
 </body>
