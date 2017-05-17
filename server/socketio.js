@@ -4,7 +4,8 @@
 
 const userController = require('./apis/user/user.controller');
 const Message = require('./apis/message/message.model');
-const Conversation = require('./apis/conversation/conversation.model')
+const Conversation = require('./apis/conversation/conversation.model');
+const User = require('./apis/user/user.model');
 
 module.exports = (io) => {
 
@@ -70,8 +71,26 @@ module.exports = (io) => {
             conversationId = message.receiver + "@" + message.sender;
           };
           Conversation.findOneAndUpdate({id: conversationId}, {$push: {messages: message}}, function(err, conversation){
-            if (err) console.log(err);
-            io.emit('chat', data);
+              if (err) console.log(err);
+              User.findOne({_id: data.senderId}, function(err, user){
+                  if (err) console.log(err);
+                  console.log({
+                      senderId: data.senderId,
+                      receiverId: data.receiverId,
+                      messageData: {
+                          imgUrl: user.imgUrl,
+                          message: data.message
+                      }
+                  });
+                  io.emit('chat', {
+                      senderId: data.senderId,
+                      receiverId: data.receiverId,
+                      messageData: {
+                          imgUrl: user.imgUrl,
+                          message: data.message
+                      }
+                  });
+              });
           });
       });
     }
