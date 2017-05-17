@@ -38,6 +38,7 @@ module.exports = {
             });
         } else {
             sendResponse(res, room[roomName].sessionId);
+
             // if (room[roomName].peer_id1 !== peer_id1 && room[roomName].peer_id2 !== peer_id1) {
             //     if (!room[roomName].peer_id1) {
             //         room[roomName].peer_id1 = peer_id1;
