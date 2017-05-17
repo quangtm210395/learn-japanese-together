@@ -7,6 +7,7 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const socketio = require('./socketio')(io);
 const https = require('https');
+const ejs = require('ejs');
 var OpenTok = require('opentok');
 var opentok = new OpenTok(config.apiKey, config.apiSecret);
 
@@ -19,10 +20,15 @@ const httpsServer = https.Server(credentials, app);
 config.settingExpress(app);
 
 app.use('/',express.static('./client'));
+console.log(__dirname);
+
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
+app.engine('ejs', ejs.renderFile);
+
 const routes = require('./routes')(app);
 
 mongoose.connect(config.mongoUrl, {server: {reconnectTries: Number.MAX_VALUE}});
-
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -35,23 +41,24 @@ const httpsPort = config.httpsPort;
 
 var sessionId;
 
-opentok.createSession(function(err, session) {
-    if (err) return console.log(err);
-    sessionId = session.sessionId;
-
-    // save the sessionId
-    // db.save('session', session.sessionId, done);
-});
-
-app.get('/videocall', function (req, res) {
-    var token = opentok.generateToken(sessionId);
-    // console.log(token);
-    res.json({
-        apiKey: config.apiKey,
-        sessionId: sessionId,
-        token : token
-    });
-});
+// opentok.createSession(function(err, session) {
+//     if (err) return console.log(err);
+//     sessionId = session.sessionId;
+// });
+//
+// app.get('/api/videocall', function (req, res) {
+//     var token = opentok.generateToken(sessionId);
+//     console.log(token);
+//     res.json({
+//         apiKey: config.apiKey,
+//         sessionId: sessionId,
+//         token : token
+//     });
+// });
+//
+// app.get('/videocall1',function (req, res) {
+//     res.render('videocall.ejs');
+// });
 
 server.listen(port, () => {
     console.log(`Server is running at localhost:${port}`);
