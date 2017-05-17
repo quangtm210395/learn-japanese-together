@@ -36,7 +36,7 @@
                         </a>
                     </li>
                     <li id="nav1" onclick="changeTab(1)">
-                        <a href="/videocall.html">
+                        <a href="" >
                             <i class="fa fa-snapchat fa-fw fa-lg"></i> Chat
                         </a>
                     </li>
@@ -48,12 +48,13 @@
         </div>
     </nav>
 
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                </button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
 
                     <div role="tabpanel">
                         <!-- Nav tabs -->
@@ -123,6 +124,8 @@
             </div>
         </div>
     </div>
+
+    <div id="incommingCall"></div>
 
     <div class="container-content2" id="main-container">
         <div class="row">
@@ -195,77 +198,6 @@
                             <div class="fbNGroup">
                                 <div class="fbNGroup">
                                     <div class="chatTabs" id="chatTabs">
-                                        <script id="template-chat-tabs" type="text/x-handlebars-template">
-                                            <div class="chatTab opened" id="{{_id}}">
-                                                <div class="fbNub left-relative">
-                                                    <div class="fbNubFlyoutTitlebar titlebar">
-                                                        <div class="chatTitle-inside">
-                                                            <div class="titlebarTextWrapper _15p6" onclick="showChatTab('{{_id}}')">
-                                                                <span class="titlebarText noLink">
-                                                                {{friend.name}}
-                                                            </span>
-                                                            </div>
-                                                            <div class="close_X">
-                                                                <a class="close button" data-hover="tooltip" href="#" id="js_4s3">
-                                                                    <i class="fa fa-times" aria-hidden="true"></i>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="fbNubFlyoutBody chat-body">
-                                                        <div class="fbNubChatBody">
-                                                            <div class="fbNubFlyoutBodyContent">
-                                                                <table class="conversationContainer chatContent">
-                                                                    <tbody>
-                                                                        <tr class="vBot">
-                                                                            <div style="height:176px">
-                                                                                <div id="chat{{id}}">
-                                                                                    <!--each -->
-                                                                                    {{#each messages}}
-                                                                                    <div class="user-chat-unit {{_chatCss}}">
-                                                                                        {{#if _isFriend}}
-                                                                                        <div class="user-chat-logo">
-                                                                                            <div class="chat-logo">
-                                                                                                <img src="{{../friend.imgUrl}}" alt="">
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        {{/if}}
-                                                                                        <div class="chat-content">
-                                                                                            <div class="group">
-                                                                                                <div class="chat-unit {{_reverseCss}} direction_ltr">
-                                                                                                    <div class="chat-unit-content">
-                                                                                                        <div class="cuc-1">
-                                                                                                            <div class="cuc-2">
-                                                                                                                <div class="cuc-3">
-                                                                                                                    <span>{{content}}</span>
-                                                                                                                </div>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    {{/each}}
-                                                                                    <!--/each -->
-                                                                                </div>
-                                                                            </div>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                        <div class="fbNubChatFooter">
-                                                            <div class="_chatFooter" >
-                                                                <div class="chat-footer-box" style="min-height: 16px;">
-                                                                    <input id="send{{friend._id}}" onkeypress="{{friend._id}}" type="text" placeholder=" Nhập tin nhắn...">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </script>
                                     </div>
                                 </div>
                             </div>
@@ -280,11 +212,107 @@
 
     </footer>
 
+    <!--incoming call-->
+    <script id="template-incomming-call" type="text/x-handlebars-template">
+        <div class="modal fade" id="incommingCallModal" tabindex="-1" role="dialog" aria-labelledby="incommingcallmdLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                        <h5 class="modal-title" id="exampleModalLabel">{{caller.name}} is calling</h5>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="acceptCall('{{caller._id}}')">Bỏ qua</button>
+                        <button type="button" class="btn btn-primary">Chấp nhận</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <!--chat-->
+    <script id="template-chat-tabs" type="text/x-handlebars-template">
+        <div class="chatTab opened" id="{{_id}}">
+            <div class="fbNub left-relative">
+                <div class="fbNubFlyoutTitlebar titlebar">
+                    <div class="chatTitle-inside">
+                        <div class="titlebarTextWrapper _15p6" onclick="showChatTab('{{_id}}')">
+                            <span class="titlebarText noLink">
+                                 {{friend.name}}
+                             </span>
+                        </div>
+                        <div class="close_X">
+                            <a class="close button" data-hover="tooltip" href="#" id="js_4s3">
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            </a>
+                            <a class="close button" onclick="videoCall('{{friend._id}}')">
+                                <i class="fa fa-phone" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="fbNubFlyoutBody chat-body">
+                    <div class="fbNubChatBody">
+                        <div class="fbNubFlyoutBodyContent">
+                            <table class="conversationContainer chatContent">
+                                <tbody>
+                                    <tr class="vBot">
+                                        <div style="height:176px">
+                                            <div id="chat{{friend._id}}">
+                                                <!--each -->
+                                                {{#each messages}}
+                                                <div class="user-chat-unit {{_chatCss}}">
+                                                    {{#if _isFriend}}
+                                                    <div class="user-chat-logo">
+                                                        <div class="chat-logo">
+                                                            <img src="{{../friend.imgUrl}}" alt="">
+                                                        </div>
+                                                    </div>
+                                                    {{/if}}
+                                                    <div class="chat-content">
+                                                        <div class="group">
+                                                            <div class="chat-unit {{_reverseCss}} direction_ltr">
+                                                                <div class="chat-unit-content">
+                                                                    <div class="cuc-1">
+                                                                        <div class="cuc-2">
+                                                                            <div class="cuc-3">
+                                                                                <span>{{content}}</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {{/each}}
+                                                <!--/each -->
+                                            </div>
+                                        </div>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="fbNubChatFooter">
+                        <div class="_chatFooter">
+                            <div class="chat-footer-box" style="min-height: 16px;">
+                                <input id="send{{friend._id}}" onkeypress="sendMessage(event, '{{friend._id}}')" type="text" placeholder=" Nhập tin nhắn...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
     <script id="template-chat-friend" type="text/x-handlebars-template">
         <div class="user-chat-unit chat-friend">
             <div class="user-chat-logo">
                 <div class="chat-logo">
-                    <img src="imgs/user_male_df.png" alt="">
+                    <img src="{{imgUrl}}" alt="">
                 </div>
             </div>
             <div class="chat-content">
@@ -294,7 +322,7 @@
                             <div class="cuc-1">
                                 <div class="cuc-2">
                                     <div class="cuc-3">
-                                        <span>tuong no hoi may cai ha</span>
+                                        <span>{{message}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -313,7 +341,7 @@
                             <div class="cuc-1">
                                 <div class="cuc-2">
                                     <div class="cuc-3">
-                                        <span>tuong no hoi may cai ham sida vcl ddasd asd</span>
+                                        <span>{{message}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -600,8 +628,8 @@
         <li><a id="click-profile">{{user.name}}</a></li>
         <li><a id="click-logout">Đăng xuất</a></li>
         {{else}}
-        <li><a data-toggle="modal" data-target="#myModal" id="click-login">Đăng nhập</a></li>
-        <li><a data-toggle="modal" data-target="#myModal" id="click-register">Đăng kí</a></li>
+        <li><a data-toggle="modal" data-target="#loginModal" id="click-login">Đăng nhập</a></li>
+        <li><a data-toggle="modal" data-target="#loginModal" id="click-register">Đăng kí</a></li>
         {{/if}}
     </script>
 
@@ -612,6 +640,7 @@
     <script src="libs/handlebars.js"></script>
     <script src="js/login.js"></script>
     <script type="text/javascript" src="scripts/index.js"></script>
+    <script type="text/javascript" src="scripts/chat.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
 
 </body>

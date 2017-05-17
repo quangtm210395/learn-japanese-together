@@ -40,13 +40,20 @@ changeTab = function(index) {
 }
 
 showChatTab = function(tabID) {
-    console.log('clicked!');
     if ($('#'+tabID).hasClass("opened")) {
         $('#'+tabID).removeClass("opened");
     } else {
-        $('.chatTab').removeClass("opened");
+        // $('.chatTab').removeClass("opened");
         $('#'+tabID).addClass("opened");
     }
     
+}
+
+videoCall = function(id) {
+    var myWindow = window.open("/videocall?peer_id=" + id, "", "width=1280,height=720");
+}
+
+acceptCall = function(id) {
+    var myWindow = window.open("/videocall?peer_id=" + id, "", "width=1280,height=720");
 }
 

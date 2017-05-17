@@ -45,7 +45,7 @@ opentok.createSession(function(err, session) {
 
 app.get('/videocall', function (req, res) {
     var token = opentok.generateToken(sessionId);
-    console.log(token);
+    // console.log(token);
     res.json({
         apiKey: config.apiKey,
         sessionId: sessionId,

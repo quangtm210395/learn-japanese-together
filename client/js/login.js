@@ -1,5 +1,6 @@
+var socket;
 $(document).ready(function () {
-    var socket = io.connect();
+    socket = io.connect();
 
     $("#register").click(function () {
         if ($('#password_register').val() !== $('#verify_password').val()) {
@@ -109,6 +110,8 @@ $(document).ready(function () {
             localStorage.removeItem('token');
             localStorage.removeItem('user');
             socket.emit('logout');
+            $("#chatTabs").children().remove();
+            $.ajaxSetup({headers: {"token": null}});
             setStatusLoginHtml();
         });
     }

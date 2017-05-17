@@ -2,7 +2,13 @@ var templates = {};
 var tabSelected = 0;
 var resultK = "";
 var collapse = 0;
-$.ajaxSetup({headers: {"token": localStorage.getItem("token")}});
+$.ajaxSetup({
+    headers: {
+        "token": localStorage.getItem("token")
+    }
+});
+
+var incommingData = {};
 
 $(document).ready(function () {
     templates.vocabResult = Handlebars.compile($("#template-vocab-result").html());
@@ -13,6 +19,11 @@ $(document).ready(function () {
     templates.grammarResult = Handlebars.compile($("#template-grammar-result").html());
     templates.grammarUsagesResult = Handlebars.compile($("#template-grammar-usages").html());
     templates.chatTabs = Handlebars.compile($('#template-chat-tabs').html());
+    templates.chatMySelf = Handlebars.compile($('#template-chat-myself').html());
+    templates.chatFriend = Handlebars.compile($('#template-chat-friend').html());
+    templates.incommingCall = Handlebars.compile($('#template-incomming-call').html());
+
+    // $('#incommingCall').html(templates.incommingCall(incommingData));
 
     Handlebars.registerHelper('searchResultWord', function (found, data) {
         console.log(found + ' ' + data);
@@ -109,9 +120,9 @@ $(document).ready(function () {
                                 console.log(data2);
                                 if (data2.status == 200) {
                                     var grammar = data2.grammar;
-                                    grammar.usages.forEach(function(usage) {
+                                    grammar.usages.forEach(function (usage) {
                                         usage.mean = decodeHtml(usage.mean);
-                                        usage.examples.forEach(function(examp) {
+                                        usage.examples.forEach(function (examp) {
                                             examp.mean = decodeHtml(examp.mean);
                                         })
                                     })
@@ -131,16 +142,16 @@ $(document).ready(function () {
 });
 
 function regisChat(id) {
-    console.log('clicked!');
+    console.log('regis clicked!');
     $.ajax({
             url: "/api/conversation/get/" + id,
             method: "get"
         })
-        .done(function(data) {
+        .done(function (data) {
             console.log(data);
-            if (data.status){
+            if (data.status) {
                 var result = data.result;
-                result.messages.forEach(function(item) {
+                result.messages.forEach(function (item) {
                     if (item.sender == id) {
                         item._chatCss = "chat-friend";
                         item._reverseCss = "";
@@ -151,17 +162,13 @@ function regisChat(id) {
                         item._isFriend = false;
                     }
                 });
-                $('#chatTabs').append(templates.chatTabs(data.result));
+                if ($("#" + result._id).length == 0)
+                    $('#chatTabs').append(templates.chatTabs(result));
             }
-                
         });
+
 }
 
-function sendMessage(id) {
-    var msg = $('#send'+id).text();
-    let user = JSON.parse(localStorage.getItem('user'));
-    socket.emit('', {sendId: user._id, receiverId: id});
-}
 
 function reloadResources(index) {
     // $("#list-kanji").html(templates.kanjiResult(resultK));
