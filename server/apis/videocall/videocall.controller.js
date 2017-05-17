@@ -37,25 +37,26 @@ module.exports = {
 
             });
         } else {
-            if (room[roomName].peer_id1 !== peer_id1 && room[roomName].peer_id2 !== peer_id1) {
-                if (!room[roomName].peer_id1) {
-                    room[roomName].peer_id1 = peer_id1;
-                    sendResponse(res, room[roomName].sessionId);
-                } else if (!room[roomName].peer_id2) {
-                    room[roomName].peer_id2 = peer_id1;
-                    sendResponse(res, room[roomName].sessionId);
-                }
-            } else if (room[roomName].peer_id1 !== peer_id2 && room[roomName].peer_id2 !== peer_id2){
-                if (!room[roomName].peer_id1) {
-                    room[roomName].peer_id1 = peer_id2;
-                    sendResponse(res, room[roomName].sessionId);
-                } else if (!room[roomName].peer_id2) {
-                    room[roomName].peer_id2 = peer_id2;
-                    sendResponse(res, room[roomName].sessionId);
-                }
-            } else {
-                res.json({status: false, message: "No connected."});
-            }
+            sendResponse(res, room[roomName].sessionId);
+            // if (room[roomName].peer_id1 !== peer_id1 && room[roomName].peer_id2 !== peer_id1) {
+            //     if (!room[roomName].peer_id1) {
+            //         room[roomName].peer_id1 = peer_id1;
+            //         sendResponse(res, room[roomName].sessionId);
+            //     } else if (!room[roomName].peer_id2) {
+            //         room[roomName].peer_id2 = peer_id1;
+            //         sendResponse(res, room[roomName].sessionId);
+            //     }
+            // } else if (room[roomName].peer_id1 !== peer_id2 && room[roomName].peer_id2 !== peer_id2){
+            //     if (!room[roomName].peer_id1) {
+            //         room[roomName].peer_id1 = peer_id2;
+            //         sendResponse(res, room[roomName].sessionId);
+            //     } else if (!room[roomName].peer_id2) {
+            //         room[roomName].peer_id2 = peer_id2;
+            //         sendResponse(res, room[roomName].sessionId);
+            //     }
+            // } else {
+            //     res.json({status: false, message: "No connected."});
+            // }
         }
     }
 };
