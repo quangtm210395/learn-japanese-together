@@ -3,6 +3,9 @@
  */
 
 const userController = require('./apis/user/user.controller');
+const Message = require('./apis/message/message.model');
+const Conversation = require('./apis/conversation/conversation.model');
+const User = require('./apis/user/user.model');
 
 module.exports = (io) => {
 
@@ -20,6 +23,10 @@ module.exports = (io) => {
         socket.on('logout', function () {
             socket.username = undefined;
             updateStatusUsers(io);
+        })
+
+        socket.on('chat', function(data){
+            createMessage(data);
         })
     });
 
@@ -49,4 +56,42 @@ module.exports = (io) => {
             });
         });
     };
+
+    function createMessage(data) {
+      var newMessage = new Message({
+          content: data.message,
+          sender: data.senderId,
+          receiver: data.receiverId
+      });
+      newMessage.save(function(err, message){
+          if (err) console.log(err);
+          if (message.sender < message.receiver) {
+            conversationId = message.sender + "@" + message.receiver;
+          } else {
+            conversationId = message.receiver + "@" + message.sender;
+          };
+          Conversation.findOneAndUpdate({id: conversationId}, {$push: {messages: message}}, function(err, conversation){
+              if (err) console.log(err);
+              User.findOne({_id: data.senderId}, function(err, user){
+                  if (err) console.log(err);
+                  console.log({
+                      senderId: data.senderId,
+                      receiverId: data.receiverId,
+                      messageData: {
+                          imgUrl: user.imgUrl,
+                          message: data.message
+                      }
+                  });
+                  io.emit('chat', {
+                      senderId: data.senderId,
+                      receiverId: data.receiverId,
+                      messageData: {
+                          imgUrl: user.imgUrl,
+                          message: data.message
+                      }
+                  });
+              });
+          });
+      });
+    }
 };
