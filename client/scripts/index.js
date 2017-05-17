@@ -8,6 +8,8 @@ $.ajaxSetup({
     }
 });
 
+var incommingData = {};
+
 $(document).ready(function () {
     templates.vocabResult = Handlebars.compile($("#template-vocab-result").html());
     templates.vocabAll = Handlebars.compile($("#template-vocab-all").html());
@@ -19,6 +21,9 @@ $(document).ready(function () {
     templates.chatTabs = Handlebars.compile($('#template-chat-tabs').html());
     templates.chatMySelf = Handlebars.compile($('#template-chat-myself').html());
     templates.chatFriend = Handlebars.compile($('#template-chat-friend').html());
+    templates.incommingCall = Handlebars.compile($('#template-incomming-call').html());
+
+    // $('#incommingCall').html(templates.incommingCall(incommingData));
 
     Handlebars.registerHelper('searchResultWord', function (found, data) {
         console.log(found + ' ' + data);

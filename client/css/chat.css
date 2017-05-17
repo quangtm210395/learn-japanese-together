@@ -368,7 +368,8 @@ img {
 }
 
 .close_X {
-    flex: 0 0 23px;
+    flex: 0 0 46px;
+    flex-direction: column;
 }
 
 .fbNub.left-relative .titlebar .button {
@@ -383,4 +384,5 @@ img {
     transition: opacity .15s;
     -webkit-user-drag: none;
     width: 22px;
+    color: #7b7878;
 }
