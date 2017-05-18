@@ -54,6 +54,17 @@ videoCall = function(id) {
 }
 
 acceptCall = function(id) {
+    socket.emit('access call', {
+        peer_id: id,
+        accepted: true
+    });
     var myWindow = window.open("/videocall?peer_id=" + id, "", "width=1280,height=720");
 }
+
+rejectCall = function (id) {
+    socket.emit('access call', {
+        peer_id: id,
+        accepted: false
+    });
+};
 

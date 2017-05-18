@@ -67,9 +67,18 @@ module.exports = {
     },
 
     getAll: function (callback) {
-        User.find().select("username name").lean()
+        User.find().select("_id username name").lean()
             .exec(function (err, user) {
                 return callback(user);
             });
+    },
+
+    getUserCallback: function (id, callback) {
+        User.findOne({_id: id}, '-__v -salt -password')
+            .exec(function (err, user) {
+                return callback(user);
+            });
+
     }
+
 };

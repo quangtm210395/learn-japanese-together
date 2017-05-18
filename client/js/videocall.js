@@ -1,4 +1,6 @@
+var socket;
 $(document).ready(function() {
+    socket = io.connect();
     $.ajaxSetup({headers: {"token": localStorage.getItem("token")}});
 
     $.post('/api/videocall/room?peer_id=' + peer_id, function (data, status) {
@@ -12,6 +14,15 @@ $(document).ready(function() {
         }
 
     });
+
+    socket.emit('create call', {
+        peer_id_receive: peer_id,
+        peer_id_sender: JSON.parse(localStorage.getItem('user'))._id
+    });
+
+    socket.on('reply access call', function (data) {
+        if (data.accepted) console.log("Chấp nhận cuộc gọi"); else console.log("Từ chối cuộc gọi");
+    })
 });
 
 function initializeSession(apiKey, sessionId, token) {

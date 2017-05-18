@@ -4,7 +4,7 @@
 var OpenTok = require('opentok');
 const config = require('../../configs');
 var opentok = new OpenTok(config.apiKey, config.apiSecret);
-var room = {};
+var room = require('./videocall.model').room;
 
 function sendResponse(res, sessionId) {
     var token = opentok.generateToken(sessionId);
@@ -25,7 +25,6 @@ module.exports = {
         var peer_id2 = req.user._id;
         if (!peer_id1) res.json({status: false, message: "Need peer id."});
         var roomName = (peer_id1 < peer_id2) ? peer_id1 + "@" + peer_id2 : peer_id2 + "@" + peer_id1;
-        console.log(roomName);
         if (!room[roomName]) {
             opentok.createSession(function (err, session) {
                 if (err) return console.log(err);
@@ -37,41 +36,16 @@ module.exports = {
 
             });
         } else {
-            if (room[roomName].peer_id1 === peer_id2 || room[roomName].peer_id2 === peer_id2){
-                res.json({status: false, message: "No connected."});
-            } else
-
-            if (!room[roomName].peer_id1){
+            if (room[roomName].peer_id1 === peer_id2 || room[roomName].peer_id2 === peer_id2) {
+                res.json({status: false, message: "Connected"});
+            } else if (!room[roomName].peer_id1) {
                 room[roomName].peer_id1 = peer_id2;
                 sendResponse(res, room[roomName].sessionId);
-            } else
-
-            if (!room[roomName].peer_id2){
+            } else if (!room[roomName].peer_id2) {
                 room[roomName].peer_id2 = peer_id2;
                 sendResponse(res, room[roomName].sessionId);
             } else
-
-            res.json({status: false, message: "No connected."});
-
-            // if (room[roomName].peer_id1 !== peer_id1 && room[roomName].peer_id2 !== peer_id1) {
-            //     if (!room[roomName].peer_id1) {
-            //         room[roomName].peer_id1 = peer_id1;
-            //         sendResponse(res, room[roomName].sessionId);
-            //     } else if (!room[roomName].peer_id2) {
-            //         room[roomName].peer_id2 = peer_id1;
-            //         sendResponse(res, room[roomName].sessionId);
-            //     }
-            // } else if (room[roomName].peer_id1 !== peer_id2 && room[roomName].peer_id2 !== peer_id2){
-            //     if (!room[roomName].peer_id1) {
-            //         room[roomName].peer_id1 = peer_id2;
-            //         sendResponse(res, room[roomName].sessionId);
-            //     } else if (!room[roomName].peer_id2) {
-            //         room[roomName].peer_id2 = peer_id2;
-            //         sendResponse(res, room[roomName].sessionId);
-            //     }
-            // } else {
-            //     res.json({status: false, message: "No connected."});
-            // }
+                res.json({status: false, message: "No connected."});
         }
     }
 };

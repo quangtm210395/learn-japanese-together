@@ -23,8 +23,6 @@ $(document).ready(function () {
     templates.chatFriend = Handlebars.compile($('#template-chat-friend').html());
     templates.incommingCall = Handlebars.compile($('#template-incomming-call').html());
 
-    // $('#incommingCall').html(templates.incommingCall(incommingData));
-
     Handlebars.registerHelper('searchResultWord', function (found, data) {
         console.log(found + ' ' + data);
         var result = "";
