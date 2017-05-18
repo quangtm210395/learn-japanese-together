@@ -39,17 +39,17 @@ module.exports = {
         } else {
             if (room[roomName].peer_id1 === peer_id2 || room[roomName].peer_id2 === peer_id2){
                 res.json({status: false, message: "No connected."});
-            }
+            } else
 
             if (!room[roomName].peer_id1){
                 room[roomName].peer_id1 = peer_id2;
                 sendResponse(res, room[roomName].sessionId);
-            }
+            } else
 
             if (!room[roomName].peer_id2){
                 room[roomName].peer_id2 = peer_id2;
                 sendResponse(res, room[roomName].sessionId);
-            }
+            } else
 
             res.json({status: false, message: "No connected."});
 
