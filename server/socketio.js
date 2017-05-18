@@ -63,6 +63,7 @@ module.exports = (io) => {
           sender: data.senderId,
           receiver: data.receiverId
       });
+      
       newMessage.save(function(err, message){
           if (err) console.log(err);
           if (message.sender < message.receiver) {
