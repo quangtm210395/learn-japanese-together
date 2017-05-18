@@ -1,5 +1,5 @@
 var socket;
-$(document).ready(function() {
+$(document).ready(function () {
     socket = io.connect();
     $.ajaxSetup({headers: {"token": localStorage.getItem("token")}});
 
@@ -31,7 +31,7 @@ function initializeSession(apiKey, sessionId, token) {
     // Subscribe to a newly created stream
 
     // Connect to the session
-    session.connect(token, function(error) {
+    session.connect(token, function (error) {
         // If the connection is successful, initialize a publisher and publish to the session
         if (!error) {
             var publisher = OT.initPublisher('publisher', {
@@ -44,7 +44,7 @@ function initializeSession(apiKey, sessionId, token) {
         }
     });
 
-    session.on('streamCreated', function(event) {
+    session.on('streamCreated', function (event) {
         session.subscribe(event.stream, 'subscriber', {
             insertMode: 'append',
             width: '100%',
