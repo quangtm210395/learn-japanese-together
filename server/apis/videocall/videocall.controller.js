@@ -31,13 +31,27 @@ module.exports = {
                 if (err) return console.log(err);
                 room[roomName] = {
                     sessionId: session.sessionId,
-                    peer_id1: peer_id1
+                    peer_id2: peer_id2
                 };
                 sendResponse(res, session.sessionId);
 
             });
         } else {
-            sendResponse(res, room[roomName].sessionId);
+            if (room[roomName].peer_id1 === peer_id2 || room[roomName].peer_id2 === peer_id2){
+                res.json({status: false, message: "No connected."});
+            }
+
+            if (!room[roomName].peer_id1){
+                room[roomName].peer_id1 = peer_id2;
+                sendResponse(res, room[roomName].sessionId);
+            }
+
+            if (!room[roomName].peer_id2){
+                room[roomName].peer_id2 = peer_id2;
+                sendResponse(res, room[roomName].sessionId);
+            }
+
+            res.json({status: false, message: "No connected."});
 
             // if (room[roomName].peer_id1 !== peer_id1 && room[roomName].peer_id2 !== peer_id1) {
             //     if (!room[roomName].peer_id1) {
