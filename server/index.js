@@ -8,8 +8,6 @@ const io = require('socket.io')(server);
 const socketio = require('./socketio')(io);
 const https = require('https');
 const ejs = require('ejs');
-var OpenTok = require('opentok');
-var opentok = new OpenTok(config.apiKey, config.apiSecret);
 
 var privateKey  = fs.readFileSync('server/fakekeys/server.key', 'utf8');
 var certificate = fs.readFileSync('server/fakekeys/server.crt', 'utf8');
@@ -38,27 +36,6 @@ db.once('open', function () {
 
 const port = config.port;
 const httpsPort = config.httpsPort;
-
-var sessionId;
-
-// opentok.createSession(function(err, session) {
-//     if (err) return console.log(err);
-//     sessionId = session.sessionId;
-// });
-//
-// app.get('/api/videocall', function (req, res) {
-//     var token = opentok.generateToken(sessionId);
-//     console.log(token);
-//     res.json({
-//         apiKey: config.apiKey,
-//         sessionId: sessionId,
-//         token : token
-//     });
-// });
-//
-// app.get('/videocall1',function (req, res) {
-//     res.render('videocall.ejs');
-// });
 
 server.listen(port, () => {
     console.log(`Server is running at localhost:${port}`);
