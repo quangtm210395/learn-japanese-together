@@ -7,5 +7,6 @@ var router = express.Router();
 var ViewController = require('./view.controller');
 
 router.get('/videocall', ViewController.videocall);
+router.get('/random-call', ViewController.randomCall);
 
 module.exports = router;

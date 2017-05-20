@@ -6,11 +6,14 @@ const userController = require('./apis/user/user.controller');
 const messageController = require('./apis/message/message.controller');
 //const Conversation = require('./apis/conversation/conversation.model');
 const User = require('./apis/user/user.model');
+
 var room = require('./apis/videocall/videocall.model').room;
+var peerRandom = [];
 
 module.exports = (io) => {
 
     io.on('connection', function (socket) {
+
         updateStatusUsers(socket);
         socket.on('login', function (data) {
             socket.id = data.id;
@@ -35,6 +38,12 @@ module.exports = (io) => {
             createMessage(data);
         });
 
+        socket.on('find peer', function (data) {
+            socket.id = data.id;
+            peerRandom.push(data.id);
+            findPeer();
+        });
+
         socket.on('create call', function (data) {
             socket.isCall = true;
             socket.id = data.peer_id_sender;
@@ -52,6 +61,17 @@ module.exports = (io) => {
                     });
                 });
             }
+        });
+
+        socket.on('get room', function (data) {
+            io.sockets.clients(function (error, clients) {
+                clients.forEach(function (client) {
+                    if (io.sockets.sockets[client].id === data.id) {
+                        console.log("socket");
+                        io.sockets.sockets[client].emit('get room data',{});
+                    }
+                });
+            });
         });
 
         socket.on('access call', function (data) {
@@ -126,6 +146,29 @@ module.exports = (io) => {
             });
             callback();
         });
+    }
+    
+    function findPeer() {
+        var peer_id1;
+        var peer_id2;
+        if (peerRandom.length >= 2){
+            var index1 = Math.floor(Math.random() * (peerRandom.length -1));
+            peer_id1 = peerRandom[index1];
+            peerRandom.splice(index1, 1);
+            var index2 = Math.floor(Math.random() * (peerRandom.length -1));
+            peer_id2 = peerRandom[index2];
+            peerRandom.splice(index2, 1);
+            io.sockets.clients(function (error, clients) {
+                clients.forEach(function (client) {
+                    if (io.sockets.sockets[client].id === peer_id1) {
+                        io.sockets.sockets[client].emit("peer opponent", {peer_opponent: peer_id2, isGetRoom: true});
+                    }
+                    if (io.sockets.sockets[client].id === peer_id2) {
+                        io.sockets.sockets[client].emit("peer opponent", {peer_opponent: peer_id1, isGetRoom: false});
+                    }
+                });
+            })
+        }
     }
 
     function listUser(callback) {
