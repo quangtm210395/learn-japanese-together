@@ -9,7 +9,9 @@ var config = require('../../configs/index');
 module.exports = {
 
     addUser: function (req, res) {
+        console.log(req.body);
         var newUser = new User(req.body);
+
         User.findOne({username: req.body.username}, {_id: 0, __v: 0})
             .then(function (user) {
                 if (user) {

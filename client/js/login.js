@@ -18,7 +18,7 @@ $("#register").click(function () {
 });
 
 $("#login").click(function () {
-    login();
+    login($('#username_login').val(), $('#password_login').val());
 });
 
 var sourceUsersStatus = $("#users-status-template").html();
@@ -88,7 +88,7 @@ function pressEnterRegister(event) {
 }
 
 function pressEnterLogin(event) {
-    if (event.keyCode == 13) login();
+    if (event.keyCode == 13) login($('#username_login').val(), $('#password_login').val());
 }
 
 function registerAccount() {
@@ -110,22 +110,24 @@ function registerAccount() {
                         toastr.error(data.message);
                     }
                     else {
-                        console.log(data.messagesss);
+                        console.log(data.message);
                         toastr.error('Đăng kí thất bại');
                     }
                 } else {
                     $('#myModal').modal('hide');
                     toastr.success('Đăng kí thành công');
+                    login($('#username_register').val(), $('#password_register').val())
+
                 }
             })
     }
 }
 
-function login() {
+function login(username, password) {
     $.post('/api/user/login',
         {
-            username: $('#username_login').val(),
-            password: $('#password_login').val(),
+            username: username,
+            password: password,
         },
         function (data, status) {
             if (!data.status) {

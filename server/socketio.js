@@ -99,7 +99,6 @@ module.exports = (io) => {
                 }
             }
         }
-        console.log(room);
     }
 
     function updateStatusUsers(browser) {
