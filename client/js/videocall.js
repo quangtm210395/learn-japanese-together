@@ -25,6 +25,7 @@ $(document).ready(function () {
     })
 });
 
+
 function initializeSession(apiKey, sessionId, token) {
     var session = OT.initSession(apiKey, sessionId);
 

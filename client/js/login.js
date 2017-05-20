@@ -3,57 +3,11 @@ $(document).ready(function () {
     socket = io.connect();
 
     $("#register").click(function () {
-        if ($('#password_register').val() !== $('#verify_password').val()) {
-            toastr.error('Mật khẩu không trùng khớp');
-        } else {
-            $.post('/api/user/register',
-                {
-                    username: $('#username_register').val(),
-                    password: $('#password_register').val(),
-                    name: $('#full_name').val(),
-                    email: $('#email').val(),
-                    gender: $('#gender').val(),
-                    dob: $('#dob').val()
-                },
-                function (data, status) {
-                    if (!data.status) {
-                        if (data.message.length) {
-                            toastr.error(data.message);
-                        }
-                        else {
-                            console.log(data.messagesss);
-                            toastr.error('Đăng kí thất bại');
-                        }
-                    } else {
-                        $('#myModal').modal('hide');
-                        toastr.success('Đăng kí thành công');
-                    }
-                })
-        }
+        registerAccount();
     });
+
     $("#login").click(function () {
-        $.post('/api/user/login',
-            {
-                username: $('#username_login').val(),
-                password: $('#password_login').val(),
-            },
-            function (data, status) {
-                if (!data.status) {
-                    if (data.message.length) {
-                        toastr.error(data.message);
-                    }
-                    else {
-                        toastr.error('Đăng nhập thất bại');
-                    }
-                } else {
-                    $('#loginModal').modal('hide');
-                    localStorage.setItem('token', data.token);
-                    localStorage.setItem('user', JSON.stringify(data.user));
-                    setStatusLoginHtml();
-                    toastr.success('Đăng nhập thành công');
-                    $.ajaxSetup({headers: {"token": localStorage.getItem("token")}});
-                }
-            })
+        login();
     });
 
     var sourceUsersStatus = $("#users-status-template").html();
@@ -86,7 +40,7 @@ $(document).ready(function () {
         if (dataStorage.user) {
             socket.emit("login", {
                 username: dataStorage.user.username,
-                id : dataStorage.user._id
+                id: dataStorage.user._id
             });
         }
 
@@ -120,3 +74,65 @@ $(document).ready(function () {
     }
 });
 
+function pressEnterRegister(event) {
+    if (event.keyCode == 13) registerAccount();
+}
+
+function pressEnterLogin(event) {
+    if (event.keyCode == 13) login();
+}
+
+function registerAccount() {
+    if ($('#password_register').val() !== $('#verify_password').val()) {
+        toastr.error('Mật khẩu không trùng khớp');
+    } else {
+        $.post('/api/user/register',
+            {
+                username: $('#username_register').val(),
+                password: $('#password_register').val(),
+                name: $('#full_name').val(),
+                email: $('#email').val(),
+                gender: $('#gender').val(),
+                dob: $('#dob').val()
+            },
+            function (data, status) {
+                if (!data.status) {
+                    if (data.message.length) {
+                        toastr.error(data.message);
+                    }
+                    else {
+                        console.log(data.messagesss);
+                        toastr.error('Đăng kí thất bại');
+                    }
+                } else {
+                    $('#myModal').modal('hide');
+                    toastr.success('Đăng kí thành công');
+                }
+            })
+    }
+}
+
+function login() {
+    $.post('/api/user/login',
+        {
+            username: $('#username_login').val(),
+            password: $('#password_login').val(),
+        },
+        function (data, status) {
+            if (!data.status) {
+                if (data.message.length) {
+                    toastr.error(data.message);
+                }
+                else {
+                    toastr.error('Đăng nhập thất bại');
+                }
+            } else {
+                $('#loginModal').modal('hide');
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('user', JSON.stringify(data.user));
+                setStatusLoginHtml();
+                toastr.success('Đăng nhập thành công');
+                $.ajaxSetup({headers: {"token": localStorage.getItem("token")}});
+            }
+        })
+}

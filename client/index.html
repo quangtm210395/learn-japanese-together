@@ -76,7 +76,7 @@
                                     </div>
                                     <div class="form-group required">
                                         <label for="password_login" class="control-label">Mật khẩu:</label>
-                                        <input type="password" class="form-control" id="password_login" required>
+                                        <input type="password" class="form-control" id="password_login" onkeypress="pressEnterLogin(event)" required>
                                     </div>
                                     <button type="button" class="btn btn-primary save" id="login">Đăng nhập</button>
                                 </form>
@@ -114,6 +114,10 @@
                                         <option>Nữ</option>
                                         <option>Khác</option>
                                     </select>
+                                    </div>
+                                    <div class="form-group required">
+                                        <label for="avatar-url" class="control-label">Ảnh đại diện:</label>
+                                        <input type="text" class="form-control" id="avatar-url"  onkeypress="pressEnterRegister(event)" required>
                                     </div>
                                     <button type="button" class="btn btn-primary save" id="register">Đăng kí</button>
                                 </form>
