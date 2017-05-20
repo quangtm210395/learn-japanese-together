@@ -36,7 +36,7 @@ $(document).ready(function () {
 
 function initializeSession(apiKey, sessionId, token) {
     var session = OT.initSession(apiKey, sessionId);
-
+    var uPublisher = JSON.parse(localStorage.getItem('user'));
     // Subscribe to a newly created stream
 
     // Connect to the session
@@ -44,7 +44,10 @@ function initializeSession(apiKey, sessionId, token) {
         // If the connection is successful, initialize a publisher and publish to the session
         if (!error) {
             var publisher = OT.initPublisher('publisher', {
-                insertMode: 'append',
+                name: uPublisher.name,
+                fitMode: "contain",
+                width: '20%',
+                height: '30%'
             });
 
             session.publish(publisher);
@@ -55,7 +58,7 @@ function initializeSession(apiKey, sessionId, token) {
 
     session.on('streamCreated', function (event) {
         session.subscribe(event.stream, 'subscriber', {
-            insertMode: 'append',
+            fitMode: "contain",
             width: '100%',
             height: '100%'
         });

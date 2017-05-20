@@ -19,9 +19,9 @@ module.exports = (io) => {
         });
 
         socket.on('disconnect', function () {
+            disconnectVideoCall(socket);
             socket.username = undefined;
             socket.id = undefined;
-            disconnectVideoCall(socket);
             updateStatusUsers(io);
         });
 

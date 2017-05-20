@@ -10,7 +10,15 @@ module.exports = {
 
     addUser: function (req, res) {
         console.log(req.body);
-        var newUser = new User(req.body);
+        var newUser = new User({
+            username: req.body.username,
+            password: req.body.password,
+            name: req.body.name,
+            email: req.body.email,
+            gender: req.body.gender,
+            dob: req.body.dob,
+            imgUrl: (req.body.imgUrl.trim() === "") ? "imgs/user_male_df.png" : req.body.imgUrl.trim()
+        });
 
         User.findOne({username: req.body.username}, {_id: 0, __v: 0})
             .then(function (user) {
