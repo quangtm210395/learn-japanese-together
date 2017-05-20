@@ -385,6 +385,14 @@ img {
     transition: opacity .15s;
     -webkit-user-drag: none;
     width: 22px;
-    color: #7b7878;
+    color: #989696;
     text-align: center;
+}
+
+.fbNub.left-relative .titlebar .button.close:hover {
+    color: #000000;
+}
+
+.closed #callBtn {
+    display: none;
 }

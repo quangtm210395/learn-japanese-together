@@ -40,13 +40,18 @@ changeTab = function(index) {
 }
 
 showChatTab = function(tabID) {
-    if ($('#'+tabID).hasClass("opened")) {
-        $('#'+tabID).removeClass("opened");
+    if ($('#chatTab'+tabID).hasClass("opened")) {
+        $('#chatTab'+tabID).removeClass("opened");
+        $('#chatTab'+tabID).addClass("closed");
     } else {
-        // $('.chatTab').removeClass("opened");
-        $('#'+tabID).addClass("opened");
+        $('#chatTab'+tabID).removeClass("closed");
+        $('#chatTab'+tabID).addClass("opened");
     }
     
+}
+
+closeChatTab = function(tabID) {
+    $('#chatTab'+tabID).remove();
 }
 
 videoCall = function(id) {
@@ -68,3 +73,7 @@ rejectCall = function (id) {
     });
 };
 
+scrollToBottom = function(id) {
+    // $("#nub"+id).animate({ scrollTop: $("#nub"+id).prop("scrollHeight")}, 1000);
+    $("#nub"+id).scrollTop($("#nub"+id).prop("scrollHeight"))
+}

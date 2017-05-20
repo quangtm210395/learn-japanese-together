@@ -1,12 +1,11 @@
 $(document).ready(function () {
     socket.on('chat', function (data) {
         var currentUser = JSON.parse(localStorage.getItem('user'));
-        console.log(currentUser._id +" " + data.receiverId);
-        console.log(currentUser._id == data.receiverId);
         if (currentUser._id == data.receiverId) {
-            if ($("#chat" + data.senderId).length != 0)
+            if ($("#chat" + data.senderId).length != 0) {
                 $("#chat" + data.senderId).append(templates.chatFriend(data.messageData));
-            else {
+                scrollToBottom(data.senderId);
+            } else {
                 $.ajax({
                         url: "/api/conversation/get/" + data.senderId,
                         method: "get"
@@ -26,8 +25,10 @@ $(document).ready(function () {
                                     item._isFriend = false;
                                 }
                             });
-                            if ($("#" + result._id).length == 0)
+                            if ($("#" + result._id).length == 0) {
                                 $('#chatTabs').append(templates.chatTabs(result));
+                                scrollToBottom(data.senderId);
+                            }
                         }
                     });
             }
@@ -35,7 +36,7 @@ $(document).ready(function () {
     });
 
     socket.on('join call', function (data) {
-        if ($('#incommingCallModal').hasClass('in')){
+        if ($('#incommingCallModal').hasClass('in')) {
             socket.emit('access call', {
                 peer_id: data._id,
                 accepted: false
@@ -44,7 +45,7 @@ $(document).ready(function () {
             $('#incommingCall').html(templates.incommingCall(data));
             $('#incommingCallModal').modal('show');
         }
-    })
+    });
 
 });
 
@@ -62,5 +63,6 @@ function sendMessage(e, id) {
         });
         $("#chat" + id).append(templates.chatMySelf(message));
         $('#send' + id).val("");
+        scrollToBottom(id);
     }
 }

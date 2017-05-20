@@ -52,7 +52,6 @@ $(document).ready(function () {
     })
 
     $("#search-button").click(function () {
-        console.log('clicked!');
         var text = $('#search-text-box').val();
         $.ajax({
                 url: "/api/dictionary/search/",
@@ -162,6 +161,7 @@ function regisChat(id) {
                 });
                 if ($("#" + result._id).length == 0)
                     $('#chatTabs').append(templates.chatTabs(result));
+                    scrollToBottom(id);
             }
         });
 

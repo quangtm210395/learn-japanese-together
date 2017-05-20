@@ -235,27 +235,27 @@
 
     <!--chat-->
     <script id="template-chat-tabs" type="text/x-handlebars-template">
-        <div class="chatTab opened" id="{{_id}}">
+        <div class="chatTab opened" id="chatTab{{friend._id}}">
             <div class="fbNub left-relative">
                 <div class="fbNubFlyoutTitlebar titlebar">
                     <div class="chatTitle-inside">
-                        <div class="titlebarTextWrapper _15p6" onclick="showChatTab('{{_id}}')">
+                        <div class="titlebarTextWrapper _15p6" onclick="showChatTab('{{friend._id}}')">
                             <span class="titlebarText noLink">
                                  {{friend.name}}
                              </span>
                         </div>
                         <div class="close_X">
                             <a class="close button" data-hover="tooltip">
-                                <i class="ion-android-close" aria-hidden="true"></i>
+                                <i class="ion-android-close" aria-hidden="true" onclick="closeChatTab('{{friend._id}}')"></i>
                             </a>
-                            <a class="close button" onclick="videoCall('{{friend._id}}')">
+                            <a class="close button" id="callBtn" onclick="videoCall('{{friend._id}}')">
                                 <i class="ion-android-call" aria-hidden="true"></i>
                             </a>
                         </div>
                     </div>
                 </div>
                 <div class="fbNubFlyoutBody chat-body">
-                    <div class="fbNubChatBody">
+                    <div class="fbNubChatBody" id="nub{{friend._id}}">
                         <div class="fbNubFlyoutBodyContent">
                             <table class="conversationContainer chatContent">
                                 <tbody>
