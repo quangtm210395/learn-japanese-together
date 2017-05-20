@@ -9,6 +9,6 @@ module.exports = {
         res.render('videocall.ejs', {peer_id: req.query.peer_id});
     },
     randomCall: function (req, res) {
-        res.render('randomCall.ejs', {peer_id: uuidV4()});
+        res.render('randomcall.ejs', {peer_id: uuidV4()});
     }
 }
