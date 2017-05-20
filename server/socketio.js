@@ -13,8 +13,6 @@ var peerRandom = [];
 module.exports = (io) => {
 
     io.on('connection', function (socket) {
-        var client_ip_address = socket.handshake.address;
-        console.log(client_ip_address);
         updateStatusUsers(socket);
         socket.on('login', function (data) {
             socket.id = data.id;
@@ -41,7 +39,10 @@ module.exports = (io) => {
 
         socket.on('find peer', function (data) {
             socket.id = data.id;
-            peerRandom.push(data.id);
+            peerRandom.push({
+                id: data.id,
+                ipAddress: socket.handshake.address
+            });
             findPeer();
         });
 
@@ -69,7 +70,7 @@ module.exports = (io) => {
                 clients.forEach(function (client) {
                     if (io.sockets.sockets[client].id === data.id) {
                         console.log("socket");
-                        io.sockets.sockets[client].emit('get room data',{});
+                        io.sockets.sockets[client].emit('get room data', {});
                     }
                 });
             });
@@ -87,7 +88,7 @@ module.exports = (io) => {
             });
         });
 
-        socket.on('typing', function(data){
+        socket.on('typing', function (data) {
             io.sockets.clients(function (error, clients) {
                 clients.forEach(function (client) {
                     if (io.sockets.sockets[client].id === data.receiverId) {
@@ -148,24 +149,33 @@ module.exports = (io) => {
             callback();
         });
     }
-    
+
     function findPeer() {
-        var peer_id1;
-        var peer_id2;
-        if (peerRandom.length >= 2){
-            var index1 = Math.floor(Math.random() * (peerRandom.length -1));
-            peer_id1 = peerRandom[index1];
+        var peer_1;
+        var peer_2;
+        if (peerRandom.length >= 2) {
+            var index1 = Math.floor(Math.random() * (peerRandom.length - 1));
+            peer_1 = peerRandom[index1];
             peerRandom.splice(index1, 1);
-            var index2 = Math.floor(Math.random() * (peerRandom.length -1));
-            peer_id2 = peerRandom[index2];
+            var count = 0;
+            var index2 = -1;
+            while (count < peerRandom.length) {
+                count++;
+                var tmp = Math.floor(Math.random() * (peerRandom.length - 1));
+                if (peerRandom[tmp].ipAddress !== peer_1.ipAddress) {
+                    index2 = tmp;
+                }
+            }
+            if (index2 === -1) return;
+            peer_2 = peerRandom[index2];
             peerRandom.splice(index2, 1);
             io.sockets.clients(function (error, clients) {
                 clients.forEach(function (client) {
-                    if (io.sockets.sockets[client].id === peer_id1) {
-                        io.sockets.sockets[client].emit("peer opponent", {peer_opponent: peer_id2, isGetRoom: true});
+                    if (io.sockets.sockets[client].id === peer_1.id) {
+                        io.sockets.sockets[client].emit("peer opponent", {peer_opponent: peer_2.id, isGetRoom: true});
                     }
-                    if (io.sockets.sockets[client].id === peer_id2) {
-                        io.sockets.sockets[client].emit("peer opponent", {peer_opponent: peer_id1, isGetRoom: false});
+                    if (io.sockets.sockets[client].id === peer_2.id) {
+                        io.sockets.sockets[client].emit("peer opponent", {peer_opponent: peer_1.id, isGetRoom: false});
                     }
                 });
             })
@@ -187,25 +197,25 @@ module.exports = (io) => {
             content: data.message,
             sender: data.senderId,
             receiver: data.receiverId
-        }, function(conversation){
-          User.findOne({_id: data.senderId}, function(err, user){
-              if (err) console.log(err);
+        }, function (conversation) {
+            User.findOne({_id: data.senderId}, function (err, user) {
+                if (err) console.log(err);
 
-              io.sockets.clients(function (error, clients) {
-                clients.forEach(function (client) {
-                    if (io.sockets.sockets[client].id === data.receiverId) {
-                        io.sockets.sockets[client].emit('chat', {
-                            senderId: data.senderId,
-                            receiverId: data.receiverId,
-                            messageData: {
-                                imgUrl: user.imgUrl,
-                                message: data.message
-                            }
-                        });
-                    }
+                io.sockets.clients(function (error, clients) {
+                    clients.forEach(function (client) {
+                        if (io.sockets.sockets[client].id === data.receiverId) {
+                            io.sockets.sockets[client].emit('chat', {
+                                senderId: data.senderId,
+                                receiverId: data.receiverId,
+                                messageData: {
+                                    imgUrl: user.imgUrl,
+                                    message: data.message
+                                }
+                            });
+                        }
+                    });
                 });
-              });
-          });
-      })
+            });
+        })
     }
 };
