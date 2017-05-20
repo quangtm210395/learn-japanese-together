@@ -2,7 +2,6 @@ var socket;
 socket = io.connect();
 
 setupAjax();
-
 $.get('/api/user/login/check-login', function (data, status) {
     console.log(data);
     if (!data.status || !data.result.login) {
@@ -14,11 +13,15 @@ $.get('/api/user/login/check-login', function (data, status) {
 });
 
 $("#register").click(function () {
-    registerAccount();
+    if ($('#register-form').valid()) {
+        registerAccount();
+    }
 });
 
 $("#login").click(function () {
-    login($('#username_login').val(), $('#password_login').val());
+    if ($('#login-form').valid()) {
+        login($('#username_login').val(), $('#password_login').val());
+    }
 });
 
 var sourceUsersStatus = $("#users-status-template").html();
@@ -57,7 +60,6 @@ function setStatusLoginHtml() {
     var loginStatus = statusLoginTemplate(dataStorage);
     $('#status-login').html(loginStatus);
 
-
     $('#click-register').click(function () {
         $('#tab-signIn').removeClass('active');
         $('#signIn').removeClass('active');
@@ -81,46 +83,110 @@ function setStatusLoginHtml() {
         $.ajaxSetup({headers: {"token": null}});
         setStatusLoginHtml();
     });
+
+    $('#login-form').validate({
+        rules: {
+            username_login: {
+                required: true
+            },
+            password_login: {
+                required: true
+            }
+        },
+
+        messages: {
+            username_login: "Vui lòng nhập tên đăng nhập",
+            password_login: "Vui lòng nhập mật khẩu"
+        }
+    });
+
+    $('#register-form').validate({
+        rules: {
+            username_register: {
+                required: true
+            },
+            password_register: {
+                required: true,
+                minlength: 8
+            },
+            verify_password: {
+                required: true,
+                minlength: 8,
+                equalTo: "#password_register"
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            full_name: {
+                required: true
+            },
+            dob: {
+                required: true,
+                date: true
+            },
+            gender: {
+                required: true
+            }
+        },
+        messages: {
+            username_register: "Vui lòng nhập tên đăng nhập",
+            password_register: {
+                required: "Vui lòng nhập mật khẩu",
+                minlength: "Mật khẩu ít nhất 8 kí tự"
+            },
+            verify_password: {
+                required: "Vui lòng nhập mật khẩu",
+                minlength: "Mật khẩu ít nhất 8 kí tự",
+                equalTo: "Mật khẩu không trùng khớp"
+            },
+            email: "Vui lòng nhập email",
+            full_name: "Vui lòng nhập họ và tên",
+            dob: "Vui lòng nhập ngày sinh",
+            gender: "Vui lòng chọn giới tính"
+        }
+    })
+
 }
 
 function pressEnterRegister(event) {
-    if (event.keyCode == 13) registerAccount();
+    if (event.keyCode === 13 && $('#register-form').valid()) {
+        registerAccount();
+    }
 }
 
 function pressEnterLogin(event) {
-    if (event.keyCode == 13) login($('#username_login').val(), $('#password_login').val());
+    if (event.keyCode === 13 && $('#login-form').valid()) {
+        login($('#username_login').val(), $('#password_login').val());
+    }
 }
 
 function registerAccount() {
-    if ($('#password_register').val() !== $('#verify_password').val()) {
-        toastr.error('Mật khẩu không trùng khớp');
-    } else {
-        $.post('/api/user/register',
-            {
-                username: $('#username_register').val(),
-                password: $('#password_register').val(),
-                name: $('#full_name').val(),
-                email: $('#email').val(),
-                gender: $('#gender').val(),
-                dob: $('#dob').val()
-            },
-            function (data, status) {
-                if (!data.status) {
-                    if (data.message.length) {
-                        toastr.error(data.message);
-                    }
-                    else {
-                        console.log(data.message);
-                        toastr.error('Đăng kí thất bại');
-                    }
-                } else {
-                    $('#myModal').modal('hide');
-                    toastr.success('Đăng kí thành công');
-                    login($('#username_register').val(), $('#password_register').val())
-
+    $.post('/api/user/register',
+        {
+            username: $('#username_register').val(),
+            password: $('#password_register').val(),
+            name: $('#full_name').val(),
+            email: $('#email').val(),
+            gender: $('#gender').val(),
+            dob: $('#dob').val()
+        },
+        function (data, status) {
+            if (!data.status) {
+                if (data.message.length) {
+                    toastr.error(data.message);
                 }
-            })
-    }
+                else {
+                    console.log(data.message);
+                    toastr.error('Đăng kí thất bại');
+                }
+            } else {
+                $('#myModal').modal('hide');
+                toastr.success('Đăng kí thành công');
+                login($('#username_register').val(), $('#password_register').val())
+
+            }
+        })
 }
 
 function login(username, password) {
