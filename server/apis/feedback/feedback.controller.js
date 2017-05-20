@@ -5,7 +5,6 @@ var config = require('../../configs/index.js');
 
 module.exports = {
     createFeedback: function(req, res) {
-        req.body.user = JSON.parse(req.body.user);
         var newFeedback = new Feedback(req.body);
         newFeedback.save(function(err, feedback){
             if (err) {
@@ -18,7 +17,6 @@ module.exports = {
 
     getAllFeedback: function(req, res) {
         Feedback.find({}, {'_id': 0, '__v': 0})
-            .populate({path: 'user', select: '-__v -_id -salt -password'})
             .exec(function(err, feedbacks){
               if (err) {
                   res.json({status: false, message: err});

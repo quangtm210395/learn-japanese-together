@@ -36,6 +36,14 @@ changeTab = function (index) {
     if (index != activeTab) {
         $(".navbar-nav li").removeClass("active");
         $("#nav" + index).addClass("active");
+
+        if (index == 0) {
+            $("#viewContent").show();
+            $("#feedback").hide();
+        } else if (index == 1) {
+            $("#feedback").show();
+            $("#viewContent").hide();
+        }
     }
 }
 
