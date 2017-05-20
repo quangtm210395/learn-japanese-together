@@ -159,14 +159,14 @@ module.exports = (io) => {
             peer_1 = peerRandom[index1];
             peerRandom.splice(index1, 1);
             var count = 0;
-            var index2 = -1;
-            while (count < peerRandom.length) {
-                count++;
-                var tmp = Math.floor(Math.random() * (peerRandom.length - 1));
-                if (peerRandom[tmp].ipAddress !== peer_1.ipAddress) {
-                    index2 = tmp;
-                }
-            }
+            var index2 = Math.floor(Math.random() * (peerRandom.length - 1));
+            // while (count < peerRandom.length) {
+            //     count++;
+            //     var tmp = Math.floor(Math.random() * (peerRandom.length - 1));
+            //     if (peerRandom[tmp].ipAddress !== peer_1.ipAddress) {
+            //         index2 = tmp;
+            //     }
+            // }
             if (index2 === -1) return;
             peer_2 = peerRandom[index2];
             peerRandom.splice(index2, 1);
