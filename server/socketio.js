@@ -39,10 +39,10 @@ module.exports = (io) => {
 
         socket.on('find peer', function (data) {
             socket.id = data.id;
-            console.log(socket.handshake.address);
+            console.log(socket.request.connection.remoteAddress);
             peerRandom.push({
                 id: data.id,
-                ipAddress: socket.handshake.address
+                ipAddress: socket.request.connection.remoteAddress
             });
             findPeer();
         });
