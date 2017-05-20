@@ -346,7 +346,7 @@ table {
     background-clip: padding-box;
     background-color: #e9ebee;
     border-left: 1px solid rgba(199, 193, 193, 0.44);
-    box-shadow: inset 2px 0 2px -2px #b2b9c9;
+    /*box-shadow: inset 2px 0 2px -2px #b2b9c9;*/
     display: none;
     font-size: 12px;
     height: 100%;
@@ -1084,10 +1084,14 @@ fieldset[disabled] .btn-link {
     overflow-y: auto;
 }
 
+.users-status ul li {
+    padding-left: 5px;
+}
+
 .users-status ul li .userStatus{
     display: inline-block;
     padding: 10px;
-    width: 165px;
+    width: 160px;
 }
 
 .users-status ul li .userAva {

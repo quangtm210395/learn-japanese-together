@@ -23,6 +23,10 @@ $(document).ready(function () {
         }
     });
 
+    socket.on('typing', function (data) {
+        
+    });
+
 });
 
 function sendMessage(e, id) {

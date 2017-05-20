@@ -28,7 +28,7 @@ changeTypeSearch = function (index) {
     }
 }
 
-changeTab = function(index) {
+changeTab = function (index) {
     var activeTab = parseInt($('.active').attr('id').charAt(3));
     console.log(index);
     console.log(activeTab);
@@ -39,26 +39,26 @@ changeTab = function(index) {
     }
 }
 
-showChatTab = function(tabID) {
-    if ($('#chatTab'+tabID).hasClass("opened")) {
-        $('#chatTab'+tabID).removeClass("opened");
-        $('#chatTab'+tabID).addClass("closed");
+showChatTab = function (tabID) {
+    if ($('#chatTab' + tabID).hasClass("opened")) {
+        $('#chatTab' + tabID).removeClass("opened");
+        $('#chatTab' + tabID).addClass("closed");
     } else {
-        $('#chatTab'+tabID).removeClass("closed");
-        $('#chatTab'+tabID).addClass("opened");
+        $('#chatTab' + tabID).removeClass("closed");
+        $('#chatTab' + tabID).addClass("opened");
     }
-    
+
 }
 
-closeChatTab = function(tabID) {
-    $('#chatTab'+tabID).remove();
+closeChatTab = function (tabID) {
+    $('#chatTab' + tabID).remove();
 }
 
-videoCall = function(id) {
+videoCall = function (id) {
     var myWindow = window.open("/videocall?peer_id=" + id, "", "width=1280,height=720");
 }
 
-acceptCall = function(id) {
+acceptCall = function (id) {
     socket.emit('access call', {
         peer_id: id,
         accepted: true
@@ -73,11 +73,31 @@ rejectCall = function (id) {
     });
 };
 
-scrollToBottom = function(id) {
+scrollToBottom = function (id) {
     // $("#nub"+id).animate({ scrollTop: $("#nub"+id).prop("scrollHeight")}, 1000);
-    $("#nub"+id).scrollTop($("#nub"+id).prop("scrollHeight"))
+    $("#nub" + id).scrollTop($("#nub" + id).prop("scrollHeight"))
 }
 
-clearSearchText = function() {
+clearSearchText = function () {
     $('#search-text-box').val("");
+}
+
+isTypingEffect = function (id, isTyping) {
+    if (isTyping == true) {
+        console.log('aaa');
+        var text = $("#textTyping" + id).val();
+        var dots = "";
+        var i = 1;
+        setTimeout(function () {
+            if (i % 3 == 1) dots = ".";
+            else if (i % 3 == 1) dots = "..";
+            else dots = "...";
+            console.log(i);
+            text = text + dots;
+            console.log(text);
+            $("#textTyping" + id).val(text);
+            i++;
+            if (i == 100) i = 1;
+        }, 500);
+    }
 }
