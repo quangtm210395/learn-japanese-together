@@ -370,12 +370,13 @@ img {
 .close_X {
     flex: 0 0 46px;
     flex-direction: column;
+    margin-top: 3px;
 }
 
 .fbNub.left-relative .titlebar .button {
     display: inline-block;
     height: 26px;
-    vertical-align: top;
+    vertical-align: center;
     font-weight: 100;
 }
 
@@ -385,4 +386,5 @@ img {
     -webkit-user-drag: none;
     width: 22px;
     color: #7b7878;
+    text-align: center;
 }
