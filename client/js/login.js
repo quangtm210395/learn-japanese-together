@@ -2,6 +2,13 @@ var socket;
 $(document).ready(function () {
     socket = io.connect();
 
+    $.post('/api/user/login/check-login', function (data, status) {
+        if (!data.status || !data.result.login){
+            localStorage.removeItem('token');
+            setStatusLoginHtml();
+        }
+    });
+
     $("#register").click(function () {
         registerAccount();
     });

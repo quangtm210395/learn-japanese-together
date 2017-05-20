@@ -55,7 +55,7 @@ module.exports = {
                     else {
                         var token = jwt.sign({
                             data: user
-                        }, config.secret, { expiresIn: '60m' });
+                        }, config.secret, {expiresIn: '1m'});
                         user.password = undefined;
                         user.salt = undefined;
                         user._v = undefined;
@@ -64,6 +64,20 @@ module.exports = {
                 }
 
             })
+    },
+
+    checkLogin: function (req, res) {
+        jwt.verify(req.headers.token, config.secret, function (err, decoded) {
+            if (err) res.json({
+                status: true, result: {
+                    login: false
+                }
+            }); else res.json({
+                status: true, result: {
+                    login: true
+                }
+            });
+        });
     },
 
     getAll: function (callback) {
