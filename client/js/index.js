@@ -44,6 +44,7 @@ changeTab = function (index) {
             $("#feedback").show();
             $("#viewContent").hide();
         }
+
     }
 }
 
@@ -108,4 +109,8 @@ isTypingEffect = function (id, isTyping) {
             if (i == 100) i = 1;
         }, 500);
     }
+}
+
+randomCall = function() {
+    var myWindow = window.open("/random-call", "", "width=1280,height=720");
 }

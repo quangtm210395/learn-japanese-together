@@ -42,6 +42,11 @@
                             <i class="fa fa-commenting-o fa-fw fa-lg"></i> Đánh giá
                         </a>
                     </li>
+                    <li id="nav2" onclick="randomCall()">
+                        <a>
+                            <i class="fa fa-commenting-o fa-fw fa-lg"></i> Chat ngẫu nhiên
+                        </a>
+                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right" id="status-login">
                 </ul>
@@ -324,8 +329,8 @@
                                                 {{/each}}
                                                 <!--/each -->
                                             </div>
-                                            <div class="noteChat isTyping">
-                                                <span id="textTyping{{friend._id}}">{{friend.name}} is typing </span>
+                                            <div class="noteChat" id="textTyping{{friend._id}}">
+                                                <span>{{friend.name}} is typing ...</span>
                                             </div>
                                         </div>
                                     </tr>
@@ -336,7 +341,7 @@
                     <div class="fbNubChatFooter">
                         <div class="_chatFooter">
                             <div class="chat-footer-box" style="min-height: 16px;">
-                                <input id="send{{friend._id}}" onkeypress="sendMessage(event, '{{friend._id}}')" type="text" placeholder=" Nhập tin nhắn...">
+                                <input id="send{{friend._id}}"  onkeyup="sendMessage(event, '{{friend._id}}')" type="text" placeholder=" Nhập tin nhắn...">
                             </div>
                         </div>
                     </div>
