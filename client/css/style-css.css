@@ -1,7 +1,7 @@
 body {
     font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
     margin: 0;
-    background-color: #EEE;
+    background-color: #e9ebee;
     position: relative;
 }
 
@@ -1096,10 +1096,10 @@ fieldset[disabled] .btn-link {
 
 .users-status ul li .userAva {
     position: relative;
-    width: 34px;
-    height: 34px;
+    width: 30px;
+    height: 30px;
     display: inline-block;
-    margin-bottom: 1px;
+    margin-bottom: 3px;
     margin-left: 2px;
 }
 
@@ -1117,7 +1117,7 @@ fieldset[disabled] .btn-link {
 .users-status ul li:hover {
     text-decoration: none;
     color: white;
-    background-color: #caccce;
+    background-color: #dddfe2;
     cursor: pointer;
 }
 

@@ -52,14 +52,18 @@ showChatTab = function (tabID) {
     if ($('#chatTab' + tabID).hasClass("opened")) {
         $('#chatTab' + tabID).removeClass("opened");
         $('#chatTab' + tabID).addClass("closed");
+        $(".titlebar").removeClass("greenChatTitle");
     } else {
         $('#chatTab' + tabID).removeClass("closed");
         $('#chatTab' + tabID).addClass("opened");
+        $(".titlebar").removeClass("greenChatTitle");
+        $("#title" + tabID).addClass("greenChatTitle");
     }
 
 }
 
 closeChatTab = function (tabID) {
+    $(".titlebar").removeClass("greenChatTitle");
     $('#chatTab' + tabID).remove();
 }
 
@@ -93,7 +97,6 @@ clearSearchText = function () {
 
 isTypingEffect = function (id, isTyping) {
     if (isTyping == true) {
-        console.log('aaa');
         var text = $("#textTyping" + id).val();
         var dots = "";
         var i = 1;
@@ -112,5 +115,19 @@ isTypingEffect = function (id, isTyping) {
 }
 
 randomCall = function() {
-    var myWindow = window.open("/random-call", "", "width=1280,height=720");
+    var myWindow = window.open("/random-call", "", "width=1280,height=720,top=43,left=24,screenX=43,screenY=24");
+}
+
+chatFocus = function(id) {
+    $(".titlebar").removeClass("greenChatTitle");
+    $("#title" + id).addClass("greenChatTitle");
+    $("#send" + id).focus();
+}
+
+showLoading = function() {
+    $("#loading").show();
+}
+
+hideLoading = function() {
+    $("#loading").hide();
 }

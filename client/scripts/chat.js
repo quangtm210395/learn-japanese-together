@@ -53,7 +53,7 @@ function sendMessage(e, id) {
             isTyping: false
         });
     }
-    if (e.keyCode == 13 && msg != "") {
+    if (e.keyCode === 13 && msg != "") {
         console.log("aw"+msg);
         var message = {
             message: msg
@@ -72,23 +72,8 @@ function sendMessage(e, id) {
         });
         scrollToBottom(id);
     }
-}
-
-function typing(msg, id) {
-    console.log("msg");
-    var msg = $('#send' + id).val().trim();
-    var user = JSON.parse(localStorage.getItem('user'));
-    if (msg != "") {
-        socket.emit('typing', {
-            senderId: user._id,
-            receiverId: id,
-            isTyping: true
-        });
-    } else {
-        socket.emit('typing', {
-            senderId: user._id,
-            receiverId: id,
-            isTyping: false
-        });
+    if (e.keyCode === 27) {
+        $(".titlebar").removeClass("greenChatTitle");
+        $('#chatTab' + id).remove();
     }
 }

@@ -14,6 +14,7 @@
     <link rel="stylesheet" type="text/css" href="css/col-css.css">
     <link rel="stylesheet" type="text/css" href="css/chat.css">
     <link rel="stylesheet" type="text/css" href="css/feedback.css">
+    <link rel="stylesheet" type="text/css" href="css/loading.css">
 
     <link rel="icon" href="imgs/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,700italic" rel="stylesheet" type="text/css">
@@ -247,6 +248,14 @@
         </div>
     </div>
 
+    <div id="loading">
+        <ul class="bokeh">
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+
     <footer>
 
     </footer>
@@ -275,7 +284,7 @@
     <script id="template-chat-tabs" type="text/x-handlebars-template">
         <div class="chatTab opened" id="chatTab{{friend._id}}">
             <div class="fbNub left-relative">
-                <div class="fbNubFlyoutTitlebar titlebar" onclick="showChatTab('{{friend._id}}')">
+                <div class="fbNubFlyoutTitlebar titlebar" id="title{{friend._id}}" onclick="showChatTab('{{friend._id}}')">
                     <div class="chatTitle-inside">
                         <div class="titlebarTextWrapper _15p6">
                             <span class="titlebarText noLink">
@@ -292,7 +301,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="fbNubFlyoutBody chat-body">
+                <div class="fbNubFlyoutBody chat-body" onclick="chatFocus('{{friend._id}}')">
                     <div class="fbNubChatBody" id="nub{{friend._id}}">
                         <div class="fbNubFlyoutBodyContent">
                             <table class="conversationContainer chatContent">
@@ -341,7 +350,7 @@
                     <div class="fbNubChatFooter">
                         <div class="_chatFooter">
                             <div class="chat-footer-box" style="min-height: 16px;">
-                                <input id="send{{friend._id}}"  onkeyup="sendMessage(event, '{{friend._id}}')" type="text" placeholder=" Nhập tin nhắn...">
+                                <input id="send{{friend._id}}" onfocus="chatFocus('{{friend._id}}')" onkeyup="sendMessage(event, '{{friend._id}}')" type="text" placeholder=" Nhập tin nhắn...">
                             </div>
                         </div>
                     </div>
@@ -642,7 +651,7 @@
     <!-- user template -->
     <script id="users-status-template" type="text/x-handlebars-template">
         <div class="chatSidebar">
-            <div style="height: 56px"></div>
+            <div style="height: 62px"></div>
             <ul>
                 {{#each users}} {{#if isOnline}}
                 <li id="{{_id}}" onclick="regisChat('{{_id}}')">

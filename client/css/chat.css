@@ -125,7 +125,7 @@ body div {
     white-space: nowrap;
 }
 
-.fbNub.left-relative .titlebar .titlebarText {
+.titlebarText {
     color: #4b4f56;
     padding-left: 10px;
     font-size: 1.1em;
@@ -363,7 +363,7 @@ img {
 }
 
 .chat-myself .chat-unit .cuc-2 {
-    background-color: #4080ff;
+    background-color: #16bd67;
     color: white;
 }
 
@@ -411,4 +411,13 @@ img {
 .noteChat.isTyping {
     display: inline-block;
     visibility: visible;
+}
+
+.greenChatTitle {
+    background-color: #16bd67 !important;
+}
+
+.greenChatTitle .titlebarText,
+.greenChatTitle .close {
+    color: #ffffff;
 }
