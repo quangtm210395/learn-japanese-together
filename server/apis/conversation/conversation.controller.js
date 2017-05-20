@@ -46,7 +46,7 @@ module.exports = {
       friendId = req.params.friendId;
       remainingMessages = req.params.remain;
 
-      User.findOne({_id: friendId})
+      User.findOne({_id: friendId}, {'salt' : 0, 'password': 0, '__v': 0, 'age': 0})
         .exec(function(err, friend){
             if (err) res.json({status: false, message: err.message});
 
@@ -88,6 +88,7 @@ module.exports = {
                           conversation.nextUrl = "";
                           conversation.messages = conversation.messages.slice(fromIndex, toIndex + 1);
                       }
+                      console.log(conversation);
                       res.json({status: true, message: "Get conversation successfully", result: conversation});
                   } else {
                       var newConversation = new Conversation({
