@@ -13,7 +13,7 @@ var peerRandom = [];
 module.exports = (io) => {
 
     io.on('connection', function (socket) {
-        var client_ip_address = socket.request.connection.remoteAddress;
+        var client_ip_address = socket.handshake.address;
         console.log(client_ip_address);
         updateStatusUsers(socket);
         socket.on('login', function (data) {
