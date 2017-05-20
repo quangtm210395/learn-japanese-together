@@ -55,7 +55,7 @@ module.exports = {
                     else {
                         var token = jwt.sign({
                             data: user
-                        }, config.secret, { expiresIn: '' });
+                        }, config.secret, { expiresIn: '60m' });
                         user.password = undefined;
                         user.salt = undefined;
                         user._v = undefined;
