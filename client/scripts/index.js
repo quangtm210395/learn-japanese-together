@@ -159,9 +159,10 @@ function regisChat(id) {
                         item._isFriend = false;
                     }
                 });
-                if ($("#" + result._id).length == 0)
+                if ($("#chatTab" + id).length == 0) {
                     $('#chatTabs').append(templates.chatTabs(result));
                     scrollToBottom(id);
+                }
             }
         });
 

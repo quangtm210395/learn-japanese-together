@@ -6,31 +6,7 @@ $(document).ready(function () {
                 $("#chat" + data.senderId).append(templates.chatFriend(data.messageData));
                 scrollToBottom(data.senderId);
             } else {
-                $.ajax({
-                        url: "/api/conversation/get/" + data.senderId,
-                        method: "get"
-                    })
-                    .done(function (dataConvers) {
-                        console.log(dataConvers);
-                        if (dataConvers.status) {
-                            var result = dataConvers.result;
-                            result.messages.forEach(function (item) {
-                                if (item.sender == data.senderId) {
-                                    item._chatCss = "chat-friend";
-                                    item._reverseCss = "";
-                                    item._isFriend = true;
-                                } else {
-                                    item._chatCss = "chat-myself";
-                                    item._reverseCss = "row-reverse";
-                                    item._isFriend = false;
-                                }
-                            });
-                            if ($("#" + result._id).length == 0) {
-                                $('#chatTabs').append(templates.chatTabs(result));
-                                scrollToBottom(data.senderId);
-                            }
-                        }
-                    });
+                regisChat(data.senderId);
             }
         }
     });

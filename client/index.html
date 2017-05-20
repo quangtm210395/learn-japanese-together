@@ -149,9 +149,9 @@
                     <div class="input-group input-group-lg search-box-range col-xs-12 col-md-8 col-no-padding">
                         <input type="text" placeholder="日本, nihon, Nhật Bản" maxlength="64" id="search-text-box" class="form-control" 　focus-me="">
 
-                        <button type="button" class="btn btn-link ng-scope" ng-if="queryNotNull()" ng-click="clearQuery();" id="clear-search-text">
+                        <button type="button" class="btn btn-link ng-scope" onclick="clearSearchText()" id="clear-search-text">
                         <span class="fa fa-times fa-lg"></span>
-                    </button>
+                        </button>
                         <!-- ngIf: queryNotNull() -->
 
                         <div class="input-group-btn">
@@ -241,9 +241,9 @@
     <script id="template-chat-tabs" type="text/x-handlebars-template">
         <div class="chatTab opened" id="chatTab{{friend._id}}">
             <div class="fbNub left-relative">
-                <div class="fbNubFlyoutTitlebar titlebar">
+                <div class="fbNubFlyoutTitlebar titlebar" onclick="showChatTab('{{friend._id}}')">
                     <div class="chatTitle-inside">
-                        <div class="titlebarTextWrapper _15p6" onclick="showChatTab('{{friend._id}}')">
+                        <div class="titlebarTextWrapper _15p6">
                             <span class="titlebarText noLink">
                                  {{friend.name}}
                              </span>
@@ -609,19 +609,34 @@
             <ul>
                 {{#each users}} {{#if isOnline}}
                 <li id="{{_id}}" onclick="regisChat('{{_id}}')">
-                    <a class="text">{{username}}</a>
-                    <span class="pull-right">
-                <i class="fa fa-circle status-online" aria-hidden="true">
-                </i>
-            </span>
+                    <div class="userAva">
+                        <img src="{{imgUrl}}" alt="">
+                    </div>
+                    <div class="userStatus">
+                        <div style="display:block">
+                            <a class="text">{{name}}</a>
+                            <span class="pull-right">
+                                <i class="fa fa-circle status-online" aria-hidden="true">
+                                </i>
+                            </span>
+                        </div>
+                    </div>
                 </li>
-                {{/if}} {{/each}} {{#each users}} {{#unless isOnline}}
+                {{/if}} {{/each}} 
+                {{#each users}} {{#unless isOnline}}
                 <li id="{{_id}}" onclick="regisChat('{{_id}}')">
-                    <a>{{username}}</a>
-                    <span class="pull-right">
-                        <i class="fa fa-circle status-offline" aria-hidden="true">
-                        </i>
-                    </span>
+                    <div class="userAva">
+                        <img src="{{imgUrl}}" alt="">
+                    </div>
+                    <div class="userStatus">
+                        <div style="display:block">
+                            <a>{{name}}</a>
+                            <span class="pull-right">
+                                <i class="fa fa-circle status-offline" aria-hidden="true">
+                                </i>
+                            </span>
+                        </div>
+                    </div>
                 </li>
                 {{/unless}} {{/each}}
             </ul>

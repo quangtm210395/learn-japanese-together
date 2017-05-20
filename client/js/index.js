@@ -77,3 +77,7 @@ scrollToBottom = function(id) {
     // $("#nub"+id).animate({ scrollTop: $("#nub"+id).prop("scrollHeight")}, 1000);
     $("#nub"+id).scrollTop($("#nub"+id).prop("scrollHeight"))
 }
+
+clearSearchText = function() {
+    $('#search-text-box').val("");
+}
