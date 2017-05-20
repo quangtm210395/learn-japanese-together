@@ -70,55 +70,55 @@
                         <!-- Tab panes -->
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane" id="signIn">
-                                <form>
+                                <form id="login-form">
                                     <div class="form-group required">
                                         <label for="username_login" class="control-label">Tên đăng nhập:</label>
-                                        <input type="text" class="form-control" id="username_login" required>
+                                        <input type="text" class="form-control" id="username_login" name="username_login" required>
                                     </div>
                                     <div class="form-group required">
                                         <label for="password_login" class="control-label">Mật khẩu:</label>
-                                        <input type="password" class="form-control" id="password_login" onkeypress="pressEnterLogin(event)" required>
+                                        <input type="password" class="form-control" id="password_login" name="password_login" onkeypress="pressEnterLogin(event)" required>
                                     </div>
                                     <button type="button" class="btn btn-primary save" id="login">Đăng nhập</button>
                                 </form>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="signUp">
-                                <form>
+                                <form id="register-form">
                                     <div class="form-group required">
                                         <label for="username_register" class="control-label">Tên đăng nhập:</label>
-                                        <input type="text" class="form-control" id="username_register" required>
+                                        <input type="text" class="form-control" id="username_register" name="username_register" required>
                                     </div>
                                     <div class="form-group required">
                                         <label for="password_register" class="control-label">Mật khẩu:</label>
-                                        <input type="password" class="form-control" id="password_register" required>
+                                        <input type="password" class="form-control" id="password_register" name="password_register" required>
                                     </div>
                                     <div class="form-group required">
                                         <label for="verify_password" class="control-label">Nhâp lại mật khẩu:</label>
-                                        <input type="password" class="form-control" id="verify_password" required>
+                                        <input type="password" class="form-control" id="verify_password" name="verify_password" required>
                                     </div>
                                     <div class="form-group required">
                                         <label for="full_name" class="control-label">Họ và tên:</label>
-                                        <input type="text" class="form-control" id="full_name" required>
+                                        <input type="text" class="form-control" id="full_name" name="full_name" required>
                                     </div>
                                     <div class="form-group required">
                                         <label for="email" class="control-label">Email:</label>
-                                        <input type="email" class="form-control" id="email" required>
+                                        <input type="email" class="form-control" id="email" name="email" required>
                                     </div>
                                     <div class="form-group required">
                                         <label for="dob" class="control-label">Ngày sinh:</label>
-                                        <input type="date" class="form-control" id="dob" required>
+                                        <input type="date" class="form-control" id="dob" name="dob" required>
                                     </div>
                                     <div class="form-group required">
                                         <label for="gender" class="control-label">Giới tính:</label>
-                                        <select class="form-control" id="gender" required>
+                                        <select class="form-control" id="gender" name="gender" required>
                                         <option>Nam</option>
                                         <option>Nữ</option>
                                         <option>Khác</option>
                                     </select>
                                     </div>
-                                    <div class="form-group required">
-                                        <label for="avatar-url" class="control-label">Ảnh đại diện:</label>
-                                        <input type="text" class="form-control" id="avatar-url"  onkeypress="pressEnterRegister(event)" required>
+                                    <div class="form-group">
+                                        <label for="avatar-url" class="control-label">Ảnh đại diện: (URL)</label>
+                                        <input type="text" class="form-control" id="avatar-url"  name="avatar-url" onkeypress="pressEnterRegister(event)">
                                     </div>
                                     <button type="button" class="btn btn-primary save" id="register">Đăng kí</button>
                                 </form>
@@ -654,6 +654,7 @@
     </script>
 
     <script src="libs/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
     <script src="libs/bootstrap/js/bootstrap.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="libs/socket.io-client/dist/socket.io.js"></script>

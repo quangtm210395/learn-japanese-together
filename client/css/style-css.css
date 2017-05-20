@@ -1455,3 +1455,10 @@ button.btn:focus {
     display: none;
     overflow: hidden;
 }
+
+form label.error{
+    font-weight: 100;
+    color: red;
+    font-style: italic;
+    font-size: 0.8em;
+}

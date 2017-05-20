@@ -57,7 +57,7 @@ module.exports = {
                     else {
                         var token = jwt.sign({
                             data: user
-                        }, config.secret, {expiresIn: '1m'});
+                        }, config.secret, {expiresIn: '7d'});
                         user.password = undefined;
                         user.salt = undefined;
                         user._v = undefined;
@@ -83,7 +83,7 @@ module.exports = {
     },
 
     getAll: function (callback) {
-        User.find().select("_id username name").lean()
+        User.find().select("_id username name imgUrl").lean()
             .exec(function (err, user) {
                 return callback(user);
             });
