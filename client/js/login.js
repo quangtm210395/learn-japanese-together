@@ -46,7 +46,7 @@ $(document).ready(function () {
                         toastr.error('Đăng nhập thất bại');
                     }
                 } else {
-                    $('#myModal').modal('hide');
+                    $('#loginModal').modal('hide');
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('user', JSON.stringify(data.user));
                     setStatusLoginHtml();
@@ -84,7 +84,10 @@ $(document).ready(function () {
         };
 
         if (dataStorage.user) {
-            socket.emit("login", {username: dataStorage.user.username});
+            socket.emit("login", {
+                username: dataStorage.user.username,
+                id : dataStorage.user._id
+            });
         }
 
         var loginStatus = statusLoginTemplate(dataStorage);

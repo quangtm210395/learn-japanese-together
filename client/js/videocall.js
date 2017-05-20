@@ -1,25 +1,37 @@
-var apiKey = '45828062';
-var sessionId = '2_MX40NTgyODA2Mn5-MTQ5NDY4MzUyMjgxMn52OUFRSEYwdDB6YTg3eXJZdU16MlJQaUl-UH4';
-var token = 'T1==cGFydG5lcl9pZD00NTgyODA2MiZzaWc9NDE5MjM3OWEyODFkNDI2ZDY3OTBjY2I2OWQ5NDc1NGNkNDkwNDZmMzpzZXNzaW9uX2lkPTJfTVg0ME5UZ3lPREEyTW41LU1UUTVORFk0TXpVeU1qZ3hNbjUyT1VGUlNFWXdkREI2WVRnM2VYSlpkVTE2TWxKUWFVbC1VSDQmY3JlYXRlX3RpbWU9MTQ5NDY4NDc4NSZub25jZT0wLjc3OTU3MTk0NzgwMDUxMzYmcm9sZT1wdWJsaXNoZXImZXhwaXJlX3RpbWU9MTQ5NDc3MTE4NQ==';
+var socket;
+$(document).ready(function () {
+    socket = io.connect();
+    $.ajaxSetup({headers: {"token": localStorage.getItem("token")}});
 
-$(document).ready(function() {
-    // (optional) add server code here
-    $.get('/videocall', function (data, status) {
-        apiKey = data.apiKey;
-        sessionId = data.sessionId;
-        token = data.token;
-        console.log(data);
-        initializeSession();
+    $.post('/api/videocall/room?peer_id=' + peer_id, function (data, status) {
+        if (data.status) {
+            var apiKey = data.result.apiKey;
+            var sessionId = data.result.sessionId;
+            var token = data.result.token;
+            initializeSession(apiKey, sessionId, token);
+        } else {
+            console.log(data.message);
+        }
+
     });
+
+    socket.emit('create call', {
+        peer_id_receive: peer_id,
+        peer_id_sender: JSON.parse(localStorage.getItem('user'))._id
+    });
+
+    socket.on('reply access call', function (data) {
+        if (data.accepted) console.log("Chấp nhận cuộc gọi"); else console.log("Từ chối cuộc gọi");
+    })
 });
 
-function initializeSession() {
+function initializeSession(apiKey, sessionId, token) {
     var session = OT.initSession(apiKey, sessionId);
 
     // Subscribe to a newly created stream
 
     // Connect to the session
-    session.connect(token, function(error) {
+    session.connect(token, function (error) {
         // If the connection is successful, initialize a publisher and publish to the session
         if (!error) {
             var publisher = OT.initPublisher('publisher', {
@@ -32,7 +44,7 @@ function initializeSession() {
         }
     });
 
-    session.on('streamCreated', function(event) {
+    session.on('streamCreated', function (event) {
         session.subscribe(event.stream, 'subscriber', {
             insertMode: 'append',
             width: '100%',

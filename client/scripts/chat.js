@@ -34,6 +34,18 @@ $(document).ready(function () {
         }
     });
 
+    socket.on('join call', function (data) {
+        if ($('#incommingCallModal').hasClass('in')){
+            socket.emit('access call', {
+                peer_id: data._id,
+                accepted: false
+            });
+        } else {
+            $('#incommingCall').html(templates.incommingCall(data));
+            $('#incommingCallModal').modal('show');
+        }
+    })
+
 });
 
 function sendMessage(e, id) {
