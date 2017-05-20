@@ -215,7 +215,7 @@
 
 
                 <script id="feedback-template" type="text/x-handlebars-template">
-                    {{#each result}}
+                    {{#each feedbacks}}
                     <div class="well">
                         <p class="feedback-title">{{title}}</p>
                         <p class="feedback-date">{{createdAt}}</p>
@@ -659,7 +659,7 @@
                         </div>
                     </div>
                 </li>
-                {{/if}} {{/each}} 
+                {{/if}} {{/each}}
                 {{#each users}} {{#unless isOnline}}
                 <li id="{{_id}}" onclick="regisChat('{{_id}}')">
                     <div class="userAva">

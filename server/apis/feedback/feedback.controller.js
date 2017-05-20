@@ -24,5 +24,25 @@ module.exports = {
                   res.json({status: true, message: "Thành công", result: feedbacks});
               }
             })
+    },
+
+    getFeedbackBy10: function(req, res) {
+      Feedback.count({}, function(err, count) {
+          Feedback.find().select('-_id -__v')
+              .sort('-createdAt')
+              .skip(5 * parseInt(req.query.page))
+              .limit(5)
+              .exec(function (err, feedbacks) {
+                  if (err) res.json({status: false, message: err});
+
+                  if (count - 5*(parseInt(req.query.page)+1) <= 0) {
+                      var nextUrl = "";
+                  } else {
+                      var nextUrl = "/api/feedback/getPart?page=" + (parseInt(req.query.page) + 1);
+                  }
+                  res.json({status: true, message: "Thành công", result: {feedbacks: feedbacks, nextUrl: nextUrl}});
+              });
+      });
+
     }
 };
