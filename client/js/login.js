@@ -169,7 +169,8 @@ function registerAccount() {
             name: $('#full_name').val(),
             email: $('#email').val(),
             gender: $('#gender').val(),
-            dob: $('#dob').val()
+            dob: $('#dob').val(),
+            imgUrl: $('#avatar-url').val()
         },
         function (data, status) {
             if (!data.status) {

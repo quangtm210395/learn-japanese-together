@@ -83,7 +83,7 @@ module.exports = {
     },
 
     getAll: function (callback) {
-        User.find().select("_id username name").lean()
+        User.find().select("_id username name imgUrl").lean()
             .exec(function (err, user) {
                 return callback(user);
             });
