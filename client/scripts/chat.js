@@ -23,15 +23,41 @@ $(document).ready(function () {
         }
     });
 
+    socket.on('typing', function (data) {
+        if (data.isTyping == true) {
+            if ($("#chatTab" + data.senderId).length != 0) {
+                $("#textTyping" + data.senderId).addClass("isTyping");
+            }
+        } else {
+            if ($("#chatTab" + data.senderId).length != 0) {
+                $("#textTyping" + data.senderId).removeClass("isTyping");
+            }
+        }
+    });
+
 });
 
 function sendMessage(e, id) {
-    if (e.keyCode == 13) {
-        var msg = $('#send' + id).val();
+    var msg = $('#send' + id).val().trim();
+    var user = JSON.parse(localStorage.getItem('user'));
+    if (msg != "") {
+        socket.emit('typing', {
+            senderId: user._id,
+            receiverId: id,
+            isTyping: true
+        });
+    } else {
+        socket.emit('typing', {
+            senderId: user._id,
+            receiverId: id,
+            isTyping: false
+        });
+    }
+    if (e.keyCode == 13 && msg != "") {
+        console.log("aw"+msg);
         var message = {
             message: msg
         };
-        let user = JSON.parse(localStorage.getItem('user'));
         socket.emit('chat', {
             senderId: user._id,
             receiverId: id,
@@ -39,6 +65,30 @@ function sendMessage(e, id) {
         });
         $("#chat" + id).append(templates.chatMySelf(message));
         $('#send' + id).val("");
+        socket.emit('typing', {
+            senderId: user._id,
+            receiverId: id,
+            isTyping: false
+        });
         scrollToBottom(id);
+    }
+}
+
+function typing(msg, id) {
+    console.log("msg");
+    var msg = $('#send' + id).val().trim();
+    var user = JSON.parse(localStorage.getItem('user'));
+    if (msg != "") {
+        socket.emit('typing', {
+            senderId: user._id,
+            receiverId: id,
+            isTyping: true
+        });
+    } else {
+        socket.emit('typing', {
+            senderId: user._id,
+            receiverId: id,
+            isTyping: false
+        });
     }
 }

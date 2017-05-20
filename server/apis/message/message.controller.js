@@ -23,4 +23,21 @@ module.exports = {
             });
         });
     },
+
+    createMessageCallback: function(data, callback) {
+        var newMessage = new Message(data);
+        newMessage.save(function(err, message){
+            if (err) console.log({status: false, message: err});
+
+            if (message.sender < message.receiver) {
+              conversationId = message.sender + "@" + message.receiver;
+            } else {
+              conversationId = message.receiver + "@" + message.sender;
+            };
+            Conversation.findOneAndUpdate({id: conversationId}, {$push: {messages: message}}, function(err, conversation){
+                if (err) console.log({status: false, message: err});
+                callback(conversation);
+            });
+        });
+    }
 };

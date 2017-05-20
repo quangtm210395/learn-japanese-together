@@ -3,8 +3,8 @@
  */
 
 const userController = require('./apis/user/user.controller');
-const Message = require('./apis/message/message.model');
-const Conversation = require('./apis/conversation/conversation.model');
+const messageController = require('./apis/message/message.controller');
+//const Conversation = require('./apis/conversation/conversation.model');
 const User = require('./apis/user/user.model');
 var room = require('./apis/videocall/videocall.model').room;
 
@@ -29,11 +29,11 @@ module.exports = (io) => {
             socket.username = undefined;
             socket.id = undefined;
             updateStatusUsers(io);
-        })
+        });
 
         socket.on('chat', function (data) {
             createMessage(data);
-        })
+        });
 
         socket.on('create call', function (data) {
             socket.isCall = true;
@@ -52,7 +52,7 @@ module.exports = (io) => {
                     });
                 });
             }
-        })
+        });
 
         socket.on('access call', function (data) {
             io.sockets.clients(function (error, clients) {
@@ -64,7 +64,17 @@ module.exports = (io) => {
                     }
                 });
             });
-        })
+        });
+
+        socket.on('typing', function(data){
+            io.sockets.clients(function (error, clients) {
+                clients.forEach(function (client) {
+                    if (io.sockets.sockets[client].id === data.receiverId) {
+                        io.sockets.sockets[client].emit('typing', data);
+                    }
+                });
+            });
+        });
     });
 
     function checkJoinedCall(socket) {
@@ -129,41 +139,29 @@ module.exports = (io) => {
     };
 
     function createMessage(data) {
-      var newMessage = new Message({
-          content: data.message,
-          sender: data.senderId,
-          receiver: data.receiverId
-      });
-
-      newMessage.save(function(err, message){
-          if (err) console.log(err);
-          if (message.sender < message.receiver) {
-            conversationId = message.sender + "@" + message.receiver;
-          } else {
-            conversationId = message.receiver + "@" + message.sender;
-          };
-          Conversation.findOneAndUpdate({id: conversationId}, {$push: {messages: message}}, function(err, conversation){
+        messageController.createMessageCallback({
+            content: data.message,
+            sender: data.senderId,
+            receiver: data.receiverId
+        }, function(conversation){
+          User.findOne({_id: data.senderId}, function(err, user){
               if (err) console.log(err);
-              User.findOne({_id: data.senderId}, function(err, user){
-                  if (err) console.log(err);
-                  console.log({
-                      senderId: data.senderId,
-                      receiverId: data.receiverId,
-                      messageData: {
-                          imgUrl: user.imgUrl,
-                          message: data.message
-                      }
-                  });
-                  io.emit('chat', {
-                      senderId: data.senderId,
-                      receiverId: data.receiverId,
-                      messageData: {
-                          imgUrl: user.imgUrl,
-                          message: data.message
-                      }
-                  });
+
+              io.sockets.clients(function (error, clients) {
+                clients.forEach(function (client) {
+                    if (io.sockets.sockets[client].id === data.receiverId) {
+                        io.sockets.sockets[client].emit('chat', {
+                            senderId: data.senderId,
+                            receiverId: data.receiverId,
+                            messageData: {
+                                imgUrl: user.imgUrl,
+                                message: data.message
+                            }
+                        });
+                    }
+                });
               });
           });
-      });
+      })
     }
 };

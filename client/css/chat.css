@@ -396,3 +396,19 @@ img {
 .closed #callBtn {
     display: none;
 }
+
+.noteChat {
+    clear: both;
+    color: #90949c;
+    font-size: 11px;
+    margin-left: 44px;
+    margin-right: 9px;
+    padding-bottom: 5px;
+    -webkit-user-select: none;
+    visibility: hidden;
+}
+
+.noteChat.isTyping {
+    display: inline-block;
+    visibility: visible;
+}

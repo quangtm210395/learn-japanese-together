@@ -140,31 +140,32 @@ $(document).ready(function () {
 
 function regisChat(id) {
     console.log('regis clicked!');
-    $.ajax({
-            url: "/api/conversation/get/" + id,
-            method: "get"
-        })
-        .done(function (data) {
-            console.log(data);
-            if (data.status) {
-                var result = data.result;
-                result.messages.forEach(function (item) {
-                    if (item.sender == id) {
-                        item._chatCss = "chat-friend";
-                        item._reverseCss = "";
-                        item._isFriend = true;
-                    } else {
-                        item._chatCss = "chat-myself";
-                        item._reverseCss = "row-reverse";
-                        item._isFriend = false;
-                    }
-                });
-                if ($("#chatTab" + id).length == 0) {
+    if ($("#chatTab" + id).length == 0) {
+        $.ajax({
+                url: "/api/conversation/get/" + id,
+                method: "get"
+            })
+            .done(function (data) {
+                console.log(data);
+                if (data.status) {
+                    var result = data.result;
+                    result.messages.forEach(function (item) {
+                        if (item.sender == id) {
+                            item._chatCss = "chat-friend";
+                            item._reverseCss = "";
+                            item._isFriend = true;
+                        } else {
+                            item._chatCss = "chat-myself";
+                            item._reverseCss = "row-reverse";
+                            item._isFriend = false;
+                        }
+                    });
                     $('#chatTabs').append(templates.chatTabs(result));
                     scrollToBottom(id);
+                    // isTypingEffect(id, true);
                 }
-            }
-        });
+            });
+    }
 
 }
 
