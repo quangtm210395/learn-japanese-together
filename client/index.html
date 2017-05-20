@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="css/style-css.css">
     <link rel="stylesheet" type="text/css" href="css/col-css.css">
     <link rel="stylesheet" type="text/css" href="css/chat.css">
+    <link rel="stylesheet" type="text/css" href="css/feedback.css">
 
     <link rel="icon" href="imgs/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,700italic" rel="stylesheet" type="text/css">
@@ -37,8 +38,8 @@
                         </a>
                     </li>
                     <li id="nav1" onclick="changeTab(1)">
-                        <a href="" >
-                            <i class="fa fa-snapchat fa-fw fa-lg"></i> Chat
+                        <a>
+                            <i class="fa fa-commenting-o fa-fw fa-lg"></i> Đánh giá
                         </a>
                     </li>
                 </ul>
@@ -183,14 +184,42 @@
 
                     <div class="col-md-6 col-xs-12 result result-grammar dis-cont" id="result-content-3">
                     </div>
+                </div>
+            </div>
+        </div> <!-- Row 1 : Dictionary -->
 
+        <div class="row">
+            <div id="feedback" style="display: none">
+                <div class="container-fluid">
+                    <form class="feedback-form">
+                        <div class="form-group required">
+                            <label for="feedback-title" class="control-label">Tiêu đề:</label>
+                            <input type="text" class="form-control" id="feedback-title" required>
+                        </div>
+                        <div class="form-group required">
+                            <label for="feedback-content" class="control-label">Nội dung:</label>
+                            <textarea class="form-control" rows="5" id="feedback-content" required></textarea>
+                        </div>
+                            <button type="button" class="btn btn-primary" id="send-feedback">Gửi đánh giá</button>
+                            <button type="button" class="btn btn-primary" id="get-feedback">Xem đánh giá</button>
+                    </form>
+
+                    <div id="all-feedback">
+                    </div>
                 </div>
 
+
+                <script id="feedback-template" type="text/x-handlebars-template">
+                    {{#each result}}
+                    <div class="well">
+                        <p class="feedback-title">{{title}}</p>
+                        <p class="feedback-date">{{createdAt}}</p>
+                        <p class="feedback-content">{{content}}</p>
+                    </div>
+                    {{/each}}
+                </script>
             </div>
-
-
-
-        </div>
+        </div> <!-- Row 2 : Feedback -->
 
         <aside id="viewAside" class="users-status chatSidebar fixed_always">
         </aside>
@@ -660,6 +689,7 @@
     <script src="libs/socket.io-client/dist/socket.io.js"></script>
     <script src="libs/handlebars.js"></script>
     <script src="js/login.js"></script>
+    <script src="js/feedback.js"></script>
     <script type="text/javascript" src="scripts/index.js"></script>
     <script type="text/javascript" src="scripts/chat.js"></script>
     <script type="text/javascript" src="js/index.js"></script>

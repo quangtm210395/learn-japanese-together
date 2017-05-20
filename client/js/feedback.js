@@ -1,14 +1,11 @@
 $(document).ready(function() {
   var feedbackTemplate = Handlebars.compile($("#feedback-template").html());
 
-  $.ajaxSetup({headers: {"token": localStorage.getItem("token")}});
-
 	$("#send-feedback").click(function() {
 		$.post('/api/feedback/create',
       {
-				title: $('#title').val(),
-				content: $('#content').val(),
-        user: localStorage.getItem("user")
+				title: $('#feedback-title').val(),
+				content: $('#feedback-content').val()
 			},
 			function(data, status) {
         console.log(data);
@@ -20,6 +17,8 @@ $(document).ready(function() {
 					}
 				} else {
 					toastr.success('Feedback thành công');
+          $('#feedback-title').val("");
+          $('#feedback-content').val("");
 				}
 			})
 	});
@@ -29,7 +28,14 @@ $(document).ready(function() {
 			method: "get",
 			url: "/api/feedback/getAll"
 		}).then(function(data) {
-			$('#all-feedback').html(feedbackTemplate(data));
+      console.log(data);
+      data.result.forEach(function(feedback){
+          feedback.createdAt = new Date(feedback.createdAt);
+          feedback.createdAt = feedback.createdAt.getDate() + "-"
+            + (feedback.createdAt.getMonth() + 1) + "-"
+            + feedback.createdAt.getFullYear();
+      });
+		  $('#all-feedback').html(feedbackTemplate(data));
 		}).fail(function(err) {
 			console.log(err);
 		})
