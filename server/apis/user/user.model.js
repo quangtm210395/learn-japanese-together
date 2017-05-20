@@ -15,12 +15,23 @@ var user = mongoose.Schema({
         type: String,
         required: true
     },
-    name: String,
-    age: Number,
+    name: {
+        type: String,
+        required: true
+    },
     salt: String,
-    email: String,
-    gender: String,
-    dob: String,
+    email: {
+        type: String,
+        required: true
+    },
+    gender: {
+        type: String,
+        required: true
+    },
+    dob: {
+        type: String,
+        required: true
+    },
     imgUrl: {
         type: String,
         default: "imgs/user_male_df.png"

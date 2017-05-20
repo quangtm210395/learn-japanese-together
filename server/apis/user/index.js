@@ -8,6 +8,7 @@ var UserController = require('./user.controller');
 
 router.post('/register', UserController.addUser);
 router.post('/login', UserController.login);
+router.get('/login/check-login', UserController.checkLogin);
 router.get('/:username', UserController.getUser);
 
 module.exports = router;

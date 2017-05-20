@@ -9,7 +9,9 @@ var config = require('../../configs/index');
 module.exports = {
 
     addUser: function (req, res) {
+        console.log(req.body);
         var newUser = new User(req.body);
+
         User.findOne({username: req.body.username}, {_id: 0, __v: 0})
             .then(function (user) {
                 if (user) {
@@ -55,7 +57,7 @@ module.exports = {
                     else {
                         var token = jwt.sign({
                             data: user
-                        }, config.secret, { expiresIn: '60m' });
+                        }, config.secret, {expiresIn: '1m'});
                         user.password = undefined;
                         user.salt = undefined;
                         user._v = undefined;
@@ -64,6 +66,20 @@ module.exports = {
                 }
 
             })
+    },
+
+    checkLogin: function (req, res) {
+        jwt.verify(req.headers.token, config.secret, function (err, decoded) {
+            if (err) res.json({
+                status: true, result: {
+                    login: false
+                }
+            }); else res.json({
+                status: true, result: {
+                    login: true
+                }
+            });
+        });
     },
 
     getAll: function (callback) {
