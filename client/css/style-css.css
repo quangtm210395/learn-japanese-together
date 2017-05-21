@@ -1472,6 +1472,7 @@ button.btn:focus {
     background-color: #16bd67;
     color: white;
     border-color: #16bd67;
+    outline: none;
 }
 
 .dis-cont {
@@ -1498,4 +1499,67 @@ form label.error{
 .btn.btn-primary:disabled,.btn.btn-primary:disabled:focus {
     background-color: #16bd67;
     outline: none;
+}
+
+.user-search {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 500;
+    line-height: inherit;
+    font-size: inherit;
+    background-color: white;
+    height: 30px;
+    width: 100%;
+    padding: 7px;
+}
+
+.user-search>label{
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.user-search>label>i{
+    color: #cacaca;
+    font-weight: 100;
+    font-style: normal;
+}
+
+.user-search>label>i.ion-android-close {
+    font-weight: 200;
+    cursor: pointer;
+}
+
+#user-search-input {
+    display: inline-block;
+    border: 0px;
+    width: 160px;
+}
+
+input::placeholder {
+    color: #cacaca;
+    font-weight: 100;
+    font-style: normal;
+}
+
+.nav.navbar-nav>li>a>i.ion-android-call {
+    margin-right: 2px;
+}
+
+.no-result {
+    background-color: #cbecd5;
+    color: #247131;
+    padding: 15px;
+    margin-bottom: 22px;
+    border: 1px solid transparent;
+    border-radius: 0;
+    /*display: none;*/
+}
+
+#result-content-1 .no-result{
+    width: 50%;
+}
+
+.btn.btn-default:active:focus {
+    outline-color: #16bd67;
 }

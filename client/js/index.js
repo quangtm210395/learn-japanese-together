@@ -3,7 +3,6 @@ changeTypeSearch = function (index) {
     tabSelected = index;
 
     if (index != activeTab) {
-        console.log(tabSelected);
         $(".search-input-container button").removeClass("tab-active");
         $("#tab" + index).addClass("tab-active");
         $(".tab-container .result").addClass("dis-cont");

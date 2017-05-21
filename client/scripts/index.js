@@ -26,6 +26,7 @@ $(document).ready(function () {
     templates.chatMySelf = Handlebars.compile($('#template-chat-myself').html());
     templates.chatFriend = Handlebars.compile($('#template-chat-friend').html());
     templates.incommingCall = Handlebars.compile($('#template-incomming-call').html());
+    templates.noResult = Handlebars.compile($("#template-no-result").html());
 
     Handlebars.registerHelper('searchResultWord', function (found, data) {
         console.log(found + ' ' + data);
@@ -59,10 +60,45 @@ $(document).ready(function () {
         searchDictionary();
     });
 
-    $("#search-text-box").keyup(function(e){
+    $("#search-text-box").keyup(function (e) {
         if (e.keyCode === 13) searchDictionary();
     });
+
+    $("div.user-search").click(function () {
+        $("#user-search-input").focus();
+    });
+
 });
+
+function searchUser(e) {
+    console.log("search");
+    var searchText = $("#user-search-input").val().trim();
+    var searchedList = [];
+    usersData.users.forEach(function (user) {
+        if (user.name.indexOf(searchText) != -1) {
+            searchedList.push(user);
+        }
+    });
+    if (e.keyCode === 13 || searchText.length == 0) {
+        var listUser = usersStatusTemplate({
+            users: searchedList,
+            searchText: searchText
+        });
+        $('#viewAside').html(listUser);
+        $("#user-search-input").val("");
+        $("#user-search-input").focus();
+    }
+}
+
+function cancelSearch() {
+    var listUser = usersStatusTemplate({
+        users: usersData.users,
+        searchText: ""
+    });
+    $('#viewAside').html(listUser);
+    $("#user-search-input").val("");
+    $("#user-search-input").focus();
+}
 
 function searchDictionary() {
     var text = $('#search-text-box').val();
@@ -78,7 +114,13 @@ function searchDictionary() {
             })
             .done(function (data) {
                 console.log(data);
-                $("#result-content-0").html(templates.vocabAll(data));
+                if (data.found)
+                    $("#result-content-0").html(templates.vocabAll(data));
+                else
+                    $("#result-content-0").html(templates.noResult({
+                        type: "từ vựng",
+                        word: text
+                    }));
             })
             .fail(function (err) {
                 console.log(err);
@@ -91,6 +133,7 @@ function searchDictionary() {
                 type: "post",
             })
             .done(function (data) {
+                console.log(data);
                 if (data.status == 200) {
                     data.results.forEach(function (item) {
                         item.details = getDetail(item);
@@ -99,6 +142,11 @@ function searchDictionary() {
                     $("#list-kanji").html(templates.kanjiResult(data));
                     $("#kanji-detail-result").html(templates.kanjiResultContent(data.results[0]));
                     resultK = data;
+                } else {
+                    $("#result-content-1").html(templates.noResult({
+                        type: "chữ hán",
+                        word: text
+                    }));
                 }
             }).fail(function (err) {
                 console.log(err);
@@ -114,6 +162,11 @@ function searchDictionary() {
                 console.log(data);
                 if (data.status == 200) {
                     $("#result-content-2").html(templates.sentenceResult(data));
+                } else {
+                    $("#result-content-2").html(templates.noResult({
+                        type: "câu",
+                        word: text
+                    }));
                 }
             }).fail(function (err) {
                 console.log(err);
@@ -150,6 +203,11 @@ function searchDictionary() {
                                 console.log(err);
                             });
                     })
+                } else {
+                    $("#result-content-3").html(templates.noResult({
+                        type: "ngữ pháp",
+                        word: text
+                    }));
                 }
             }).fail(function (err) {
                 console.log(err);

@@ -1,6 +1,8 @@
 var socket;
 socket = io.connect();
-
+var usersData;
+var sourceUsersStatus;
+var usersStatusTemplate;
 setupAjax();
 $.get('/api/user/login/check-login', function (data, status) {
     console.log(data);
@@ -24,8 +26,8 @@ $("#login").click(function () {
     }
 });
 
-var sourceUsersStatus = $("#users-status-template").html();
-var usersStatusTemplate = Handlebars.compile(sourceUsersStatus);
+sourceUsersStatus = $("#users-status-template").html();
+usersStatusTemplate = Handlebars.compile(sourceUsersStatus);
 socket.on("update status users", function (data) {
     var userLogin = JSON.parse(localStorage.getItem('user'));
     if (userLogin) {
@@ -36,9 +38,9 @@ socket.on("update status users", function (data) {
             }
         });
     }
-
+    usersData = data;
     var listUser = usersStatusTemplate(data);
-    $('.users-status').html(listUser);
+    $('#viewAside').html(listUser);
 });
 
 var sourceStatusLogin = $("#status-login-template").html();
