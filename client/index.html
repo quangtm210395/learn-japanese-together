@@ -14,6 +14,8 @@
     <link rel="stylesheet" type="text/css" href="css/col-css.css">
     <link rel="stylesheet" type="text/css" href="css/chat.css">
     <link rel="stylesheet" type="text/css" href="css/feedback.css">
+    <link rel="stylesheet" type="text/css" href="css/profile.css">
+    <link rel="stylesheet" type="text/css" href="css/loading.css">
 
     <link rel="icon" href="imgs/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,700italic" rel="stylesheet" type="text/css">
@@ -83,7 +85,7 @@
                                     </div>
                                     <div class="form-group required">
                                         <label for="password_login" class="control-label">Mật khẩu:</label>
-                                        <input type="password" class="form-control" id="password_login" name="password_login" onkeypress="pressEnterLogin(event)"
+                                        <input type="password" class="form-control" id="password_login" name="password_login" onkeypress="pressEnterLogin(event)" required>
                                             required>
                                     </div>
                                     <button type="button" class="btn btn-primary save" id="login">Đăng nhập</button>
@@ -125,7 +127,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="avatar-url" class="control-label">Ảnh đại diện: (URL)</label>
-                                        <input type="text" class="form-control" id="avatar-url" name="avatar-url" onkeypress="pressEnterRegister(event)">
+                                        <input type="text" class="form-control" id="avatar-url"  name="avatar-url" onkeypress="pressEnterRegister(event)">
                                     </div>
                                     <button type="button" class="btn btn-primary save" id="register">Đăng kí</button>
                                 </form>
@@ -163,13 +165,13 @@
 
                         <div class="input-group-btn">
                             <button type="button" class="btn btn-primary" id="search-button" ng-click="inputEnter();">
-                            <span class="fa fa-search fa-lg" id="search-btn"></span>
+                            <span class="fa fa-search fa-lg"></span>
                         </button>
                         </div>
                     </div>
                 </div>
 
-                <div class="tab-container relative col-md-12 col-xs-12 no-padding" id="tab-container">
+                <div class="tab-container col-md-12 col-xs-12 no-padding" id="tab-container">
 
                     <!-- Tu vung -->
                     <div class="col-md-6 col-xs-12 result result-word ng-scope" id="result-content-0"></div>
@@ -192,8 +194,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Row 1 : Dictionary -->
+        </div> <!-- Row 1 : Dictionary -->
 
         <div class="row">
             <div id="feedback" style="display: none">
@@ -213,6 +214,11 @@
 
                     <div id="all-feedback">
                     </div>
+
+                    <button id="feedback-load" class="btn btn-primary btn-lg" style="display: none">
+                        Load more
+                        <!-- <i class="fa fa-spinner fa-spin"></i> Loading -->
+                    </button>
                 </div>
 
 
@@ -228,6 +234,52 @@
             </div>
         </div>
         <!-- Row 2 : Feedback -->
+
+        <div class="row">
+          <div id="profile" style="display: none">
+              <div class="container-fluid">
+                  <form id="profile-form">
+                      <div class="form-group required">
+                          <label for="profile-username" class="control-label">Tên đăng nhập:</label>
+                          <input type="text" class="form-control" id="profile-username" name="profile-username" required disabled>
+                      </div>
+                      <div class="form-group">
+                          <label for="profile-password" class="control-label">Mật khẩu: (để trống nếu không thay đổi)</label>
+                          <input type="password" class="form-control" id="profile-password" name="profile-password">
+                      </div>
+                      <div class="form-group">
+                          <label for="profile-verify-password" class="control-label">Nhâp lại mật khẩu: (để trống nếu không thay đổi)</label>
+                          <input type="password" class="form-control" id="profile-verify-password" name="profile-verify-password">
+                      </div>
+                      <div class="form-group required">
+                          <label for="profile-fullname" class="control-label">Họ và tên:</label>
+                          <input type="text" class="form-control" id="profile-fullname" name="profile-fullname" required>
+                      </div>
+                      <div class="form-group required">
+                          <label for="profile-email" class="control-label">Email:</label>
+                          <input type="email" class="form-control" id="profile-email" name="profile-email" required>
+                      </div>
+                      <div class="form-group required">
+                          <label for="profile-dob" class="control-label">Ngày sinh:</label>
+                          <input type="date" class="form-control" id="profile-dob" name="profile-dob" required>
+                      </div>
+                      <div class="form-group required">
+                          <label for="profile-gender" class="control-label">Giới tính:</label>
+                          <select class="form-control" id="profile-gender" name="profile-gender" required>
+                          <option>Nam</option>
+                          <option>Nữ</option>
+                          <option>Khác</option>
+                      </select>
+                      </div>
+                      <div class="form-group">
+                          <label for="profile-avatar-url" class="control-label">Ảnh đại diện: (URL)</label>
+                          <input type="text" class="form-control" id="profile-avatar-url"  name="profile-avatar-url" onkeypress="pressEnterRegister(event)">
+                      </div>
+                      <button type="button" class="btn btn-primary save" id="update">Cập nhật</button>
+                  </form>
+              </div>
+          </div>
+        </div> <!-- Row 3 : Profile -->
 
         <aside id="viewAside" class="users-status chatSidebar fixed_always">
         </aside>
@@ -690,7 +742,8 @@
 
     <script id="status-login-template" type="text/x-handlebars-template">
         {{#if token}}
-        <li><a id="click-profile">{{user.name}}</a></li>
+        <!-- <li><a id="click-profile" id="nav0" onclick="changeTab(0)">{{user.name}}</a></li> -->
+        <li id="nav3" onclick="changeTab(3)"><a>{{user.name}}</a></li>
         <li><a id="click-logout">Đăng xuất</a></li>
         {{else}}
         <li><a data-toggle="modal" data-target="#loginModal" id="click-login">Đăng nhập</a></li>
@@ -706,6 +759,7 @@
     <script src="libs/handlebars.js"></script>
     <script src="js/login.js"></script>
     <script src="js/feedback.js"></script>
+    <script src="js/profile.js"></script>
     <script type="text/javascript" src="scripts/index.js"></script>
     <script type="text/javascript" src="scripts/chat.js"></script>
     <script type="text/javascript" src="js/index.js"></script>

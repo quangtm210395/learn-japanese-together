@@ -40,9 +40,15 @@ changeTab = function (index) {
         if (index == 0) {
             $("#viewContent").show();
             $("#feedback").hide();
+            $("#profile").hide();
         } else if (index == 1) {
             $("#feedback").show();
             $("#viewContent").hide();
+            $("#profile").hide();
+        } else if (index == 3) {
+            $("#profile").show();
+            $("#viewContent").hide();
+            $("#feedback").hide();
         }
 
     }
