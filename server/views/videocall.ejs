@@ -25,11 +25,15 @@
             <img src="{{imgUrl}}"
                  alt="avatar-subscriber" class="avatar">
             <div class="name-subcriber">{{name}}</div>
-            <i class="fa fa-spinner fa-spin loading"></i>
-            {{#unless isConnect}}
-            <div class="status-call">Đang gọi...</div>
+            {{#unless isNoAccepted}}
+                <i class="fa fa-spinner fa-spin loading"></i>
+                {{#unless isConnect}}
+                <div class="status-call">Đang gọi...</div>
+                {{else}}
+                <div class="status-call">Đang kết nối...</div>
+                {{/unless}}
             {{else}}
-            <div class="status-call">Đang kết nối...</div>
+            <div class="status-call">Từ chối cuôc gọi</div>
             {{/unless}}
         </div>
     </div>

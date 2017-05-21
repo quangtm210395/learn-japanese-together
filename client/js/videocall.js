@@ -21,9 +21,6 @@ $(document).ready(function () {
         }
 
         $.post('/api/videocall/room?peer_id=' + peer_id, function (data, status) {
-            dataTempplate.isConnect = true;
-            var subcriberHtml = subcriberTemplate(dataTempplate);
-            $('#subscriber').html(subcriberHtml);
             if (data.status) {
                 var apiKey = data.result.apiKey;
                 var sessionId = data.result.sessionId;
@@ -41,7 +38,17 @@ $(document).ready(function () {
         });
 
         socket.on('reply access call', function (data) {
-            if (data.accepted) console.log("Chấp nhận cuộc gọi"); else console.log("Từ chối cuộc gọi");
+            if (data.accepted) {
+                dataTempplate.isConnect = true;
+                var subcriberHtml = subcriberTemplate(dataTempplate);
+                $('#subscriber').html(subcriberHtml);
+            } else {
+                dataTempplate.isNoAccepted = true;
+                var subcriberHtml = subcriberTemplate(dataTempplate);
+                $('#subscriber').html(subcriberHtml);
+            }
+
+
         })
     });
 });
