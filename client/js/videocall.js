@@ -1,12 +1,15 @@
 var socket;
+var dataTempplate;
+var sourceSubcriber;
+var subcriberTemplate;
 $(document).ready(function () {
     socket = io.connect();
     setupAjax();
-    var dataTempplate;
-    var sourceSubcriber= $("#template-subcriber").html();
-    var subcriberTemplate = Handlebars.compile(sourceSubcriber);
-    $.get('/api/user/'+peer_id, function (data) {
-        if (data.status){
+
+    sourceSubcriber = $("#template-subcriber").html();
+    subcriberTemplate = Handlebars.compile(sourceSubcriber);
+    $.get('/api/user/' + peer_id, function (data) {
+        if (data.status) {
             dataTempplate = data.data;
             var subcriberHtml = subcriberTemplate(dataTempplate);
             $('#subscriber').html(subcriberHtml);
@@ -69,7 +72,6 @@ function initializeSession(apiKey, sessionId, token) {
                 width: '20%',
                 height: '30%'
             });
-
             session.publish(publisher);
         } else {
             console.log('There was an error connecting to the session: ', error.code, error.message);
@@ -77,12 +79,24 @@ function initializeSession(apiKey, sessionId, token) {
     });
 
     session.on('streamCreated', function (event) {
+        $('.container-bg').hide();
         var subscriber = session.subscribe(event.stream, 'subscriber', {
+            insertMode: 'append',
             fitMode: "contain",
             width: '100%',
             height: '100%'
         });
     });
+
+    session.on('connectionDestroyed', function (event) {
+        console.log("disconnect");
+        $('.container-bg').show();
+        dataTempplate.isDisconnect = true;
+        socket.disconnect();
+        var subcriberHtml = subcriberTemplate(dataTempplate);
+        $('#subscriber').html(subcriberHtml);
+        session = null;
+    })
 
 
 }

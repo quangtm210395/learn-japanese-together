@@ -27,16 +27,21 @@
             <img src="{{imgUrl}}"
                  alt="avatar-subscriber" class="avatar">
             <div class="name-subcriber">{{name}}</div>
-            {{#unless isNoAccepted}}
-                <i class="fa fa-spinner fa-spin loading"></i>
-                {{#unless isConnect}}
-                <div class="status-call">Đang gọi...</div>
+            {{#unless isDisconnect}}
+                {{#unless isNoAccepted}}
+                    <i class="fa fa-spinner fa-spin loading"></i>
+                    {{#unless isConnect}}
+                    <div class="status-call">Đang gọi...</div>
+                    {{else}}
+                    <div class="status-call">Đang kết nối...</div>
+                    {{/unless}}
                 {{else}}
-                <div class="status-call">Đang kết nối...</div>
+                <div class="status-call">Từ chối cuôc gọi</div>
+                <button type="button" class="btn btn-default" onclick="closeWindow()">Đóng</button>
                 {{/unless}}
             {{else}}
-            <div class="status-call">Từ chối cuôc gọi</div>
-            <button type="button" class="btn btn-default" onclick="closeWindow()">Đóng</button>
+                <div class="status-call">Kết thúc cuôc gọi</div>
+                <button type="button" class="btn btn-default" onclick="closeWindow()">Đóng</button>
             {{/unless}}
         </div>
     </div>
