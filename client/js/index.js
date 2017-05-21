@@ -114,20 +114,42 @@ isTypingEffect = function (id, isTyping) {
     }
 }
 
-randomCall = function() {
+randomCall = function () {
     var myWindow = window.open("/random-call", "", "width=1280,height=720,top=43,left=24,screenX=43,screenY=24");
 }
 
-chatFocus = function(id) {
+chatFocus = function (id) {
     $(".titlebar").removeClass("greenChatTitle");
     $("#title" + id).addClass("greenChatTitle");
     $("#send" + id).focus();
 }
 
-showLoading = function() {
+showLoading = function () {
     $("#loading").show();
 }
 
-hideLoading = function() {
+hideLoading = function () {
     $("#loading").hide();
+}
+
+playAudio = function (name) {
+    var audioName = convertJptoHex(name).toUpperCase() + ".mp3";
+    audioElement.setAttribute('src', 'http://data.mazii.net/audios/' + audioName);
+
+    // audioElement.addEventListener('ended', function() {
+    //     this.play();
+    // }, true);
+    audioElement.play();
+}
+
+convertJptoHex = function(a) {
+    if (null == a || "" == a)
+        return "";
+    -1 != a.indexOf("「") && (a = a.replace(new RegExp("「","g"), ""),
+    a = a.replace(new RegExp("」","g"), "")),
+    a = a.trim();
+    for (var b = "", c = 0; c < a.length; c++)
+        b += ("0000" + a.charCodeAt(c).toString(16)).substr(-4),
+        c != a.length - 1 && (b += "_");
+    return b;
 }

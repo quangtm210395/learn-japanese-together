@@ -413,7 +413,7 @@
                 </div>
 
                 <!--audio-->
-                <div class="audio-word fa fa-volume-down fa-lg">
+                <div class="audio-word fa fa-volume-down fa-lg" onclick="playAudio('{{word}}')">
 
                 </div>
 
@@ -660,7 +660,9 @@
                     </div>
                     <div class="userStatus">
                         <div style="display:block">
-                            <a class="text">{{name}}</a>
+                            <a>
+                                <p class="usernameText">{{name}}</p>
+                            </a>
                             <span class="pull-right">
                                 <i class="fa fa-circle status-online" aria-hidden="true">
                                 </i>
@@ -676,7 +678,9 @@
                     </div>
                     <div class="userStatus">
                         <div style="display:block">
-                            <a>{{name}}</a>
+                            <a>
+                                <p class="usernameText">{{name}}</p>
+                            </a>
                             <span class="pull-right">
                                 <i class="fa fa-circle status-offline" aria-hidden="true">
                                 </i>
