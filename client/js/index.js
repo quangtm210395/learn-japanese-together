@@ -88,10 +88,14 @@ acceptCall = function (id) {
         peer_id: id,
         accepted: true
     });
+    videoCallSoundElement.pause();
+    videoCallSoundElement.currentTime = 0
     var myWindow = window.open("/videocall?peer_id=" + id, "", "width=1280,height=720");
 }
 
 rejectCall = function (id) {
+    videoCallSoundElement.pause();
+    videoCallSoundElement.currentTime = 0
     socket.emit('access call', {
         peer_id: id,
         accepted: false
