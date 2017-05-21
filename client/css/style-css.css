@@ -802,11 +802,15 @@ body {
 
 .btn-primary.active,
 .btn-primary:active,
+.btn-primary:active:hover,
+.btn-primary:active:focus,
 .btn-primary:hover,
+.btn-primary:focus,
 .open>.dropdown-toggle.btn-primary {
     color: #fff;
     background-color: #16bd67;
     border-color: #16bd67;
+    outline: none;
 }
 
 .btn-primary {
@@ -1086,12 +1090,27 @@ fieldset[disabled] .btn-link {
 
 .users-status ul li {
     padding-left: 5px;
+    max-height: 37px;
+    
 }
 
 .users-status ul li .userStatus{
     display: inline-block;
     padding: 10px;
     width: 160px;
+    max-height: 36px;
+}
+
+.usernameText {
+    margin: 0;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    max-width: 120px;
+    white-space: nowrap;
+}
+
+.userStatus p.usernameText {
+    display: inline-block;
 }
 
 .users-status ul li .userAva {
