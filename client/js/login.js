@@ -109,11 +109,11 @@ function setStatusLoginHtml() {
             },
             password_register: {
                 required: true,
-                minlength: 8
+                minlength: 2
             },
             verify_password: {
                 required: true,
-                minlength: 8,
+                minlength: 2,
                 equalTo: "#password_register"
             },
             email: {

@@ -10,6 +10,11 @@ module.exports = {
 
     addUser: function (req, res) {
         console.log(req.body);
+        if (req.body.password && req.body.password.length < 8 ){
+            res.json({status: false, message: "Mật khẩu phải có ít nhất 8 kí tự."});
+            return;
+        }
+
         try {
             var newUser = new User({
                 username: req.body.username.toLowerCase(),
@@ -27,13 +32,13 @@ module.exports = {
         User.findOne({username: req.body.username}, {_id: 0, __v: 0})
             .then(function (user) {
                 if (user) {
-                    res.json({status: false, message: "Tài khoản đã tồn tại"});
+                    res.json({status: false, message: "Tài khoản đã tồn tại."});
                 } else {
                     newUser.save(function (err, user) {
                         if (err) {
                             res.json({status: false, message: err});
                         } else {
-                            res.json({status: true, message: "Đăng kí thành công"});
+                            res.json({status: true, message: "Đăng kí thành công."});
                         }
                     })
                 }
@@ -49,7 +54,7 @@ module.exports = {
                 if (user) {
                     res.json({status: true, data: user});
                 } else {
-                    res.json({status: false, message: "Tài khoản chưa tồn tại"});
+                    res.json({status: false, message: "Tài khoản chưa tồn tại."});
                 }
             });
 
@@ -61,10 +66,10 @@ module.exports = {
                 if (err) {
                     res.json({status: false, message: user});
                 }
-                if (!user) res.json({status: false, message: "This account is not register"});
+                if (!user) res.json({status: false, message: "Tài khoản chưa đăng kí."});
                 else {
                     if (!user.authenticate(req.body.password)) {
-                        res.json({status: false, message: "Password incorrect"});
+                        res.json({status: false, message: "Mật khẩu không chính xác."});
                     }
                     else {
                         var token = jwt.sign({
@@ -73,7 +78,7 @@ module.exports = {
                         user.password = undefined;
                         user.salt = undefined;
                         user._v = undefined;
-                        res.json({status: true, message: "Login successful.", token: token, user: user});
+                        res.json({status: true, message: "Đăng nhập thành công.", token: token, user: user});
                     }
                 }
 
@@ -134,16 +139,11 @@ module.exports = {
                   console.log(err);
                   res.json({status: false, message: err.message});
                 }
-
-                res.json({status: true, message:"Update successfully!", result: updatedUser});
+                updatedUser.salt = undefined;
+                updatedUser.password = undefined;
+                res.json({status: true, message:"Cập nhật thành công!", result: updatedUser});
             });
         });
-
-        // User.update({username: req.user.username}, editUser, function(err, user){
-        //     if (err) res.json({status: false, message: err.message});
-        //
-        //     res.json({status: true, message:"Update successfully!", result: user});
-        // });
     },
 
     updatePassword: function(req, res) {
@@ -154,13 +154,13 @@ module.exports = {
               }
 
               if (!user.authenticate(req.body.oldPassword)) {
-                  res.json({status: false, message: "Password incorrect"});
+                  res.json({status: false, message: "Mật khẩu không chính xác."});
               } else {
                   user.password = req.body.newPassword;
                   user.save(function(err, updatedUser){
                       if (err) res.json({status: false, message: err.message});
 
-                      res.json({status: true, message: "Update password successfully!", result: updatedUser});
+                      res.json({status: true, message: "Cập nhật mật khẩu thành công!", result: updatedUser});
                   });
               }
 

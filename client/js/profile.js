@@ -39,6 +39,8 @@
                 imgUrl: $('#profile_avatar-url').val()
             },
             function (data, status) {
+
+            console.log(data);
                 if (!data.status) {
                     if (data.message.length) {
                         toastr.error(data.message);
@@ -48,6 +50,8 @@
                         toastr.error('Cập nhật thất bại');
                     }
                 } else {
+                    localStorage.setItem('user',JSON.stringify(data.result));
+                    setStatusLoginHtml();
                     toastr.success('Cập nhật thành công');
                 }
             })
