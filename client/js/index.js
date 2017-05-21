@@ -88,10 +88,14 @@ acceptCall = function (id) {
         peer_id: id,
         accepted: true
     });
+    videoCallSoundElement.pause();
+    videoCallSoundElement.currentTime = 0
     var myWindow = window.open("/videocall?peer_id=" + id, "", "width=1280,height=720");
 }
 
 rejectCall = function (id) {
+    videoCallSoundElement.pause();
+    videoCallSoundElement.currentTime = 0
     socket.emit('access call', {
         peer_id: id,
         accepted: false
@@ -149,10 +153,6 @@ hideLoading = function () {
 playAudio = function (name) {
     var audioName = convertJptoHex(name).toUpperCase() + ".mp3";
     audioElement.setAttribute('src', 'http://data.mazii.net/audios/' + audioName);
-
-    // audioElement.addEventListener('ended', function() {
-    //     this.play();
-    // }, true);
     audioElement.play();
 }
 

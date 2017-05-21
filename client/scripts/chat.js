@@ -12,6 +12,7 @@ $(document).ready(function () {
     });
 
     socket.on('join call', function (data) {
+        videoCallSoundElement.play();
         if ($('#incommingCallModal').hasClass('in')) {
             socket.emit('access call', {
                 peer_id: data._id,

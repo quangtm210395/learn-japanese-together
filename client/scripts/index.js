@@ -3,6 +3,7 @@ var tabSelected = 0;
 var resultK = "";
 var collapse = 0;
 var audioElement;
+var videoCallSoundElement;
 
 $.ajaxSetup({
     headers: {
@@ -14,6 +15,8 @@ var incommingData = {};
 
 $(document).ready(function () {
     audioElement = document.createElement("audio");
+    videoCallSoundElement = document.createElement("audio");
+    videoCallSoundElement.setAttribute('src', 'sound/videocallSound.mp3');
     $("#search-text-box").focus();
 
     templates.vocabResult = Handlebars.compile($("#template-vocab-result").html());
