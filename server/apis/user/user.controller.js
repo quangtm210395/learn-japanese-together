@@ -9,7 +9,6 @@ var config = require('../../configs/index');
 module.exports = {
 
     addUser: function (req, res) {
-        console.log(req.body);
         if (req.body.password && req.body.password.length < 8 ){
             res.json({status: false, message: "Mật khẩu phải có ít nhất 8 kí tự."});
             return;
@@ -115,9 +114,7 @@ module.exports = {
     },
 
     updateUser: function(req, res) {
-        console.log(req.body);
         var editUser = req.user;
-        console.log(editUser);
 
         editUser.name = req.body.name;
         editUser.email = req.body.email;
@@ -136,7 +133,6 @@ module.exports = {
 
             user.save(function (err, updatedUser) {
                 if (err) {
-                  console.log(err);
                   res.json({status: false, message: err.message});
                 }
                 updatedUser.salt = undefined;

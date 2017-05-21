@@ -5,7 +5,6 @@ var sourceUsersStatus;
 var usersStatusTemplate;
 setupAjax();
 $.get('/api/user/login/check-login', function (data, status) {
-    console.log(data);
     if (!data.status || !data.result.login) {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
@@ -34,7 +33,6 @@ socket.on("update status users", function (data) {
         data.users.forEach(function (user, index) {
             if (user.username === userLogin.username) {
                 data.users.splice(index, 1);
-                console.log(data.users);
             }
         });
     }
@@ -77,7 +75,6 @@ function setStatusLoginHtml() {
     });
 
     $('#click-logout').click(function () {
-        console.log("click");
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         socket.emit('logout');
@@ -182,7 +179,6 @@ function registerAccount() {
                     toastr.error(data.message);
                 }
                 else {
-                    console.log(data.message);
                     toastr.error('Đăng kí thất bại');
                 }
             } else {

@@ -51,7 +51,6 @@ $(document).ready(function() {
 			$('#all-feedback').append($(listFeedback));
 
 		}).fail(function(err) {
-			console.log(err);
 		}).always(function () {
       isLoading = false;
 			$("#feedback-load").html("Load more");

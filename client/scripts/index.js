@@ -29,7 +29,6 @@ $(document).ready(function () {
     templates.noResult = Handlebars.compile($("#template-no-result").html());
 
     Handlebars.registerHelper('searchResultWord', function (found, data) {
-        console.log(found + ' ' + data);
         var result = "";
         if (found) {
             result += templates.vocabResult(data[0]);
@@ -39,11 +38,9 @@ $(document).ready(function () {
     });
 
     Handlebars.registerHelper('searchResultKanji', function (status, results) {
-        console.log(status + " " + results);
         var result = "";
         var a = {};
         a.results = results;
-        console.log("a: " + a);
         if (status == 200) {
             result += templates.kanjiResult(a);
         }
@@ -71,7 +68,6 @@ $(document).ready(function () {
 });
 
 function searchUser(e) {
-    console.log("search");
     var searchText = $("#user-search-input").val().trim();
     var searchedList = [];
     usersData.users.forEach(function (user) {
@@ -113,7 +109,6 @@ function searchDictionary() {
                 contentType: "application/json",
             })
             .done(function (data) {
-                console.log(data);
                 if (data.found)
                     $("#result-content-0").html(templates.vocabAll(data));
                 else
@@ -123,7 +118,6 @@ function searchDictionary() {
                     }));
             })
             .fail(function (err) {
-                console.log(err);
             }).always(function () {
                 hideLoading();
             });
@@ -133,7 +127,6 @@ function searchDictionary() {
                 type: "post",
             })
             .done(function (data) {
-                console.log(data);
                 if (data.status == 200) {
                     data.results.forEach(function (item) {
                         item.details = getDetail(item);
@@ -149,7 +142,6 @@ function searchDictionary() {
                     }));
                 }
             }).fail(function (err) {
-                console.log(err);
             }).always(function () {
                 hideLoading();
             });
@@ -159,7 +151,6 @@ function searchDictionary() {
                 type: "post",
             })
             .done(function (data) {
-                console.log(data);
                 if (data.status == 200) {
                     $("#result-content-2").html(templates.sentenceResult(data));
                 } else {
@@ -169,7 +160,7 @@ function searchDictionary() {
                     }));
                 }
             }).fail(function (err) {
-                console.log(err);
+
             }).always(function () {
                 hideLoading();
             });
@@ -179,7 +170,6 @@ function searchDictionary() {
                 type: "post",
             })
             .done(function (data) {
-                console.log(data);
                 if (data.status == 200) {
                     $("#result-content-3").html(templates.grammarResult(data));
                     data.results.forEach(function (result) {
@@ -188,7 +178,6 @@ function searchDictionary() {
                                 type: "post",
                             })
                             .done(function (data2) {
-                                console.log(data2);
                                 if (data2.status == 200) {
                                     var grammar = data2.grammar;
                                     grammar.usages.forEach(function (usage) {
@@ -218,7 +207,6 @@ function searchDictionary() {
 }
 
 function regisChat(id) {
-    console.log('regis clicked!');
     if ($("#chatTab" + id).length == 0) {
         $.ajax({
                 url: "/api/conversation/get/" + id,

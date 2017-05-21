@@ -54,7 +54,6 @@ function sendMessage(e, id) {
         });
     }
     if (e.keyCode === 13 && msg != "") {
-        console.log("aw"+msg);
         var message = {
             message: msg
         };

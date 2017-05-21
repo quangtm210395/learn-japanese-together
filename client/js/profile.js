@@ -12,7 +12,6 @@
 
     function setUserInfo() {
         var user = JSON.parse(localStorage.getItem("user"));
-        console.log(user);
         $("#profile_username").val(user.username);
         $("#profile_fullname").val(user.name);
         $("#profile_email").val(user.email);
@@ -40,7 +39,6 @@
             },
             function (data, status) {
 
-            console.log(data);
                 if (!data.status) {
                     if (data.message.length) {
                         toastr.error(data.message);

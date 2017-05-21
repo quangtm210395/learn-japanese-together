@@ -39,7 +39,6 @@ module.exports = (io) => {
 
         socket.on('find peer', function (data) {
             socket.id = data.id;
-            console.log(socket.request.connection.remoteAddress);
             peerRandom.push({
                 id: data.id,
                 ipAddress: socket.request.connection.remoteAddress
@@ -70,7 +69,6 @@ module.exports = (io) => {
             io.sockets.clients(function (error, clients) {
                 clients.forEach(function (client) {
                     if (io.sockets.sockets[client].id === data.id) {
-                        console.log("socket");
                         io.sockets.sockets[client].emit('get room data', {});
                     }
                 });
