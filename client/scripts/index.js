@@ -211,39 +211,43 @@ function searchDictionary() {
 }
 
 function regisChat(id) {
-    if ($("#chatTab" + id).length == 0) {
-        $.ajax({
-                url: "/api/conversation/get/" + id,
-                method: "get"
-            })
-            .done(function (data) {
-                if (data.status) {
-                    var result = data.result;
-                    result.messages.forEach(function (item) {
-                        if (item.sender == id) {
-                            item._chatCss = "chat-friend";
-                            item._reverseCss = "";
-                            item._isFriend = true;
-                        } else {
-                            item._chatCss = "chat-myself";
-                            item._reverseCss = "row-reverse";
-                            item._isFriend = false;
-                        }
-                    });
-                    $('#chatTabs').append(templates.chatTabs(result));
-                    scrollToBottom(id);
-                    if (!$("#send" + id).is(":focus"))
-                        chatFocus(id);
-                    // isTypingEffect(id, true);
-                }
-            });
+    if (JSON.parse(localStorage.getItem("user"))) {
+        if ($("#chatTab" + id).length == 0) {
+            $.ajax({
+                    url: "/api/conversation/get/" + id,
+                    method: "get"
+                })
+                .done(function (data) {
+                    if (data.status) {
+                        var result = data.result;
+                        result.messages.forEach(function (item) {
+                            if (item.sender == id) {
+                                item._chatCss = "chat-friend";
+                                item._reverseCss = "";
+                                item._isFriend = true;
+                            } else {
+                                item._chatCss = "chat-myself";
+                                item._reverseCss = "row-reverse";
+                                item._isFriend = false;
+                            }
+                        });
+                        $('#chatTabs').append(templates.chatTabs(result));
+                        scrollToBottom(id);
+                        if (!$("#send" + id).is(":focus"))
+                            chatFocus(id);
+                        // isTypingEffect(id, true);
+                    }
+                });
+        } else {
+            $('#chatTab' + id).removeClass("closed");
+            $('#chatTab' + id).addClass("opened");
+            $(".titlebar").removeClass("greenChatTitle");
+            $("#title" + id).addClass("greenChatTitle");
+            if (!$("#send" + id).is(":focus"))
+                chatFocus(id);
+        }
     } else {
-        $('#chatTab' + id).removeClass("closed");
-        $('#chatTab' + id).addClass("opened");
-        $(".titlebar").removeClass("greenChatTitle");
-        $("#title" + id).addClass("greenChatTitle");
-        if (!$("#send" + id).is(":focus"))
-            chatFocus(id);
+        toastr.warning("Vui lòng đăng nhập để chat");
     }
 }
 
