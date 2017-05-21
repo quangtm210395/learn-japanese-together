@@ -12,5 +12,6 @@ router.post('/login', UserController.login);
 router.get('/login/check-login', UserController.checkLogin);
 router.get('/:id', UserController.getUser);
 router.post('/update',  Auth.authentication(), UserController.updateUser);
+router.post('/updatePassword',  Auth.authentication(), UserController.updatePassword);
 
 module.exports = router;

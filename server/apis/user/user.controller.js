@@ -110,9 +110,6 @@ module.exports = {
         var editUser = req.user;
         console.log(editUser);
 
-        if (!req.body.password) {
-            if (req.body.password !== "") editUser.password = req.body.password;
-        };
         editUser.name = req.body.name;
         editUser.email = req.body.email;
         editUser.dob = req.body.dob;
@@ -122,7 +119,6 @@ module.exports = {
         User.findOne({username: editUser.username}, function (err, user) {
             if (err) res.json({status: false, message: err.message});
 
-            user.password = editUser.password;
             user.name = editUser.name;
             user.email = editUser.email;
             user.dob = editUser.dob;
@@ -130,7 +126,11 @@ module.exports = {
             user.imgUrl = editUser.imgUrl;
 
             user.save(function (err, updatedUser) {
-                if (err) res.json({status: false, message: err.message});
+                if (err) {
+                  console.log(err);
+                  res.json({status: false, message: err.message});
+                }
+
                 res.json({status: true, message:"Update successfully!", result: updatedUser});
             });
         });
@@ -140,6 +140,27 @@ module.exports = {
         //
         //     res.json({status: true, message:"Update successfully!", result: user});
         // });
+    },
+
+    updatePassword: function(req, res) {
+      User.findOne({username: req.user.username})
+          .exec(function (err, user) {
+              if (err) {
+                  res.json({status: false, message: user});
+              }
+
+              if (!user.authenticate(req.body.oldPassword)) {
+                  res.json({status: false, message: "Password incorrect"});
+              } else {
+                  user.password = req.body.newPassword;
+                  user.save(function(err, updatedUser){
+                      if (err) res.json({status: false, message: err.message});
+
+                      res.json({status: true, message: "Update password successfully!", result: updatedUser});
+                  });
+              }
+
+          })
     }
 
 };

@@ -79,6 +79,8 @@ function setStatusLoginHtml() {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         socket.emit('logout');
+
+        changeTab(0);
         $("#chatTabs").children().remove();
         $.ajaxSetup({headers: {"token": null}});
         setStatusLoginHtml();
@@ -209,6 +211,7 @@ function login(username, password) {
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('user', JSON.stringify(data.user));
                 setStatusLoginHtml();
+                setUserInfo();
                 toastr.success('Đăng nhập thành công');
                 $.ajaxSetup({headers: {"token": localStorage.getItem("token")}});
             }
@@ -222,4 +225,3 @@ function setupAjax() {
         }
     });
 }
-
