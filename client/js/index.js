@@ -39,9 +39,23 @@ changeTab = function (index) {
         if (index == 0) {
             $("#viewContent").show();
             $("#feedback").hide();
+            $("#profile").hide();
+            $("#password").hide();
         } else if (index == 1) {
             $("#feedback").show();
             $("#viewContent").hide();
+            $("#profile").hide();
+            $("#password").hide();
+        } else if (index == 3) {
+            $("#profile").show();
+            $("#viewContent").hide();
+            $("#feedback").hide();
+            $("#password").hide();
+        } else if (index == 4) {
+            $("#password").show();
+            $("#profile").hide();
+            $("#viewContent").hide();
+            $("#feedback").hide();
         }
 
     }
@@ -156,4 +170,3 @@ convertJptoHex = function(a) {
         c != a.length - 1 && (b += "_");
     return b;
 }
-

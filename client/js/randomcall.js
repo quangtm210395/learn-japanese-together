@@ -1,10 +1,23 @@
 var socket;
+var dataTempplate = {};
+var sourceSubcriber;
+var subcriberTemplate;
+
 $(document).ready(function () {
     socket = io.connect();
     var peer_opponent;
+    dataTempplate.isSearch = true;
+    sourceSubcriber = $("#template-subcriber").html();
+    subcriberTemplate = Handlebars.compile(sourceSubcriber);
+    var subcriberHtml = subcriberTemplate(dataTempplate);
+    $('#subscriber').html(subcriberHtml);
 
     socket.emit('find peer', {id: peer_id});
     socket.on('peer opponent', function (data) {
+        dataTempplate.isSearch = false;
+        dataTempplate.isConnect = true;
+        var subcriberHtml = subcriberTemplate(dataTempplate);
+        $('#subscriber').html(subcriberHtml);
         peer_opponent = data.peer_opponent;
         if (data.isGetRoom) {
             $.post('/api/videocall/room-random', {
@@ -47,6 +60,7 @@ $(document).ready(function () {
 
 function initializeSession(apiKey, sessionId, token) {
     var session = OT.initSession(apiKey, sessionId);
+    var uPublisher = JSON.parse(localStorage.getItem('user'));
     // Subscribe to a newly created stream
 
     // Connect to the session
@@ -54,11 +68,11 @@ function initializeSession(apiKey, sessionId, token) {
         // If the connection is successful, initialize a publisher and publish to the session
         if (!error) {
             var publisher = OT.initPublisher('publisher', {
+                name: uPublisher.name,
                 fitMode: "contain",
                 width: '20%',
                 height: '30%'
             });
-
             session.publish(publisher);
         } else {
             console.log('There was an error connecting to the session: ', error.code, error.message);
@@ -66,20 +80,29 @@ function initializeSession(apiKey, sessionId, token) {
     });
 
     session.on('streamCreated', function (event) {
+        if (dataTempplate.isDisconnect){
+            session.disconnect();
+        }
+        $('.container-bg').hide();
         var subscriber = session.subscribe(event.stream, 'subscriber', {
+            insertMode: 'append',
             fitMode: "contain",
             width: '100%',
             height: '100%'
         });
     });
 
-
+    session.on('connectionDestroyed', function (event) {
+        console.log("disconnect");
+        $('.container-bg').show();
+        dataTempplate.isDisconnect = true;
+        socket.disconnect();
+        var subcriberHtml = subcriberTemplate(dataTempplate);
+        $('#subscriber').html(subcriberHtml);
+    })
 }
 
-function setupAjax() {
-    $.ajaxSetup({
-        headers: {
-            "token": localStorage.getItem("token")
-        }
-    });
+function closeWindow() {
+    console.log("close");
+    window.close();
 }

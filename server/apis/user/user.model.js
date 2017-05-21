@@ -66,8 +66,10 @@ user.pre('update', function (next) {
 });
 
 user.pre('save', function (next) {
+    console.log("Go to save");
 // Handle new/update passwords
     if (!this.isModified('password')) {
+        console.log("Go out");
         return next();
     }
     var obj = this;
@@ -81,7 +83,9 @@ user.pre('save', function (next) {
             if (encryptErr) {
                 return next(encryptErr);
             }
+            console.log(obj.password);
             obj.password = hashedPassword;
+            console.log(hashedPassword);
             next();
         });
     });
@@ -169,4 +173,3 @@ user.methods = {
     }
 };
 module.exports = mongoose.model('User', user);
-

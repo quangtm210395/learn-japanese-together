@@ -1,3 +1,7 @@
+.feedback {
+    text-align: center;
+}
+
 .feedback-form {
     margin-top: 15px;
 }
@@ -18,4 +22,8 @@
 
 .feedback-content {
     padding: 0 30px;
+}
+
+#feedback-load {
+    margin-bottom: 25px;
 }
