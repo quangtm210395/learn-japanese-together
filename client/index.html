@@ -14,7 +14,6 @@
     <link rel="stylesheet" type="text/css" href="css/col-css.css">
     <link rel="stylesheet" type="text/css" href="css/chat.css">
     <link rel="stylesheet" type="text/css" href="css/feedback.css">
-    <link rel="stylesheet" type="text/css" href="css/loading.css">
 
     <link rel="icon" href="imgs/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,700italic" rel="stylesheet" type="text/css">
@@ -164,21 +163,13 @@
 
                         <div class="input-group-btn">
                             <button type="button" class="btn btn-primary" id="search-button" ng-click="inputEnter();">
-                            <span class="fa fa-search fa-lg"></span>
+                            <span class="fa fa-search fa-lg" id="search-btn"></span>
                         </button>
                         </div>
                     </div>
                 </div>
 
                 <div class="tab-container relative col-md-12 col-xs-12 no-padding" id="tab-container">
-
-                    <div id="loading">
-                        <ul class="bokeh">
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                        </ul>
-                    </div>
 
                     <!-- Tu vung -->
                     <div class="col-md-6 col-xs-12 result result-word ng-scope" id="result-content-0"></div>
@@ -288,9 +279,9 @@
     <script id="template-chat-tabs" type="text/x-handlebars-template">
         <div class="chatTab opened" id="chatTab{{friend._id}}">
             <div class="fbNub left-relative">
-                <div class="fbNubFlyoutTitlebar titlebar" id="title{{friend._id}}" onclick="showChatTab('{{friend._id}}')">
+                <div class="fbNubFlyoutTitlebar titlebar" id="title{{friend._id}}">
                     <div class="chatTitle-inside">
-                        <div class="titlebarTextWrapper _15p6">
+                        <div class="titlebarTextWrapper _15p6" onclick="showChatTab('{{friend._id}}')">
                             <span class="titlebarText noLink">
                                  {{friend.name}}
                              </span>

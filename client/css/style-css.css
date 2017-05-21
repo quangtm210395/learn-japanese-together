@@ -1489,3 +1489,8 @@ form label.error{
 .relative {
     position: relative;
 }
+
+#search-btn.loading{
+    color: white;
+    /*font-size: 2em;*/
+}
