@@ -171,9 +171,16 @@ function regisChat(id) {
                     });
                     $('#chatTabs').append(templates.chatTabs(result));
                     scrollToBottom(id);
+                    chatFocus(id);
                     // isTypingEffect(id, true);
                 }
             });
+    } else {
+        $('#chatTab' + id).removeClass("closed");
+        $('#chatTab' + id).addClass("opened");
+        $(".titlebar").removeClass("greenChatTitle");
+        $("#title" + id).addClass("greenChatTitle");
+        chatFocus(id);
     }
 
 }

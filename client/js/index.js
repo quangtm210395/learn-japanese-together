@@ -125,11 +125,11 @@ chatFocus = function (id) {
 }
 
 showLoading = function () {
-    $("#loading").show();
+    $("#search-btn").attr('class', 'fa fa-spinner fa-lg fa-spin loading');
 }
 
 hideLoading = function () {
-    $("#loading").hide();
+    $("#search-btn").attr('class', 'fa fa-search fa-lg');
 }
 
 playAudio = function (name) {
@@ -153,3 +153,4 @@ convertJptoHex = function(a) {
         c != a.length - 1 && (b += "_");
     return b;
 }
+

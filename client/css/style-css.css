@@ -1485,3 +1485,12 @@ form label.error{
     font-style: italic;
     font-size: 0.8em;
 }
+
+.relative {
+    position: relative;
+}
+
+#search-btn.loading{
+    color: white;
+    /*font-size: 2em;*/
+}
