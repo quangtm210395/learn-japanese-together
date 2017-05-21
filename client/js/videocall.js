@@ -2,6 +2,16 @@ var socket;
 $(document).ready(function () {
     socket = io.connect();
     setupAjax();
+    var dataTempplate;
+    var sourceSubcriber= $("#template-subcriber").html();
+    var subcriberTemplate = Handlebars.compile(sourceSubcriber);
+    $.get('/api/user/'+peer_id, function (data) {
+        if (data.status){
+            dataTempplate = data.data;
+            var subcriberHtml = subcriberTemplate(dataTempplate);
+            $('#subscriber').html(subcriberHtml);
+        }
+    })
     $.get('/api/user/login/check-login', function (data, status) {
         console.log(data);
         if (!data.status || !data.result.login) {
@@ -28,7 +38,17 @@ $(document).ready(function () {
         });
 
         socket.on('reply access call', function (data) {
-            if (data.accepted) console.log("Chấp nhận cuộc gọi"); else console.log("Từ chối cuộc gọi");
+            if (data.accepted) {
+                dataTempplate.isConnect = true;
+                var subcriberHtml = subcriberTemplate(dataTempplate);
+                $('#subscriber').html(subcriberHtml);
+            } else {
+                dataTempplate.isNoAccepted = true;
+                var subcriberHtml = subcriberTemplate(dataTempplate);
+                $('#subscriber').html(subcriberHtml);
+            }
+
+
         })
     });
 });
@@ -73,4 +93,9 @@ function setupAjax() {
             "token": localStorage.getItem("token")
         }
     });
+}
+
+function closeWindow() {
+    console.log("close");
+    open(location, '_self').close();
 }

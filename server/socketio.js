@@ -124,11 +124,13 @@ module.exports = (io) => {
             var peer_id1 = socket.peer_id1;
             var peer_id2 = socket.peer_id2;
             var roomName = (peer_id1 < peer_id2) ? peer_id1 + "@" + peer_id2 : peer_id2 + "@" + peer_id1;
-            if (room[roomName].peer_id1 === socket.id) {
-                room[roomName].peer_id1 = null;
-            } else {
-                if (room[roomName].peer_id2 === socket.id) {
-                    room[roomName].peer_id2 = null;
+            if (room[roomName]) {
+                if (room[roomName].peer_id1 === socket.id) {
+                    room[roomName].peer_id1 = null;
+                } else {
+                    if (room[roomName].peer_id2 === socket.id) {
+                        room[roomName].peer_id2 = null;
+                    }
                 }
             }
         }
