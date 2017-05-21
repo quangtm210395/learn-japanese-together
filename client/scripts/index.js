@@ -75,7 +75,7 @@ function searchUser(e) {
     var searchText = $("#user-search-input").val().trim();
     var searchedList = [];
     usersData.users.forEach(function (user) {
-        if (user.name.indexOf(searchText) != -1) {
+        if (user.name.toLowerCase().indexOf(searchText.toLowerCase()) != -1) {
             searchedList.push(user);
         }
     });
@@ -101,7 +101,7 @@ function cancelSearch() {
 }
 
 function searchDictionary() {
-    var text = $('#search-text-box').val();
+    var text = $('#search-text-box').val().toLowerCase();
     if (text != "") {
         showLoading();
         $.ajax({
@@ -139,11 +139,14 @@ function searchDictionary() {
                         item.details = getDetail(item);
                         item.title = getTittle(item);
                     });
+                    $("#result-content-1-nr").html("");
                     $("#list-kanji").html(templates.kanjiResult(data));
                     $("#kanji-detail-result").html(templates.kanjiResultContent(data.results[0]));
                     resultK = data;
                 } else {
-                    $("#result-content-1").html(templates.noResult({
+                    $("#list-kanji").html("");
+                    $("#kanji-detail-result").html("");
+                    $("#result-content-1-nr").html(templates.noResult({
                         type: "chữ hán",
                         word: text
                     }));

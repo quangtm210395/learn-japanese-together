@@ -163,7 +163,7 @@
 
                         <div class="input-group-btn">
                             <button type="button" class="btn btn-primary" id="search-button" ng-click="inputEnter();">
-                            <span class="fa fa-search fa-lg"></span>
+                            <span class="fa fa-search fa-lg" id="search-btn"></span>
                         </button>
                         </div>
                     </div>
@@ -188,6 +188,7 @@
 
                     <!-- chu han -->
                     <div class="col-xs-12 result result-kanji dis-cont" id="result-content-1">
+                        <div id="result-content-1-nr"></div>
                         <div class="list-kanji" id="list-kanji">
                         </div>
                         <div id="kanji-detail-result"></div>
@@ -363,8 +364,8 @@
                              </span>
                         </div>
                         <div class="close_X">
-                            <a class="close button" data-hover="tooltip">
-                                <i class="ion-android-close" aria-hidden="true" onclick="closeChatTab('{{friend._id}}')"></i>
+                            <a class="close button" onclick="closeChatTab('{{friend._id}}')" data-hover="tooltip">
+                                <i class="ion-android-close" aria-hidden="true"></i>
                             </a>
                             <a class="close button" id="callBtn" onclick="videoCall('{{friend._id}}')">
                                 <i class="ion-android-call" aria-hidden="true"></i>

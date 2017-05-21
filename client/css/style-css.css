@@ -800,10 +800,12 @@ body {
     vertical-align: -15%;
 }
 
-.btn-primary.active,
+/*.btn-primary.active,*/
 .btn-primary:active,
 .btn-primary:active:hover,
+.btn-primary.active:hover,
 .btn-primary:active:focus,
+.btn-primary.active:focus,
 .btn-primary:hover,
 .btn-primary:focus,
 .open>.dropdown-toggle.btn-primary {
@@ -811,6 +813,17 @@ body {
     background-color: #16bd67;
     border-color: #16bd67;
     outline: none;
+}
+
+.btn-primary:active {
+    box-shadow: inset 0 3px 5px rgba(0,0,0,.125)!important;
+}
+
+.btn-primary.active {
+    background-color: #28cc77;
+    border-color: #28cc77;
+    outline: none;
+    box-shadow: none;
 }
 
 .btn-primary {
