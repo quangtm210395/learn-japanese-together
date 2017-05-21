@@ -24,6 +24,7 @@ changeTypeSearch = function (index) {
                 placeholder = "のに, để", o = "grammar"
         }
         $("#search-text-box").attr("placeholder", placeholder);
+        $("#search-text-box").focus();
     }
 }
 

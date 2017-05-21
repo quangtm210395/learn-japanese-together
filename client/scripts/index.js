@@ -14,6 +14,7 @@ var incommingData = {};
 
 $(document).ready(function () {
     audioElement = document.createElement("audio");
+    $("#search-text-box").focus();
 
     templates.vocabResult = Handlebars.compile($("#template-vocab-result").html());
     templates.vocabAll = Handlebars.compile($("#template-vocab-all").html());
