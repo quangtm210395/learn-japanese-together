@@ -1,8 +1,10 @@
 <html>
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="libs/bootstrap/css/bootstrap.min.css">
     <link href="css/videocall.css" rel="stylesheet" type="text/css">
     <script src="https://static.opentok.com/v2/js/opentok.js"></script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </head>
 <body>
@@ -34,6 +36,7 @@
                 {{/unless}}
             {{else}}
             <div class="status-call">Từ chối cuôc gọi</div>
+            <button type="button" class="btn btn-default" onkeypress="closeWindow()">Đóng</button>
             {{/unless}}
         </div>
     </div>

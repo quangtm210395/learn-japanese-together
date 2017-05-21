@@ -94,3 +94,8 @@ function setupAjax() {
         }
     });
 }
+
+function closeWindow() {
+    console.log("close");
+    open(location, '_self').close();
+}
