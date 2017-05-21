@@ -40,9 +40,15 @@ changeTab = function (index) {
         if (index == 0) {
             $("#viewContent").show();
             $("#feedback").hide();
+            $("#profile").hide();
         } else if (index == 1) {
             $("#feedback").show();
             $("#viewContent").hide();
+            $("#profile").hide();
+        } else if (index == 3) {
+            $("#profile").show();
+            $("#viewContent").hide();
+            $("#feedback").hide();
         }
 
     }
@@ -126,10 +132,14 @@ chatFocus = function (id) {
 
 showLoading = function () {
     $("#search-btn").attr('class', 'fa fa-spinner fa-lg fa-spin loading');
+    $("#search-button").prop('disabled', true);
+    $("#search-text-box").prop('disabled', true);
 }
 
 hideLoading = function () {
     $("#search-btn").attr('class', 'fa fa-search fa-lg');
+    $("#search-button").prop('disabled', false);
+    $("#search-text-box").prop('disabled', false);
 }
 
 playAudio = function (name) {

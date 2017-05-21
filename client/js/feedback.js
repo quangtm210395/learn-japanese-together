@@ -1,9 +1,6 @@
 $(document).ready(function() {
 	var feedbackTemplate = Handlebars.compile($("#feedback-template").html());
   var nextUrl = "/api/feedback/getPart?page=0";
-  var isLoading = false;
-  var isRequested = false;
-  var throtte = false;
 
 	$("#send-feedback").click(function() {
 		$.post('/api/feedback/create', {
@@ -26,31 +23,24 @@ $(document).ready(function() {
 	});
 
 	$("#get-feedback").click(function() {
-		if (!isRequested) loadNewFeedbackPage();
-    isRequested = true;
+		$("#get-feedback").hide();
+		$("#feedback-load").show();
+		loadNewFeedbackPage();
 	});
 
-	$(window).on('scroll', function() {
-    if (!isRequested) return;
-		if (throtte) return;
-		throtte = true;
-		setTimeout(function() {
-			throtte = false;
-		}, 100);
-
-		if ($(document).height() <= $(window).height() + $(window).scrollTop() + 100 && !isLoading) {
-      loadNewFeedbackPage();
-		}
+	$("#feedback-load").click(function() {
+		loadNewFeedbackPage();
 	});
 
 	function loadNewFeedbackPage() {
-		isLoading = true;
-    if (nextUrl == "") return;
+		$("#feedback-load").html('<i class="fa fa-spinner fa-spin"></i> Loading');
 		$.ajax({
 			method: "get",
 			url: nextUrl
 		}).then(function(data) {
       nextUrl = data.result.nextUrl;
+	    if (nextUrl == "") $("#feedback-load").hide();
+
 			data.result.feedbacks.forEach(function(feedback) {
 				feedback.createdAt = new Date(feedback.createdAt);
 				feedback.createdAt = feedback.createdAt.getDate() + "-" +
@@ -64,6 +54,7 @@ $(document).ready(function() {
 			console.log(err);
 		}).always(function () {
       isLoading = false;
+			$("#feedback-load").html("Load more");
     });
 	}
 })

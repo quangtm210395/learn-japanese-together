@@ -107,6 +107,43 @@ module.exports = {
                 return callback(user);
             });
 
+    },
+
+    updateUser: function(req, res) {
+        console.log(req.body);
+        var editUser = req.user;
+        console.log(editUser);
+
+        if (!req.body.password) {
+            if (req.body.password !== "") editUser.password = req.body.password;
+        };
+        editUser.name = req.body.name;
+        editUser.email = req.body.email;
+        editUser.dob = req.body.dob;
+        editUser.gender = req.body.gender;
+        editUser.imgUrl = (req.body.imgUrl.trim() === "") ? "imgs/user_male_df.png" : req.body.imgUrl.trim();
+
+        User.findOne({username: editUser.username}, function (err, user) {
+            if (err) res.json({status: false, message: err.message});
+
+            user.password = editUser.password;
+            user.name = editUser.name;
+            user.email = editUser.email;
+            user.dob = editUser.dob;
+            user.gender = editUser.gender;
+            user.imgUrl = editUser.imgUrl;
+
+            user.save(function (err, updatedUser) {
+                if (err) res.json({status: false, message: err.message});
+                res.json({status: true, message:"Update successfully!", result: updatedUser});
+            });
+        });
+
+        // User.update({username: req.user.username}, editUser, function(err, user){
+        //     if (err) res.json({status: false, message: err.message});
+        //
+        //     res.json({status: true, message:"Update successfully!", result: user});
+        // });
     }
 
 };
