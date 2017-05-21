@@ -85,7 +85,6 @@
                                     <div class="form-group required">
                                         <label for="password_login" class="control-label">Mật khẩu:</label>
                                         <input type="password" class="form-control" id="password_login" name="password_login" onkeypress="pressEnterLogin(event)" required>
-                                            required>
                                     </div>
                                     <button type="button" class="btn btn-primary save" id="login">Đăng nhập</button>
                                 </form>
@@ -237,48 +236,72 @@
         <div class="row">
           <div id="profile" style="display: none">
               <div class="container-fluid">
-                  <form id="profile-form">
+                  <form id="profile_form">
                       <div class="form-group required">
-                          <label for="profile-username" class="control-label">Tên đăng nhập:</label>
-                          <input type="text" class="form-control" id="profile-username" name="profile-username" required disabled>
+                          <label for="profile_username" class="control-label">Tên đăng nhập:</label>
+                          <input type="text" class="form-control" id="profile_username" name="profile_username" required disabled>
                       </div>
                       <div class="form-group">
-                          <label for="profile-password" class="control-label">Mật khẩu: (để trống nếu không thay đổi)</label>
-                          <input type="password" class="form-control" id="profile-password" name="profile-password">
+                          <label for="profile_password" class="control-label">Mật khẩu: (để trống nếu không thay đổi)</label>
+                          <input type="password" class="form-control" id="profile_password" name="profile_password">
                       </div>
                       <div class="form-group">
-                          <label for="profile-verify-password" class="control-label">Nhâp lại mật khẩu: (để trống nếu không thay đổi)</label>
-                          <input type="password" class="form-control" id="profile-verify-password" name="profile-verify-password">
+                          <label for="profile_verify-password" class="control-label">Nhâp lại mật khẩu: (để trống nếu không thay đổi)</label>
+                          <input type="password" class="form-control" id="profile_verify-password" name="profile_verify-password">
                       </div>
                       <div class="form-group required">
-                          <label for="profile-fullname" class="control-label">Họ và tên:</label>
-                          <input type="text" class="form-control" id="profile-fullname" name="profile-fullname" required>
+                          <label for="profile_fullname" class="control-label">Họ và tên:</label>
+                          <input type="text" class="form-control" id="profile_fullname" name="profile_fullname" required>
                       </div>
                       <div class="form-group required">
-                          <label for="profile-email" class="control-label">Email:</label>
-                          <input type="email" class="form-control" id="profile-email" name="profile-email" required>
+                          <label for="profile_email" class="control-label">Email:</label>
+                          <input type="email" class="form-control" id="profile_email" name="profile_email" required>
                       </div>
                       <div class="form-group required">
-                          <label for="profile-dob" class="control-label">Ngày sinh:</label>
-                          <input type="date" class="form-control" id="profile-dob" name="profile-dob" required>
+                          <label for="profile_dob" class="control-label">Ngày sinh:</label>
+                          <input type="date" class="form-control" id="profile_dob" name="profile_dob" required>
                       </div>
                       <div class="form-group required">
-                          <label for="profile-gender" class="control-label">Giới tính:</label>
-                          <select class="form-control" id="profile-gender" name="profile-gender" required>
+                          <label for="profile_gender" class="control-label">Giới tính:</label>
+                          <select class="form-control" id="profile_gender" name="profile_gender" required>
                           <option>Nam</option>
                           <option>Nữ</option>
                           <option>Khác</option>
                       </select>
                       </div>
                       <div class="form-group">
-                          <label for="profile-avatar-url" class="control-label">Ảnh đại diện: (URL)</label>
-                          <input type="text" class="form-control" id="profile-avatar-url"  name="profile-avatar-url" onkeypress="pressEnterRegister(event)">
+                          <label for="profile_avatar-url" class="control-label">Ảnh đại diện: (URL)</label>
+                          <input type="text" class="form-control" id="profile_avatar-url"  name="profile_avatar-url" onkeypress="pressEnterRegister(event)">
                       </div>
                       <button type="button" class="btn btn-primary save" id="update">Cập nhật</button>
+                      <button type="button" class="btn btn-primary save" id="nav4" onclick="changeTab(4)">Thay đổi mật khẩu</button>
                   </form>
               </div>
           </div>
         </div> <!-- Row 3 : Profile -->
+
+        <div class="row">
+          <div id="password" style="display: none">
+              <div class="container-fluid">
+                  <form id="password_form">
+                      <div class="form-group required">
+                          <label for="old_password" class="control-label">Mật khẩu cũ:</label>
+                          <input type="password" class="form-control" id="old_password" name="old_password" required>
+                      </div>
+                      <div class="form-group required">
+                          <label for="new_password" class="control-label">Mật khẩu mới:</label>
+                          <input type="password" class="form-control" id="new_password" name="new_password" required>
+                      </div>
+                      <div class="form-group required">
+                          <label for="verify_new_password" class="control-label">Nhâp lại mật khẩu mới:</label>
+                          <input type="password" class="form-control" id="verify_new_password" name="verify_new_password" required>
+                      </div>
+                      <button type="button" class="btn btn-primary save" id="update_password">Cập nhật</button>
+                      <button type="button" class="btn btn-primary save" id="nav3" onclick="changeTab(3)">Thay đổi hồ sơ</button>
+                  </form>
+              </div>
+          </div>
+        </div>  <!-- Row 4 : Password -->
 
         <aside id="viewAside" class="users-status chatSidebar fixed_always">
         </aside>

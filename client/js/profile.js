@@ -13,17 +13,17 @@
     function setUserInfo() {
         var user = JSON.parse(localStorage.getItem("user"));
         console.log(user);
-        $("#profile-username").val(user.username);
-        $("#profile-fullname").val(user.name);
-        $("#profile-email").val(user.email);
-        $("#profile-dob").val(user.dob);
-        // $('#profile-dob').datepicker('setDate', new Date());
-        $("#profile-gender").val(user.gender);
-        $("#profile-avatar-url").val(user.imgUrl);
+        $("#profile_username").val(user.username);
+        $("#profile_fullname").val(user.name);
+        $("#profile_email").val(user.email);
+        $("#profile_dob").val(user.dob);
+        // $('#profile_dob').datepicker('setDate', new Date());
+        $("#profile_gender").val(user.gender);
+        $("#profile_avatar-url").val(user.imgUrl);
     }
 
     $("#update").click(function () {
-        if ($('#profile-form').valid()) {
+        if ($('#profile_form').valid()) {
             updateUser();
         }
     });
@@ -31,12 +31,12 @@
     function updateUser() {
         $.post('/api/user/update',
             {
-                password: $('#profile-password').val(),
-                name: $('#profile-fullname').val(),
-                email: $('#profile-email').val(),
-                gender: $('#profile-gender').val(),
-                dob: $('#profile-dob').val(),
-                imgUrl: $('#profile-avatar-url').val()
+                password: $('#profile_password').val(),
+                name: $('#profile_fullname').val(),
+                email: $('#profile_email').val(),
+                gender: $('#profile_gender').val(),
+                dob: $('#profile_dob').val(),
+                imgUrl: $('#profile_avatar-url').val()
             },
             function (data, status) {
                 if (!data.status) {
@@ -48,32 +48,92 @@
                         toastr.error('Cập nhật thất bại');
                     }
                 } else {
-                    toastr.success('Đăng kí thành công');
+                    toastr.success('Cập nhật thành công');
                 }
             })
     };
 
-    // $('#profile-form').validate({
-    //     rules: {
-    //         profile-email: {
-    //             required: true,
-    //             email: true
-    //         },
-    //         profile-fullname: {
-    //             required: true
-    //         },
-    //         profile-dob: {
-    //             required: true,
-    //             date: true
-    //         },
-    //         profile-gender: {
-    //             required: true
-    //         }
-    //     },
-    //     messages: {
-    //         profile-email: "Vui lòng nhập email",
-    //         profile-fullname: "Vui lòng nhập họ và tên",
-    //         profile-dob: "Vui lòng nhập ngày sinh",
-    //         profile-gender: "Vui lòng chọn giới tính"
-    //     }
-    // });
+    $('#profile_form').validate({
+        rules: {
+            profile_email: {
+                required: true,
+                email: true
+            },
+            profile_fullname: {
+                required: true
+            },
+            profile_dob: {
+                required: true,
+                date: true
+            },
+            profile_gender: {
+                required: true
+            }
+        },
+        messages: {
+            profile_email: "Vui lòng nhập email",
+            profile_fullname: "Vui lòng nhập họ và tên",
+            profile_dob: "Vui lòng nhập ngày sinh",
+            profile_gender: "Vui lòng chọn giới tính"
+        }
+    });
+
+    $("#update_password").click(function () {
+        if ($('#password_form').valid()) {
+            updatePassword();
+        }
+    });
+
+    function updatePassword() {
+        $.post('/api/user/updatePassword',
+            {
+                oldPassword: $('#old_password').val(),
+                newPassword: $('#new_password').val()
+            },
+            function (data, status) {
+                if (!data.status) {
+                    if (data.message.length) {
+                        toastr.error(data.message);
+                    }
+                    else {
+                        console.log(data.message);
+                        toastr.error('Cập nhật thất bại');
+                    }
+                } else {
+                    toastr.success('Cập nhật thành công');
+                }
+            })
+    };
+
+    $('#password_form').validate({
+        rules: {
+            old_password: {
+                required: true,
+                minlength: 8
+            },
+            new_password: {
+                required: true,
+                minlength: 8
+            },
+            verify_new_password: {
+                required: true,
+                minlength: 8,
+                equalTo: "#new_password",
+            }
+        },
+        messages: {
+            old_password: {
+                required: "Vui lòng nhập mật khẩu cũ",
+                minlength: "Mật khẩu ít nhất 8 kí tự"
+            },
+            new_password: {
+                required: "Vui lòng nhập mật khẩu mới",
+                minlength: "Mật khẩu ít nhất 8 kí tự"
+            },
+            verify_new_password: {
+                required: "Vui lòng nhập lại mật khẩu mới",
+                minlength: "Mật khẩu ít nhất 8 kí tự",
+                equalTo: "Mật khẩu không trùng khớp"
+            },
+        }
+    });
