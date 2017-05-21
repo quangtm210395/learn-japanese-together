@@ -5,7 +5,6 @@ var subcriberTemplate;
 $(document).ready(function () {
     socket = io.connect();
     setupAjax();
-
     sourceSubcriber = $("#template-subcriber").html();
     subcriberTemplate = Handlebars.compile(sourceSubcriber);
     $.get('/api/user/' + peer_id, function (data) {
@@ -79,6 +78,9 @@ function initializeSession(apiKey, sessionId, token) {
     });
 
     session.on('streamCreated', function (event) {
+        if (dataTempplate.isDisconnect){
+            session.disconnect();
+        }
         $('.container-bg').hide();
         var subscriber = session.subscribe(event.stream, 'subscriber', {
             insertMode: 'append',
@@ -95,7 +97,6 @@ function initializeSession(apiKey, sessionId, token) {
         socket.disconnect();
         var subcriberHtml = subcriberTemplate(dataTempplate);
         $('#subscriber').html(subcriberHtml);
-        session = null;
     })
 
 
