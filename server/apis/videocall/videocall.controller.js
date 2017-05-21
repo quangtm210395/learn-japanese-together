@@ -28,7 +28,6 @@ module.exports = {
         var roomName = (peer_id1 < peer_id2) ? peer_id1 + "@" + peer_id2 : peer_id2 + "@" + peer_id1;
         if (!room[roomName]) {
             opentok.createSession(function (err, session) {
-                if (err) return console.log(err);
                 room[roomName] = {
                     sessionId: session.sessionId,
                     peer_id2: peer_id2

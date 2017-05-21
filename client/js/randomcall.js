@@ -25,7 +25,6 @@ $(document).ready(function () {
                 peer_id_receive: peer_opponent
             }, function (data, status) {
                 socket.emit('get room', {id: peer_opponent});
-                console.log(data.result.sessionId);
                 if (data.status) {
                     var apiKey = data.result.apiKey;
                     var sessionId = data.result.sessionId;
@@ -44,7 +43,6 @@ $(document).ready(function () {
             peer_id_sender: peer_id,
             peer_id_receive: peer_opponent
         }, function (data, status) {
-            console.log(data.result.sessionId);
             if (data.status) {
                 var apiKey = data.result.apiKey;
                 var sessionId = data.result.sessionId;
@@ -93,7 +91,6 @@ function initializeSession(apiKey, sessionId, token) {
     });
 
     session.on('connectionDestroyed', function (event) {
-        console.log("disconnect");
         $('.container-bg').show();
         dataTempplate.isDisconnect = true;
         socket.disconnect();
@@ -103,6 +100,5 @@ function initializeSession(apiKey, sessionId, token) {
 }
 
 function closeWindow() {
-    console.log("close");
     window.close();
 }

@@ -29,8 +29,6 @@ changeTypeSearch = function (index) {
 
 changeTab = function (index) {
     var activeTab = parseInt($('.active').attr('id').charAt(3));
-    console.log(index);
-    console.log(activeTab);
 
     if (index != activeTab) {
         $(".navbar-nav li").removeClass("active");
@@ -117,9 +115,7 @@ isTypingEffect = function (id, isTyping) {
             if (i % 3 == 1) dots = ".";
             else if (i % 3 == 1) dots = "..";
             else dots = "...";
-            console.log(i);
             text = text + dots;
-            console.log(text);
             $("#textTyping" + id).val(text);
             i++;
             if (i == 100) i = 1;

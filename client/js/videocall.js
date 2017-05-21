@@ -15,7 +15,6 @@ $(document).ready(function () {
         }
     })
     $.get('/api/user/login/check-login', function (data, status) {
-        console.log(data);
         if (!data.status || !data.result.login) {
             localStorage.removeItem('token');
             localStorage.removeItem('user');
@@ -91,7 +90,6 @@ function initializeSession(apiKey, sessionId, token) {
     });
 
     session.on('connectionDestroyed', function (event) {
-        console.log("disconnect");
         $('.container-bg').show();
         dataTempplate.isDisconnect = true;
         socket.disconnect();
@@ -111,6 +109,5 @@ function setupAjax() {
 }
 
 function closeWindow() {
-    console.log("close");
     window.close();
 }
