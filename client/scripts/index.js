@@ -2,6 +2,8 @@ var templates = {};
 var tabSelected = 0;
 var resultK = "";
 var collapse = 0;
+var audioElement;
+
 $.ajaxSetup({
     headers: {
         "token": localStorage.getItem("token")
@@ -11,6 +13,8 @@ $.ajaxSetup({
 var incommingData = {};
 
 $(document).ready(function () {
+    audioElement = document.createElement("audio");
+
     templates.vocabResult = Handlebars.compile($("#template-vocab-result").html());
     templates.vocabAll = Handlebars.compile($("#template-vocab-all").html());
     templates.kanjiResult = Handlebars.compile($("#template-kanji-result").html());
