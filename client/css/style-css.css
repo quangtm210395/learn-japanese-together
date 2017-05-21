@@ -1485,3 +1485,7 @@ form label.error{
     font-style: italic;
     font-size: 0.8em;
 }
+
+.relative {
+    position: relative;
+}

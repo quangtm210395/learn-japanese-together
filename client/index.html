@@ -84,7 +84,8 @@
                                     </div>
                                     <div class="form-group required">
                                         <label for="password_login" class="control-label">Mật khẩu:</label>
-                                        <input type="password" class="form-control" id="password_login" name="password_login" onkeypress="pressEnterLogin(event)" required>
+                                        <input type="password" class="form-control" id="password_login" name="password_login" onkeypress="pressEnterLogin(event)"
+                                            required>
                                     </div>
                                     <button type="button" class="btn btn-primary save" id="login">Đăng nhập</button>
                                 </form>
@@ -125,7 +126,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="avatar-url" class="control-label">Ảnh đại diện: (URL)</label>
-                                        <input type="text" class="form-control" id="avatar-url"  name="avatar-url" onkeypress="pressEnterRegister(event)">
+                                        <input type="text" class="form-control" id="avatar-url" name="avatar-url" onkeypress="pressEnterRegister(event)">
                                     </div>
                                     <button type="button" class="btn btn-primary save" id="register">Đăng kí</button>
                                 </form>
@@ -169,7 +170,16 @@
                     </div>
                 </div>
 
-                <div class="tab-container col-md-12 col-xs-12 no-padding" id="tab-container">
+                <div class="tab-container relative col-md-12 col-xs-12 no-padding" id="tab-container">
+
+                    <div id="loading">
+                        <ul class="bokeh">
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </div>
+
                     <!-- Tu vung -->
                     <div class="col-md-6 col-xs-12 result result-word ng-scope" id="result-content-0"></div>
 
@@ -180,7 +190,6 @@
                     <!-- chu han -->
                     <div class="col-xs-12 result result-kanji dis-cont" id="result-content-1">
                         <div class="list-kanji" id="list-kanji">
-
                         </div>
                         <div id="kanji-detail-result"></div>
                     </div>
@@ -192,7 +201,8 @@
                     </div>
                 </div>
             </div>
-        </div> <!-- Row 1 : Dictionary -->
+        </div>
+        <!-- Row 1 : Dictionary -->
 
         <div class="row">
             <div id="feedback" style="display: none">
@@ -206,8 +216,8 @@
                             <label for="feedback-content" class="control-label">Nội dung:</label>
                             <textarea class="form-control" rows="5" id="feedback-content" required></textarea>
                         </div>
-                            <button type="button" class="btn btn-primary" id="send-feedback">Gửi đánh giá</button>
-                            <button type="button" class="btn btn-primary" id="get-feedback">Xem đánh giá</button>
+                        <button type="button" class="btn btn-primary" id="send-feedback">Gửi đánh giá</button>
+                        <button type="button" class="btn btn-primary" id="get-feedback">Xem đánh giá</button>
                     </form>
 
                     <div id="all-feedback">
@@ -225,7 +235,8 @@
                     {{/each}}
                 </script>
             </div>
-        </div> <!-- Row 2 : Feedback -->
+        </div>
+        <!-- Row 2 : Feedback -->
 
         <aside id="viewAside" class="users-status chatSidebar fixed_always">
         </aside>
@@ -248,13 +259,6 @@
         </div>
     </div>
 
-    <div id="loading">
-        <ul class="bokeh">
-            <li></li>
-            <li></li>
-            <li></li>
-        </ul>
-    </div>
 
     <footer>
 
@@ -350,7 +354,8 @@
                     <div class="fbNubChatFooter">
                         <div class="_chatFooter">
                             <div class="chat-footer-box" style="min-height: 16px;">
-                                <input id="send{{friend._id}}" onfocus="chatFocus('{{friend._id}}')" onkeyup="sendMessage(event, '{{friend._id}}')" type="text" placeholder=" Nhập tin nhắn...">
+                                <input id="send{{friend._id}}" onfocus="chatFocus('{{friend._id}}')" onkeyup="sendMessage(event, '{{friend._id}}')" type="text"
+                                    placeholder=" Nhập tin nhắn...">
                             </div>
                         </div>
                     </div>
@@ -670,8 +675,7 @@
                         </div>
                     </div>
                 </li>
-                {{/if}} {{/each}}
-                {{#each users}} {{#unless isOnline}}
+                {{/if}} {{/each}} {{#each users}} {{#unless isOnline}}
                 <li id="{{_id}}" onclick="regisChat('{{_id}}')">
                     <div class="userAva">
                         <img src="{{imgUrl}}" alt="">
