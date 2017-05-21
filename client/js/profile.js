@@ -1,6 +1,5 @@
 
     setupAjax();
-    setUserInfo();
 
     function setupAjax() {
         $.ajaxSetup({
