@@ -56,96 +56,108 @@ $(document).ready(function () {
     })
 
     $("#search-button").click(function () {
-        var text = $('#search-text-box').val();
-        if (text != "") {
-            showLoading();
-            $.ajax({
-                    url: "/api/dictionary/search/",
-                    data: JSON.stringify({
-                        word: text
-                    }),
-                    type: "post",
-                    contentType: "application/json",
-                })
-                .done(function (data) {
-                    console.log(data);
-                    $("#result-content-0").html(templates.vocabAll(data));
-                    hideLoading();
-                })
-                .fail(function (err) {
-                    console.log(err);
-                    hideLoading();
-                });
-
-            $.ajax({
-                    url: "/api/dictionary/kanji/" + text,
-                    type: "post",
-                })
-                .done(function (data) {
-                    if (data.status == 200) {
-                        data.results.forEach(function (item) {
-                            item.details = getDetail(item);
-                            item.title = getTittle(item);
-                        });
-                        $("#list-kanji").html(templates.kanjiResult(data));
-                        $("#kanji-detail-result").html(templates.kanjiResultContent(data.results[0]));
-                        resultK = data;
-                    }
-                }).fail(function (err) {
-                    console.log(err);
-                });
-
-            $.ajax({
-                    url: "/api/dictionary/sentence/" + text,
-                    type: "post",
-                })
-                .done(function (data) {
-                    console.log(data);
-                    if (data.status == 200) {
-                        $("#result-content-2").html(templates.sentenceResult(data));
-                    }
-                }).fail(function (err) {
-                    console.log(err);
-                });
-
-            $.ajax({
-                    url: "/api/dictionary/grammars/" + text,
-                    type: "post",
-                })
-                .done(function (data) {
-                    console.log(data);
-                    if (data.status == 200) {
-                        $("#result-content-3").html(templates.grammarResult(data));
-                        data.results.forEach(function (result) {
-                            $.ajax({
-                                    url: "/api/dictionary/grammar/" + result._id,
-                                    type: "post",
-                                })
-                                .done(function (data2) {
-                                    console.log(data2);
-                                    if (data2.status == 200) {
-                                        var grammar = data2.grammar;
-                                        grammar.usages.forEach(function (usage) {
-                                            usage.mean = decodeHtml(usage.mean);
-                                            usage.examples.forEach(function (examp) {
-                                                examp.mean = decodeHtml(examp.mean);
-                                            })
-                                        })
-                                        $("#" + result._id).html(templates.grammarUsagesResult(grammar));
-                                    }
-                                }).fail(function (err) {
-                                    console.log(err);
-                                });
-                        })
-                    }
-                }).fail(function (err) {
-                    console.log(err);
-                });
-        }
+        searchDictionary();
     });
 
-
+    $("#search-text-box").keyup(function(e){
+        if (e.keyCode === 13) searchDictionary();
+    });
 });
+
+function searchDictionary() {
+    var text = $('#search-text-box').val();
+    if (text != "") {
+        showLoading();
+        $.ajax({
+                url: "/api/dictionary/search/",
+                data: JSON.stringify({
+                    word: text
+                }),
+                type: "post",
+                contentType: "application/json",
+            })
+            .done(function (data) {
+                console.log(data);
+                $("#result-content-0").html(templates.vocabAll(data));
+            })
+            .fail(function (err) {
+                console.log(err);
+            }).always(function () {
+                hideLoading();
+            });
+
+        $.ajax({
+                url: "/api/dictionary/kanji/" + text,
+                type: "post",
+            })
+            .done(function (data) {
+                if (data.status == 200) {
+                    data.results.forEach(function (item) {
+                        item.details = getDetail(item);
+                        item.title = getTittle(item);
+                    });
+                    $("#list-kanji").html(templates.kanjiResult(data));
+                    $("#kanji-detail-result").html(templates.kanjiResultContent(data.results[0]));
+                    resultK = data;
+                }
+            }).fail(function (err) {
+                console.log(err);
+            }).always(function () {
+                hideLoading();
+            });
+
+        $.ajax({
+                url: "/api/dictionary/sentence/" + text,
+                type: "post",
+            })
+            .done(function (data) {
+                console.log(data);
+                if (data.status == 200) {
+                    $("#result-content-2").html(templates.sentenceResult(data));
+                }
+            }).fail(function (err) {
+                console.log(err);
+            }).always(function () {
+                hideLoading();
+            });
+
+        $.ajax({
+                url: "/api/dictionary/grammars/" + text,
+                type: "post",
+            })
+            .done(function (data) {
+                console.log(data);
+                if (data.status == 200) {
+                    $("#result-content-3").html(templates.grammarResult(data));
+                    data.results.forEach(function (result) {
+                        $.ajax({
+                                url: "/api/dictionary/grammar/" + result._id,
+                                type: "post",
+                            })
+                            .done(function (data2) {
+                                console.log(data2);
+                                if (data2.status == 200) {
+                                    var grammar = data2.grammar;
+                                    grammar.usages.forEach(function (usage) {
+                                        usage.mean = decodeHtml(usage.mean);
+                                        usage.examples.forEach(function (examp) {
+                                            examp.mean = decodeHtml(examp.mean);
+                                        })
+                                    })
+                                    $("#" + result._id).html(templates.grammarUsagesResult(grammar));
+                                }
+                            }).fail(function (err) {
+                                console.log(err);
+                            });
+                    })
+                }
+            }).fail(function (err) {
+                console.log(err);
+            }).always(function () {
+                hideLoading();
+            });
+    }
+}
 
 function regisChat(id) {
     console.log('regis clicked!');
@@ -155,7 +167,6 @@ function regisChat(id) {
                 method: "get"
             })
             .done(function (data) {
-                console.log(data);
                 if (data.status) {
                     var result = data.result;
                     result.messages.forEach(function (item) {
@@ -171,7 +182,8 @@ function regisChat(id) {
                     });
                     $('#chatTabs').append(templates.chatTabs(result));
                     scrollToBottom(id);
-                    chatFocus(id);
+                    if (!$("#send" + id).is(":focus"))
+                        chatFocus(id);
                     // isTypingEffect(id, true);
                 }
             });
@@ -180,9 +192,9 @@ function regisChat(id) {
         $('#chatTab' + id).addClass("opened");
         $(".titlebar").removeClass("greenChatTitle");
         $("#title" + id).addClass("greenChatTitle");
-        chatFocus(id);
+        if (!$("#send" + id).is(":focus"))
+            chatFocus(id);
     }
-
 }
 
 
