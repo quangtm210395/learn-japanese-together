@@ -2,6 +2,16 @@ var socket;
 $(document).ready(function () {
     socket = io.connect();
     setupAjax();
+    var dataTempplate;
+    var sourceSubcriber= $("#template-subcriber").html();
+    var subcriberTemplate = Handlebars.compile(sourceSubcriber);
+    $.get('/api/user/'+peer_id, function (data) {
+        if (data.status){
+            dataTempplate = data.data;
+            var subcriberHtml = subcriberTemplate(dataTempplate);
+            $('#subscriber').html(subcriberHtml);
+        }
+    })
     $.get('/api/user/login/check-login', function (data, status) {
         console.log(data);
         if (!data.status || !data.result.login) {
