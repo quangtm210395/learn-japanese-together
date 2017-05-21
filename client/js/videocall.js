@@ -21,6 +21,9 @@ $(document).ready(function () {
         }
 
         $.post('/api/videocall/room?peer_id=' + peer_id, function (data, status) {
+            dataTempplate.isConnect = true;
+            var subcriberHtml = subcriberTemplate(dataTempplate);
+            $('#subscriber').html(subcriberHtml);
             if (data.status) {
                 var apiKey = data.result.apiKey;
                 var sessionId = data.result.sessionId;

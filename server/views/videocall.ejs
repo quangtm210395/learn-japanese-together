@@ -26,10 +26,11 @@
                  alt="avatar-subscriber" class="avatar">
             <div class="name-subcriber">{{name}}</div>
             <i class="fa fa-spinner fa-spin loading"></i>
-            <div class="status-call">Đang gọi...
-                <div>
-                </div>
-            </div>
+            {{#unless isConnect}}
+            <div class="status-call">Đang gọi...</div>
+            {{else}}
+            <div class="status-call">Đang kết nối...</div>
+            {{/unless}}
         </div>
     </div>
 </script>
