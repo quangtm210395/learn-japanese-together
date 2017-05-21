@@ -1,16 +1,37 @@
 var socket;
 $(document).ready(function () {
     socket = io.connect();
-    setupAjax();
-    $.get('/api/user/login/check-login', function (data, status) {
-        console.log(data);
-        if (!data.status || !data.result.login) {
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
-            setupAjax();
-        }
+    var peer_opponent;
 
-        $.post('/api/videocall/room?peer_id=' + peer_id, function (data, status) {
+    socket.emit('find peer', {id: peer_id});
+    socket.on('peer opponent', function (data) {
+        peer_opponent = data.peer_opponent;
+        if (data.isGetRoom) {
+            $.post('/api/videocall/room-random', {
+                peer_id_sender: peer_id,
+                peer_id_receive: peer_opponent
+            }, function (data, status) {
+                socket.emit('get room', {id: peer_opponent});
+                console.log(data.result.sessionId);
+                if (data.status) {
+                    var apiKey = data.result.apiKey;
+                    var sessionId = data.result.sessionId;
+                    var token = data.result.token;
+                    initializeSession(apiKey, sessionId, token);
+                } else {
+                    console.log(data.message);
+                }
+
+            });
+        }
+    })
+
+    socket.on('get room data', function () {
+        $.post('/api/videocall/room-random', {
+            peer_id_sender: peer_id,
+            peer_id_receive: peer_opponent
+        }, function (data, status) {
+            console.log(data.result.sessionId);
             if (data.status) {
                 var apiKey = data.result.apiKey;
                 var sessionId = data.result.sessionId;
@@ -19,24 +40,13 @@ $(document).ready(function () {
             } else {
                 console.log(data.message);
             }
-
         });
-
-        socket.emit('create call', {
-            peer_id_receive: peer_id,
-            peer_id_sender: JSON.parse(localStorage.getItem('user'))._id
         });
-
-        socket.on('reply access call', function (data) {
-            if (data.accepted) console.log("Chấp nhận cuộc gọi"); else console.log("Từ chối cuộc gọi");
-        })
-    });
 });
 
 
 function initializeSession(apiKey, sessionId, token) {
     var session = OT.initSession(apiKey, sessionId);
-    var uPublisher = JSON.parse(localStorage.getItem('user'));
     // Subscribe to a newly created stream
 
     // Connect to the session
@@ -44,7 +54,6 @@ function initializeSession(apiKey, sessionId, token) {
         // If the connection is successful, initialize a publisher and publish to the session
         if (!error) {
             var publisher = OT.initPublisher('publisher', {
-                name: uPublisher.name,
                 fitMode: "contain",
                 width: '20%',
                 height: '30%'

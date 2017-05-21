@@ -6,7 +6,9 @@ const userController = require('./apis/user/user.controller');
 const messageController = require('./apis/message/message.controller');
 //const Conversation = require('./apis/conversation/conversation.model');
 const User = require('./apis/user/user.model');
+
 var room = require('./apis/videocall/videocall.model').room;
+var peerRandom = [];
 
 module.exports = (io) => {
 
@@ -19,9 +21,9 @@ module.exports = (io) => {
         });
 
         socket.on('disconnect', function () {
+            disconnectVideoCall(socket);
             socket.username = undefined;
             socket.id = undefined;
-            disconnectVideoCall(socket);
             updateStatusUsers(io);
         });
 
@@ -33,6 +35,16 @@ module.exports = (io) => {
 
         socket.on('chat', function (data) {
             createMessage(data);
+        });
+
+        socket.on('find peer', function (data) {
+            socket.id = data.id;
+            console.log(socket.request.connection.remoteAddress);
+            peerRandom.push({
+                id: data.id,
+                ipAddress: socket.request.connection.remoteAddress
+            });
+            findPeer();
         });
 
         socket.on('create call', function (data) {
@@ -54,6 +66,17 @@ module.exports = (io) => {
             }
         });
 
+        socket.on('get room', function (data) {
+            io.sockets.clients(function (error, clients) {
+                clients.forEach(function (client) {
+                    if (io.sockets.sockets[client].id === data.id) {
+                        console.log("socket");
+                        io.sockets.sockets[client].emit('get room data', {});
+                    }
+                });
+            });
+        });
+
         socket.on('access call', function (data) {
             io.sockets.clients(function (error, clients) {
                 clients.forEach(function (client) {
@@ -66,7 +89,7 @@ module.exports = (io) => {
             });
         });
 
-        socket.on('typing', function(data){
+        socket.on('typing', function (data) {
             io.sockets.clients(function (error, clients) {
                 clients.forEach(function (client) {
                     if (io.sockets.sockets[client].id === data.receiverId) {
@@ -128,6 +151,38 @@ module.exports = (io) => {
         });
     }
 
+    function findPeer() {
+        var peer_1;
+        var peer_2;
+        if (peerRandom.length >= 2) {
+            var index1 = Math.floor(Math.random() * (peerRandom.length - 1));
+            peer_1 = peerRandom[index1];
+            peerRandom.splice(index1, 1);
+            var count = 0;
+            var index2 = Math.floor(Math.random() * (peerRandom.length - 1));
+            // while (count < peerRandom.length) {
+            //     count++;
+            //     var tmp = Math.floor(Math.random() * (peerRandom.length - 1));
+            //     if (peerRandom[tmp].ipAddress !== peer_1.ipAddress) {
+            //         index2 = tmp;
+            //     }
+            // }
+            if (index2 === -1) return;
+            peer_2 = peerRandom[index2];
+            peerRandom.splice(index2, 1);
+            io.sockets.clients(function (error, clients) {
+                clients.forEach(function (client) {
+                    if (io.sockets.sockets[client].id === peer_1.id) {
+                        io.sockets.sockets[client].emit("peer opponent", {peer_opponent: peer_2.id, isGetRoom: true});
+                    }
+                    if (io.sockets.sockets[client].id === peer_2.id) {
+                        io.sockets.sockets[client].emit("peer opponent", {peer_opponent: peer_1.id, isGetRoom: false});
+                    }
+                });
+            })
+        }
+    }
+
     function listUser(callback) {
         userController.getAll(function (users) {
             users.forEach(function (user, index) {
@@ -143,25 +198,25 @@ module.exports = (io) => {
             content: data.message,
             sender: data.senderId,
             receiver: data.receiverId
-        }, function(conversation){
-          User.findOne({_id: data.senderId}, function(err, user){
-              if (err) console.log(err);
+        }, function (conversation) {
+            User.findOne({_id: data.senderId}, function (err, user) {
+                if (err) console.log(err);
 
-              io.sockets.clients(function (error, clients) {
-                clients.forEach(function (client) {
-                    if (io.sockets.sockets[client].id === data.receiverId) {
-                        io.sockets.sockets[client].emit('chat', {
-                            senderId: data.senderId,
-                            receiverId: data.receiverId,
-                            messageData: {
-                                imgUrl: user.imgUrl,
-                                message: data.message
-                            }
-                        });
-                    }
+                io.sockets.clients(function (error, clients) {
+                    clients.forEach(function (client) {
+                        if (io.sockets.sockets[client].id === data.receiverId) {
+                            io.sockets.sockets[client].emit('chat', {
+                                senderId: data.senderId,
+                                receiverId: data.receiverId,
+                                messageData: {
+                                    imgUrl: user.imgUrl,
+                                    message: data.message
+                                }
+                            });
+                        }
+                    });
                 });
-              });
-          });
-      })
+            });
+        })
     }
 };

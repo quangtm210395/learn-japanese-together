@@ -202,7 +202,7 @@ function login(username, password) {
                     toastr.error(data.message);
                 }
                 else {
-                    toastr.error('Đăng nhập thất bại');
+                    toastr.error('Đăng nhập thất bại.');
                 }
             } else {
                 $('#loginModal').modal('hide');
