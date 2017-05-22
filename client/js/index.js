@@ -167,3 +167,8 @@ convertJptoHex = function(a) {
         c != a.length - 1 && (b += "_");
     return b;
 }
+
+showWordDetail = function(id) {
+    $("#"+id).addClass("hide");
+    $("#detail_"+id).removeClass("hide");
+}

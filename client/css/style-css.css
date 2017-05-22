@@ -540,7 +540,7 @@ textarea {
 }
 
 .col-no-padding {
-    padding: 0;
+    padding: 0!important;
 }
 
 @media (min-width: 992px) {
@@ -938,26 +938,6 @@ fieldset[disabled] .btn-link {
     position: relative;
 }
 
-@media (min-width: 641px) {
-    .widget-container {
-        padding: 1em;
-    }
-}
-
-.widget-container {
-    background-color: #fff;
-    -webkit-box-shadow: 1px 1px 0 rgba(199, 196, 191, .62), 1px 1px 3px rgba(210, 207, 202, .73);
-    -moz-box-shadow: 1px 1px 0 rgba(199, 196, 191, .62), 1px 1px 3px rgba(210, 207, 202, .73);
-    padding: .5em;
-    margin-bottom: 1em;
-    border-radius: 2px;
-}
-
-.widget,
-.widget-container {
-    box-shadow: 1px 1px 0 rgba(199, 196, 191, .62), 1px 1px 3px rgba(210, 207, 202, .73);
-}
-
 *,
  :after,
  :before {
@@ -1170,7 +1150,7 @@ fieldset[disabled] .btn-link {
     transform: translateX(-50%);
 }
 
-.kanji-container .col-md-6:first-child {
+.kanji-container > div {
     padding: 6px 6px 6px 0!important;
 }
 
@@ -1252,6 +1232,12 @@ fieldset[disabled] .btn-link {
     .widget-container {
         padding: 1em;
     }
+}
+
+.suggest-box .widget-container,
+.panel-body .widget-container {
+    box-shadow: none;
+    padding: .5em;
 }
 
 .examples-list .example-container {
@@ -1575,4 +1561,70 @@ input::placeholder {
 
 .btn.btn-default:active:focus {
     outline-color: #16bd67;
+}
+
+
+.suggest-list {
+    box-shadow: none;
+}
+
+.suggest-title {
+    font-size: medium;
+    margin-left: 0;
+    color: #646464;
+    padding-bottom: .5em;
+}
+
+.menu-child, .suggest-box {
+    box-shadow: 1px 1px 0 rgba(199,196,191,.62), 1px 1px 3px rgba(210,207,202,.73);
+}
+
+.suggest-box {
+    background: #fff;
+    padding: 10px;
+    margin-top: 10px;
+    -webkit-box-shadow: 1px 1px 0 rgba(199,196,191,.62), 1px 1px 3px rgba(210,207,202,.73);
+    -moz-box-shadow: 1px 1px 0 rgba(199,196,191,.62),1px 1px 3px rgba(210,207,202,.73);
+}
+
+.suggest-box .ja {
+    font-weight: 700;
+}
+
+.hiden {
+    display: none;
+}
+
+.panel-group {
+    margin-bottom: 22px;
+    float: left;
+    width: 100%;
+}
+
+.panel-group .panel {
+    margin-bottom: 0;
+    border-radius: 2px;
+}
+
+#search-result-kanji .panel {
+    padding-bottom: 0;
+}
+
+#search-result-kanji .kanji {
+    font-size: 32px;
+    margin-right: 30px;
+}
+
+#search-result-kanji .mean {
+    margin-left: 30px;
+    color: #565656;
+    font-weight: 600;
+}
+
+.collapse.in {
+    display: block;
+}
+
+[role=button] {
+    cursor: pointer;
 }

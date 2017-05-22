@@ -1,7 +1,6 @@
 var templates = {};
 var tabSelected = 0;
 var resultK = "";
-var collapse = 0;
 var audioElement;
 var videoCallSoundElement;
 
@@ -31,17 +30,38 @@ $(document).ready(function () {
     templates.chatFriend = Handlebars.compile($('#template-chat-friend').html());
     templates.incommingCall = Handlebars.compile($('#template-incomming-call').html());
     templates.noResult = Handlebars.compile($("#template-no-result").html());
+    templates.vocabRelated = Handlebars.compile($("#template-vocab-related").html());
+    templates.vocabResultKanji = Handlebars.compile($("#template-vocab-result-kanji").html());
 
     Handlebars.registerHelper('searchResultWord', function (found, data) {
         var result = "";
         if (found) {
             result += templates.vocabResult(data[0]);
+            var related = {
+                word: data[0].word,
+                results: data.slice(1)
+            };
+            result += templates.vocabRelated(related);
         }
 
         return new Handlebars.SafeString(result);
     });
 
-    Handlebars.registerHelper('searchResultKanji', function (status, results) {
+    Handlebars.registerHelper('detailRelatedWord', function (data) {
+        var result = "";
+        result += templates.vocabResult(data);
+
+        return new Handlebars.SafeString(result);
+    });
+
+    Handlebars.registerHelper('searchResultKanji', function (data) {
+        var result = "";
+        result += templates.kanjiResultContent(data);
+
+        return new Handlebars.SafeString(result);
+    });
+
+    Handlebars.registerHelper('appendResultKanji', function (status, results) {
         var result = "";
         var a = {};
         a.results = results;
@@ -113,16 +133,19 @@ function searchDictionary() {
                 contentType: "application/json",
             })
             .done(function (data) {
-                if (data.found)
-                    $("#result-content-0").html(templates.vocabAll(data));
-                else
-                    $("#result-content-0").html(templates.noResult({
+                if (data.found) {
+                    $("#result-content-0-nr").html("");
+                    $("#word-result").html(templates.vocabAll(data));
+                } else {
+                    $("#word-result").html("");
+                    $("#search-result-kanji").html("");
+                    $("#result-content-0-nr").html(templates.noResult({
                         type: "từ vựng",
                         word: text
                     }));
+                }
             })
-            .fail(function (err) {
-            }).always(function () {
+            .fail(function (err) {}).always(function () {
                 hideLoading();
             });
 
@@ -132,11 +155,16 @@ function searchDictionary() {
             })
             .done(function (data) {
                 if (data.status == 200) {
-                    data.results.forEach(function (item) {
+                    data.results.forEach(function (item, index) {
                         item.details = getDetail(item);
                         item.title = getTittle(item);
+                        item.id = index;
                     });
                     $("#result-content-1-nr").html("");
+                    $("#search-result-kanji").html(templates.vocabResultKanji({
+                        word: text,
+                        kanjis: data.results
+                    }));
                     $("#list-kanji").html(templates.kanjiResult(data));
                     $("#kanji-detail-result").html(templates.kanjiResultContent(data.results[0]));
                     resultK = data;
@@ -148,8 +176,7 @@ function searchDictionary() {
                         word: text
                     }));
                 }
-            }).fail(function (err) {
-            }).always(function () {
+            }).fail(function (err) {}).always(function () {
                 hideLoading();
             });
 
@@ -191,7 +218,8 @@ function searchDictionary() {
                                         usage.mean = decodeHtml(usage.mean);
                                         usage.examples.forEach(function (examp) {
                                             examp.mean = decodeHtml(examp.mean);
-                                        })
+                                        });
+                                        usage.explain = decodeHtml(usage.explain);
                                     })
                                     $("#" + result._id).html(templates.grammarUsagesResult(grammar));
                                 }
@@ -285,18 +313,16 @@ function getTittle(data) {
     }
 }
 
-function showCollapse() {
-    if (collapse == 1) {
-        $(".list-collapse").slideUp(100);
-        $(".button-collapse>i").addClass("fa-angle-double-down");
-        $(".button-collapse>i").removeClass("fa-angle-double-up");
+function showCollapse(id) {
+    if ($("i.iId"+id).hasClass("fa-angle-double-up")) {
+        $(".list-collapse.kanjiId"+id).slideUp(100);
+        $(".button-collapse>i.iId"+id).addClass("fa-angle-double-down");
+        $(".button-collapse>i.iId"+id).removeClass("fa-angle-double-up");
     } else {
-        $(".list-collapse").slideDown(100);
-        $(".button-collapse>i").addClass("fa-angle-double-up");
-        $(".button-collapse>i").removeClass("fa-angle-double-down");
+        $(".list-collapse.kanjiId"+id).slideDown(100);
+        $(".button-collapse>i.iId"+id).addClass("fa-angle-double-up");
+        $(".button-collapse>i.iId"+id).removeClass("fa-angle-double-down");
     }
-    collapse = !collapse;
-
 }
 
 function isKanji(a) {
@@ -317,7 +343,7 @@ function isKatakana(a) {
 
 function isJapanese(a) {
     for (let i = 0; i < a.length; i++) {
-        if (isKanji(a.charAt(i)) || isHiragana(a.charAt(i)) || isKatakan(a.charAt(i)))
+        if (isKanji(a.charAt(i)) || isHiragana(a.charAt(i)) || isKatakana(a.charAt(i)))
             return true;
     }
     return false;
