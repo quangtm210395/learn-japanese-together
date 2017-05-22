@@ -4,6 +4,7 @@ var usersData;
 var sourceUsersStatus;
 var usersStatusTemplate;
 setupAjax();
+
 $.get('/api/user/login/check-login', function (data, status) {
     if (!data.status || !data.result.login) {
         localStorage.removeItem('token');
@@ -163,6 +164,8 @@ function pressEnterLogin(event) {
 }
 
 function registerAccount() {
+    $('#register').prop('disabled', true);
+    $('#loading-register').show();
     $.post('/api/user/register',
         {
             username: $('#username_register').val(),
@@ -187,10 +190,14 @@ function registerAccount() {
                 login($('#username_register').val(), $('#password_register').val())
 
             }
+            $('#register').prop('disabled', false);
+            $('#loading-register').hide();
         })
 }
 
 function login(username, password) {
+    $('#login').prop('disabled', true);
+    $('#loading-login').show();
     $.post('/api/user/login',
         {
             username: username,
@@ -213,6 +220,8 @@ function login(username, password) {
                 toastr.success('Đăng nhập thành công');
                 $.ajaxSetup({headers: {"token": localStorage.getItem("token")}});
             }
+            $('#login').prop('disabled', false);
+            $('#loading-login').hide();
         })
 }
 
