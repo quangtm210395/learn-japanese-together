@@ -160,6 +160,7 @@ function searchDictionary() {
                         item.title = getTittle(item);
                         item.id = index;
                     });
+                    console.log(data);
                     $("#result-content-1-nr").html("");
                     $("#search-result-kanji").html(templates.vocabResultKanji({
                         word: text,

@@ -27,7 +27,7 @@
 
     <!--<header class="header">
 
-    </header>-->
+</header>-->
 
     <nav class="navbar navbar-fixed-top">
         <div class="container-content">
@@ -61,8 +61,8 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <span aria-hidden="true">&times;</span>
+                </button>
 
                     <div role="tabpanel">
                         <!-- Nav tabs -->
@@ -72,6 +72,7 @@
                             </li>
                             <li role="presentation" id="tab-signUp"><a href="#signUp" aria-controls="signUp" role="tab" data-toggle="tab">Đăng
                             kí</a>
+
                             </li>
                         </ul>
                         <!-- Tab panes -->
@@ -87,7 +88,10 @@
                                         <input type="password" class="form-control" id="password_login" name="password_login" onkeypress="pressEnterLogin(event)"
                                             required>
                                     </div>
-                                    <button type="button" class="btn btn-primary save" id="login">Đăng nhập</button>
+                                    <button type="button" class="btn btn-primary save" id="login">
+                                    <i class="fa fa-spinner fa-spin"  style="display: none" id="loading-login"></i>
+                                    Đăng nhập
+                                </button>
                                 </form>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="signUp">
@@ -114,7 +118,7 @@
                                     </div>
                                     <div class="form-group required">
                                         <label for="dob" class="control-label">Ngày sinh:</label>
-                                        <input type="date" class="form-control" id="dob" name="dob" required>
+                                        <input type="date" class="form-control" id="dob" value="2000-12-30" name="dob" required>
                                     </div>
                                     <div class="form-group required">
                                         <label for="gender" class="control-label">Giới tính:</label>
@@ -128,7 +132,10 @@
                                         <label for="avatar-url" class="control-label">Ảnh đại diện: (URL)</label>
                                         <input type="text" class="form-control" id="avatar-url" name="avatar-url" onkeypress="pressEnterRegister(event)">
                                     </div>
-                                    <button type="button" class="btn btn-primary save" id="register">Đăng kí</button>
+                                    <button type="button" class="btn btn-primary save" id="register">
+                                    <i class="fa fa-spinner fa-spin"  style="display: none" id="loading-register"></i>
+                                    Đăng kí
+                                </button>
                                 </form>
                             </div>
                         </div>
@@ -148,18 +155,19 @@
                         <button class="btn btn-default search-option-word tab-active" id="tab0" onclick="changeTypeSearch(0)">
                         <span>Từ vựng</span>
                     </button>
-                        <button class="btn btn-default search-option-kanji" id="tab1" onclick="changeTypeSearch(1)"><span>Hán tự</span></button>
-                        <button class="btn btn-default search-option-example" id="tab2" onclick="changeTypeSearch(2)"> <span>Câu</span></button>
+                        <button class="btn btn-default search-option-kanji" id="tab1" onclick="changeTypeSearch(1)"><span>Hán tự</span>
+                    </button>
+                        <button class="btn btn-default search-option-example" id="tab2" onclick="changeTypeSearch(2)"><span>Câu</span>
+                    </button>
                         <button class="btn btn-default search-option-grammar" id="tab3" onclick="changeTypeSearch(3)"><span>Ngữ pháp</span>
                     </button>
                     </div>
 
                     <div class="input-group input-group-lg search-box-range col-xs-12 col-md-8 col-no-padding">
                         <input type="text" placeholder="日本, nihon, Nhật Bản" maxlength="64" id="search-text-box" class="form-control" 　focus-me="">
-
                         <button type="button" class="btn btn-link " onclick="clearSearchText()" id="clear-search-text">
                         <span class="fa fa-times fa-lg"></span>
-                        </button>
+                    </button>
                         <!-- ngIf: queryNotNull() -->
 
                         <div class="input-group-btn">
@@ -172,9 +180,8 @@
 
                 <div class="tab-container col-md-12 col-xs-12 no-padding" id="tab-container">
 
-
                     <!-- Tu vung -->
-                    <div class="col-xs-12 result result-word "  id="result-content-0">
+                    <div class="col-xs-12 result result-word " id="result-content-0">
                         <div id="result-content-0-nr"></div>
                         <div class="col-md-6 col-xs-12 col-no-padding" id="word-result"></div>
                         <div class="col-md-6 col-xs-12" id="search-result-kanji"></div>
@@ -189,13 +196,11 @@
                         <div class="col-md-6 col-sx-12" id="kanji-detail-result"></div>
                     </div>
 
-                    <div class="col-md-6 col-xs-12 result result-example dis-cont" id="result-content-2">
-
-                    </div>
+                    <div class="col-md-6 col-xs-12 result result-example dis-cont" id="result-content-2"></div>
 
                     <div class="col-md-6 col-xs-12 result result-grammar dis-cont" id="result-content-3">
-
                     </div>
+
                 </div>
             </div>
         </div>
@@ -221,9 +226,9 @@
                     </div>
 
                     <button id="feedback-load" class="btn btn-primary btn-lg" style="display: none">
-                        Load more
-                        <!-- <i class="fa fa-spinner fa-spin"></i> Loading -->
-                    </button>
+                    Load more
+                    <!-- <i class="fa fa-spinner fa-spin"></i> Loading -->
+                </button>
                 </div>
 
 
@@ -263,17 +268,22 @@
                         <div class="form-group required">
                             <label for="profile_gender" class="control-label">Giới tính:</label>
                             <select class="form-control" id="profile_gender" name="profile_gender" required>
-                          <option>Nam</option>
-                          <option>Nữ</option>
-                          <option>Khác</option>
-                      </select>
+                            <option>Nam</option>
+                            <option>Nữ</option>
+                            <option>Khác</option>
+                        </select>
                         </div>
                         <div class="form-group">
                             <label for="profile_avatar-url" class="control-label">Ảnh đại diện: (URL)</label>
                             <input type="text" class="form-control" id="profile_avatar-url" name="profile_avatar-url" onkeypress="pressEnterRegister(event)">
                         </div>
-                        <button type="button" class="btn btn-primary save" id="update">Cập nhật</button>
-                        <button type="button" class="btn btn-primary save" id="nav4" onclick="changeTab(4)">Thay đổi mật khẩu</button>
+                        <button type="button" class="btn btn-primary save" id="update">
+                        <i class="fa fa-spinner fa-spin"  style="display: none" id="loading-update"></i>
+                        Cập nhật
+                    </button>
+                        <button type="button" class="btn btn-primary save" id="nav4" onclick="changeTab(4)">Thay đổi mật
+                        khẩu
+                    </button>
                     </form>
                 </div>
             </div>
@@ -313,9 +323,7 @@
                     <div class="rightNContainer nContainer">
                         <div id="ChatTabsPageLet">
                             <div class="fbNGroup">
-                                <div class="fbNGroup">
-                                    <div class="chatTabs" id="chatTabs">
-                                    </div>
+                                <div class="chatTabs" id="chatTabs">
                                 </div>
                             </div>
                         </div>
@@ -342,8 +350,11 @@
                         <h5 class="modal-title" id="exampleModalLabel">{{name}} is calling</h5>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="rejectCall('{{_id}}')">Bỏ qua</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="acceptCall('{{_id}}')">Chấp nhận</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="rejectCall('{{_id}}')">Bỏ qua
+                    </button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="acceptCall('{{_id}}')">
+                        Chấp nhận
+                    </button>
                     </div>
                 </div>
             </div>
@@ -471,7 +482,6 @@
                     </div>
                 </div>
             </div>
-        </div>
     </script>
 
     <!-- tu vung -->
@@ -528,19 +538,18 @@
                             </div>
                             {{/each}}
                         </div>
-
                     </div>
                     {{/each}}
                 </div>
-
             </div>
+
         </div>
     </script>
 
     <script id="template-vocab-related" type="text/x-handlebars-template">
         <div class="suggest-list">
             <div class="suggest-title">
-                Các từ liên quan đến 
+                Các từ liên quan đến
                 <strong>{{word}}</strong>
             </div>
         </div>
@@ -570,7 +579,7 @@
     <script id="template-vocab-result-kanji" type="text/x-handlebars-template">
         <div class="panel-group">
             <p>
-                Các chữ hán trong 
+                Các chữ hán trong
                 <strong>{{word}}</strong>
             </p>
             {{#each kanjis}}
@@ -579,8 +588,7 @@
                     <h4 class="panel-title">
                         <span class="kanji">
                             {{kanji}}
-                        </span>
-                        「{{on}}」
+                        </span> 「{{on}}」
                         <strong class="mean">{{mean}}</strong>
                     </h4>
                 </div>
@@ -601,12 +609,13 @@
     <script id="template-kanji-result" type="text/x-handlebars-template">
         <div class="btn-group">
             {{#each results}}
-            <button type="button" class="btn btn-default btn-lg draw-single-kanji   selected" id="{{@index}}" onclick="changeKanji('{{@index}}')">
+            <button type="button" class="btn btn-default btn-lg draw-single-kanji selected" id="{{@index}}" onclick="changeKanji('{{@index}}')">
                 {{kanji}}
-            </button> {{/each}}
-
+            </button> 
+            {{/each}}
         </div>
     </script>
+
     <script id="template-kanji-content" type="text/x-handlebars-template">
         <div class="kanji-container">
             <div>
@@ -643,8 +652,7 @@
                                 {{h}}
                             </span>
                         </span>
-                        {{/each}} {{/if}}
-                    </div>
+                        {{/each}} {{/if}} </div>
                     <div class="short-mean">
                         <span class="kunyomi-text">Nghĩa: </span> {{title}}
                         <ul class="list-collapse kanjiId{{id}}">
@@ -711,7 +719,8 @@
                     </span>
                 </div>
             </div>
-            {{/checkSentence}} {{/each}}
+            {{/checkSentence}}
+            {{/each}}
         </div>
     </script>
 
@@ -721,8 +730,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a href="#{{_id}}" class="grammar-open-link collapsed" data-toggle="collapse" data-parent="#grammar-list" 
-                            aria-expanded="false">
+                        <a href="#{{_id}}" class="grammar-open-link collapsed" data-toggle="collapse" data-parent="#grammar-list" aria-expanded="false">
                             <div class="grammar-item-list">
                                 {{level}}:{{title}}
                             </div>
@@ -735,7 +743,8 @@
                 <div style="height: 0px;" class="panel-collapse collapse" id="{{_id}}">
                 </div>
             </div>
-            {{/each}}
+        </div>
+        {{/each}}
         </div>
     </script>
 
@@ -825,10 +834,11 @@
             </ul>
             <div class="user-search">
                 <label for="">
-                    <i class="fa fa-search fa-sm" aria-hidden="true"></i>
-                    <input type="text" value="{{searchText}}" id="user-search-input" onkeyup="searchUser(event)" placeholder="Tìm kiếm">
-                    <i class="ion-android-close fa-lg" aria-hidden="true" onclick="cancelSearch()"></i>
-                </label>
+                <i class="fa fa-search fa-sm" aria-hidden="true"></i>
+                <input type="text" value="{{searchText}}" id="user-search-input" onkeyup="searchUser(event)"
+                       placeholder="Tìm kiếm">
+                <i class="ion-android-close fa-lg" aria-hidden="true" onclick="cancelSearch()"></i>
+            </label>
             </div>
         </div>
     </script>

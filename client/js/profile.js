@@ -15,7 +15,6 @@
         $("#profile_fullname").val(user.name);
         $("#profile_email").val(user.email);
         $("#profile_dob").val(user.dob);
-        // $('#profile_dob').datepicker('setDate', new Date());
         $("#profile_gender").val(user.gender);
         $("#profile_avatar-url").val(user.imgUrl);
     }
@@ -27,6 +26,9 @@
     });
 
     function updateUser() {
+
+        $('#update').prop('disabled', true);
+        $('#loading-update').show();
         $.post('/api/user/update',
             {
                 password: $('#profile_password').val(),
@@ -51,6 +53,8 @@
                     setStatusLoginHtml();
                     toastr.success('Cập nhật thành công');
                 }
+                $('#update').prop('disabled', false);
+                $('#loading-update').hide();
             })
     };
 
@@ -86,6 +90,8 @@
     });
 
     function updatePassword() {
+        $('#update_password').prop('disabled', true);
+        $('#loading-update_password').show();
         $.post('/api/user/updatePassword',
             {
                 oldPassword: $('#old_password').val(),
@@ -103,6 +109,8 @@
                 } else {
                     toastr.success('Cập nhật thành công');
                 }
+                $('#update_password').prop('disabled', false);
+                $('#loading-update_password').hide();
             })
     };
 
