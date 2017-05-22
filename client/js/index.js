@@ -46,6 +46,7 @@ changeTab = function (index) {
             $("#profile").hide();
             $("#password").hide();
         } else if (index == 3) {
+            setUserInfo();
             $("#profile").show();
             $("#viewContent").hide();
             $("#feedback").hide();
