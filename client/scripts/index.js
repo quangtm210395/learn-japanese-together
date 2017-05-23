@@ -33,13 +33,21 @@ $(document).ready(function () {
     templates.vocabRelated = Handlebars.compile($("#template-vocab-related").html());
     templates.vocabResultKanji = Handlebars.compile($("#template-vocab-result-kanji").html());
 
-    Handlebars.registerHelper('searchResultWord', function (found, data) {
+    Handlebars.registerHelper('searchResultWord', function (found, data, word) {
         var result = "";
+        console.log(found);
         if (found) {
             result += templates.vocabResult(data[0]);
             var related = {
-                word: data[0].word,
+                word: word,
                 results: data.slice(1)
+            };
+            result += templates.vocabRelated(related);
+        } else {
+            console.log(data);
+            var related = {
+                word: word,
+                results: data
             };
             result += templates.vocabRelated(related);
         }
@@ -133,12 +141,11 @@ function searchDictionary() {
                 contentType: "application/json",
             })
             .done(function (data) {
+                data.word = text;
+                $("#word-result").html(templates.vocabAll(data));
                 if (data.found) {
                     $("#result-content-0-nr").html("");
-                    $("#word-result").html(templates.vocabAll(data));
                 } else {
-                    $("#word-result").html("");
-                    $("#search-result-kanji").html("");
                     $("#result-content-0-nr").html(templates.noResult({
                         type: "từ vựng",
                         word: text
@@ -160,7 +167,6 @@ function searchDictionary() {
                         item.title = getTittle(item);
                         item.id = index;
                     });
-                    console.log(data);
                     $("#result-content-1-nr").html("");
                     $("#search-result-kanji").html(templates.vocabResultKanji({
                         word: text,
@@ -171,6 +177,7 @@ function searchDictionary() {
                     resultK = data;
                 } else {
                     $("#list-kanji").html("");
+                    $("#search-result-kanji").html("");
                     $("#kanji-detail-result").html("");
                     $("#result-content-1-nr").html(templates.noResult({
                         type: "chữ hán",

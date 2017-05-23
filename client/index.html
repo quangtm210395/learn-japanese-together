@@ -189,11 +189,11 @@
                     </div>
 
                     <!-- chu han -->
-                    <div class="col-xs-12 result result-kanji dis-cont" id="result-content-1">
+                    <div class="col-md-6 col-xs-12 result result-kanji dis-cont" id="result-content-1">
                         <div id="result-content-1-nr"></div>
                         <div class="list-kanji" id="list-kanji">
                         </div>
-                        <div class="col-md-6 col-sx-12" id="kanji-detail-result"></div>
+                        <div class="col-sx-12" id="kanji-detail-result"></div>
                     </div>
 
                     <div class="col-md-6 col-xs-12 result result-example dis-cont" id="result-content-2"></div>
@@ -278,9 +278,9 @@
                             <input type="text" class="form-control" id="profile_avatar-url" name="profile_avatar-url" onkeypress="pressEnterRegister(event)">
                         </div>
                         <button type="button" class="btn btn-primary save" id="update">
-                        <i class="fa fa-spinner fa-spin"  style="display: none" id="loading-update"></i>
-                        Cập nhật
-                    </button>
+                            <i class="fa fa-spinner fa-spin"  style="display: none" id="loading-update"></i>
+                            Cập nhật
+                        </button>
                         <button type="button" class="btn btn-primary save" id="nav4" onclick="changeTab(4)">Thay đổi mật
                         khẩu
                     </button>
@@ -306,7 +306,10 @@
                             <label for="verify_new_password" class="control-label">Nhâp lại mật khẩu mới:</label>
                             <input type="password" class="form-control" id="verify_new_password" name="verify_new_password" required>
                         </div>
-                        <button type="button" class="btn btn-primary save" id="update_password">Cập nhật</button>
+                        <button type="button" class="btn btn-primary save" id="update_password">
+                            <i class="fa fa-spinner fa-spin"  style="display: none" id="loading-update-password"></i>
+                            Cập nhật
+                            </button>
                         <button type="button" class="btn btn-primary save" id="nav3" onclick="changeTab(3)">Thay đổi hồ sơ</button>
                     </form>
                 </div>
@@ -487,7 +490,7 @@
     <!-- tu vung -->
 
     <script id="template-vocab-all" type="text/x-handlebars-template">
-        {{searchResultWord found data}}
+        {{searchResultWord found data word}}
     </script>
 
     <script id="template-no-result" type="text/x-handlebars-template">
@@ -557,13 +560,14 @@
         {{#each results}}
         <div>
             <div class="suggest-box">
-                <div id="{{_id}}" onclick="showWordDetail('{{_id}}')">
+                <div id="{{_id}}" onclick="showWordDetail('{{_id}}')" role="button">
                     <p>
                         <span class="ja">{{word}}</span>
+                        {{phonetic}}
                     </p>
                     {{#each means}}
                     <p>
-                        {{mean}}
+                        ◆ {{mean}}
                     </p>
                     {{/each}}
                 </div>

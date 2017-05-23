@@ -92,7 +92,7 @@
 
     function updatePassword() {
         $('#update_password').prop('disabled', true);
-        $('#loading-update_password').show();
+        $('#loading-update-password').show();
         $.post('/api/user/updatePassword',
             {
                 oldPassword: $('#old_password').val(),
@@ -112,7 +112,7 @@
                     toastr.success('Cập nhật thành công');
                 }
                 $('#update_password').prop('disabled', false);
-                $('#loading-update_password').hide();
+                $('#loading-update-password').hide();
             })
     };
 

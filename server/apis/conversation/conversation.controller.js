@@ -12,7 +12,10 @@ module.exports = {
 
       User.findOne({_id: friendId})
         .exec(function(err, friend){
-            if (err) res.json({status: false, message: err.message});
+            if (err) {
+                res.json({status: false, message: err.message});
+                return;
+            }
 
             if (userId < friendId) {
               conversationId = userId + "@" + friendId;
@@ -22,7 +25,10 @@ module.exports = {
             Conversation.findOne({id: conversationId}, {'__v' : 0})
               .populate({path: 'messages', select: '-__v -_id'})
               .exec(function(err, conversation){
-                  if (err) res.json({status: false, message: err.message});
+                  if (err) {
+                    res.json({status: false, message: err.message});
+                    return;
+                  }
 
                   if (conversation) {
                       conversation.friend = friend;
@@ -33,7 +39,10 @@ module.exports = {
                         messages : []
                       });
                       newConversation.save(function (err, conversation) {
-                          if (err) res.json({status: false, message: err.message});
+                          if (err) {
+                            res.json({status: false, message: err.message});
+                            return;
+                          }
                           conversation.friend = friend;
                           res.json({status: true, message: "Create conversation successful", result: conversation});
                       })

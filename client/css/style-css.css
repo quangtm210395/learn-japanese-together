@@ -134,6 +134,10 @@ li.active {
     background-color: #27e885;
 }
 
+#loginModal li.active {
+    background: none;
+}
+
 li {
     display: list-item;
     text-align: -webkit-match-parent;
@@ -169,6 +173,10 @@ nav.navbar.navbar-fixed-top {
 .nav>li:hover {
     cursor: pointer;
     background-color: #11ab5c;
+}
+
+#loginModal .nav>li:hover {
+    background: none;
 }
 
 .navbar-nav>li>a {
@@ -340,7 +348,9 @@ table {
     margin-right: 0;
 }
 
-#viewAside {}
+#viewAside {
+    right: -20px;
+}
 
 .chatSidebar {
     background-clip: padding-box;
@@ -352,9 +362,9 @@ table {
     height: 100%;
     line-height: 16px;
     position: fixed;
-    right: 0;
+    right: -20px;
     top: 0;
-    width: 205px;
+    width: 225px;
     z-index: 300;
 }
 
@@ -1047,10 +1057,6 @@ fieldset[disabled] .btn-link {
     float: left;
 }
 
-.modal li a {
-    color: #16bd67;
-}
-
 .modal .tab-content {
     padding-top: 15px;
 }
@@ -1627,4 +1633,12 @@ input::placeholder {
 
 [role=button] {
     cursor: pointer;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    color: #16bd67;
+}
+
+#kanji-detail-result {
+    padding: 0;
 }
