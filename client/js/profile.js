@@ -108,6 +108,7 @@
                         toastr.error('Cập nhật thất bại');
                     }
                 } else {
+                    changeTab(0);
                     toastr.success('Cập nhật thành công');
                 }
                 $('#update_password').prop('disabled', false);
