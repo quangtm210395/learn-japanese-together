@@ -32,6 +32,15 @@ $(document).ready(function () {
     templates.noResult = Handlebars.compile($("#template-no-result").html());
     templates.vocabRelated = Handlebars.compile($("#template-vocab-related").html());
     templates.vocabResultKanji = Handlebars.compile($("#template-vocab-result-kanji").html());
+    templates.chatTabContent = Handlebars.compile($("#template-chat-tab-content").html());
+
+    Handlebars.registerHelper('generateChatContent', function(data){
+        var result = "";
+        if (data.messages != null) {
+            result += templates.chatTabContent(data);
+        }
+        return new Handlebars.SafeString(result);
+    });
 
     Handlebars.registerHelper('searchResultWord', function (found, data, word) {
         var result = "";
@@ -249,9 +258,16 @@ function searchDictionary() {
     }
 }
 
-function regisChat(id) {
+function regisChat(id, name) {
     if (JSON.parse(localStorage.getItem("user"))) {
         if ($("#chatTab" + id).length == 0) {
+            $('#chatTabs').append(templates.chatTabs({
+                friend: {
+                    _id: id,
+                    name: name
+                },
+                messages: null
+            }));
             $.ajax({
                     url: "/api/conversation/get/" + id,
                     method: "get"
@@ -270,11 +286,10 @@ function regisChat(id) {
                                 item._isFriend = false;
                             }
                         });
-                        $('#chatTabs').append(templates.chatTabs(result));
+                        $("#chat"+id).html(templates.chatTabContent(result));
                         scrollToBottom(id);
                         if (!$("#send" + id).is(":focus"))
                             chatFocus(id);
-                        // isTypingEffect(id, true);
                     }
                 });
         } else {

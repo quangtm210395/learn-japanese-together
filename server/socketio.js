@@ -196,27 +196,23 @@ module.exports = (io) => {
     function createMessage(data) {
         messageController.createMessageCallback({
             content: data.message,
-            sender: data.senderId,
+            sender: data.sender._id,
             receiver: data.receiverId
         }, function (conversation) {
-            User.findOne({_id: data.senderId}, function (err, user) {
-                if (err) console.log(err);
-
-                io.sockets.clients(function (error, clients) {
-                    clients.forEach(function (client) {
-                        if (io.sockets.sockets[client].id === data.receiverId) {
-                            io.sockets.sockets[client].emit('chat', {
-                                senderId: data.senderId,
-                                receiverId: data.receiverId,
-                                messageData: {
-                                    imgUrl: user.imgUrl,
-                                    message: data.message
-                                }
-                            });
-                        }
-                    });
+            io.sockets.clients(function (error, clients) {
+                clients.forEach(function (client) {
+                    if (io.sockets.sockets[client].id === data.receiverId) {
+                        io.sockets.sockets[client].emit('chat', {
+                            sender: data.sender,
+                            receiverId: data.receiverId,
+                            messageData: {
+                                imgUrl: data.sender.imgUrl,
+                                message: data.message
+                            }
+                        });
+                    }
                 });
             });
-        })
+        });
     }
 };

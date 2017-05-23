@@ -365,6 +365,38 @@
     </script>
 
     <!--chat-->
+    <script id="template-chat-tab-content" type="text/x-handlebars-template">
+        <!--each -->
+        {{#each messages}}
+        <div class="user-chat-unit {{_chatCss}}">
+            {{#if _isFriend}}
+            <div class="user-chat-logo">
+                <div class="chat-logo">
+                    <img src="{{../friend.imgUrl}}" alt="">
+                </div>
+            </div>
+            {{/if}}
+            <div class="chat-content">
+                <div class="group">
+                    <div class="chat-unit {{_reverseCss}} direction_ltr">
+                        <div class="chat-unit-content">
+                            <div class="cuc-1">
+                                <div class="cuc-2">
+                                    <div class="cuc-3">
+                                        <span>{{content}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+        <!--/each -->
+    </script>
+
+
     <script id="template-chat-tabs" type="text/x-handlebars-template">
         <div class="chatTab opened" id="chatTab{{friend._id}}">
             <div class="fbNub left-relative">
@@ -393,34 +425,7 @@
                                     <tr class="vBot">
                                         <div style="height:176px">
                                             <div id="chat{{friend._id}}">
-                                                <!--each -->
-                                                {{#each messages}}
-                                                <div class="user-chat-unit {{_chatCss}}">
-                                                    {{#if _isFriend}}
-                                                    <div class="user-chat-logo">
-                                                        <div class="chat-logo">
-                                                            <img src="{{../friend.imgUrl}}" alt="">
-                                                        </div>
-                                                    </div>
-                                                    {{/if}}
-                                                    <div class="chat-content">
-                                                        <div class="group">
-                                                            <div class="chat-unit {{_reverseCss}} direction_ltr">
-                                                                <div class="chat-unit-content">
-                                                                    <div class="cuc-1">
-                                                                        <div class="cuc-2">
-                                                                            <div class="cuc-3">
-                                                                                <span>{{content}}</span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                {{/each}}
-                                                <!--/each -->
+                                                {{generateChatContent this}}
                                             </div>
                                             <div class="noteChat" id="textTyping{{friend._id}}">
                                                 <span>{{friend.name}} is typing ...</span>
@@ -562,8 +567,7 @@
             <div class="suggest-box">
                 <div id="{{_id}}" onclick="showWordDetail('{{_id}}')" role="button">
                     <p>
-                        <span class="ja">{{word}}</span>
-                        {{phonetic}}
+                        <span class="ja">{{word}}</span> {{phonetic}}
                     </p>
                     {{#each means}}
                     <p>
@@ -588,7 +592,8 @@
             </p>
             {{#each kanjis}}
             <div class="panel panel-default">
-                <div class="panel-heading" role="button" id="heading{{@index}}" data-toggle="collapse" href="#collapse{{@index}}" aria-expanded="false" aria-controls="collapse{{@index}}">
+                <div class="panel-heading" role="button" id="heading{{@index}}" data-toggle="collapse" href="#collapse{{@index}}" aria-expanded="false"
+                    aria-controls="collapse{{@index}}">
                     <h4 class="panel-title">
                         <span class="kanji">
                             {{kanji}}
@@ -615,8 +620,7 @@
             {{#each results}}
             <button type="button" class="btn btn-default btn-lg draw-single-kanji selected" id="{{@index}}" onclick="changeKanji('{{@index}}')">
                 {{kanji}}
-            </button> 
-            {{/each}}
+            </button> {{/each}}
         </div>
     </script>
 
@@ -723,8 +727,7 @@
                     </span>
                 </div>
             </div>
-            {{/checkSentence}}
-            {{/each}}
+            {{/checkSentence}} {{/each}}
         </div>
     </script>
 
@@ -801,7 +804,7 @@
             <div style="height: 62px"></div>
             <ul>
                 {{#each users}} {{#if isOnline}}
-                <li id="{{_id}}" onclick="regisChat('{{_id}}')">
+                <li id="{{_id}}" onclick="regisChat('{{_id}}', '{{name}}')">
                     <div class="userAva">
                         <img src="{{imgUrl}}" alt="">
                     </div>
@@ -818,7 +821,7 @@
                     </div>
                 </li>
                 {{/if}} {{/each}} {{#each users}} {{#unless isOnline}}
-                <li id="{{_id}}" onclick="regisChat('{{_id}}')">
+                <li id="{{_id}}" onclick="regisChat('{{_id}}', '{{name}}')">
                     <div class="userAva">
                         <img src="{{imgUrl}}" alt="">
                     </div>

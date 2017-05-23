@@ -2,11 +2,11 @@ $(document).ready(function () {
     socket.on('chat', function (data) {
         var currentUser = JSON.parse(localStorage.getItem('user'));
         if (currentUser._id == data.receiverId) {
-            if ($("#chat" + data.senderId).length != 0) {
-                $("#chat" + data.senderId).append(templates.chatFriend(data.messageData));
-                scrollToBottom(data.senderId);
+            if ($("#chat" + data.sender._id).length != 0) {
+                $("#chat" + data.sender._id).append(templates.chatFriend(data.messageData));
+                scrollToBottom(data.sender._id);
             } else {
-                regisChat(data.senderId);
+                regisChat(data.sender._id, data.sender.name);
             }
         }
     });
@@ -59,7 +59,7 @@ function sendMessage(e, id) {
             message: msg
         };
         socket.emit('chat', {
-            senderId: user._id,
+            sender: user,
             receiverId: id,
             message: msg
         });
