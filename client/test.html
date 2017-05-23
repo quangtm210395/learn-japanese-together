@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vivus/0.4.0/vivus.js"
+></script>
+<div style="color: #00c176; width: 20%; height: auto" >
+    <object id="my-svg" type="image/svg+xml" data-async="http://data.mazii.net/kanji/0516c.svg"style="width: 100%; height: 100%"></object>
+</div>
+
+
+<script>
+    var at = new Vivus('my-svg', {duration: 200,
+//        file: 'http://data.mazii.net/kanji/0516c.svg',
+        type: 'oneByOne', onReady: playSVG,start  :'manual', pathTimingFunction: Vivus.LINEAR}, function () {
+        console.log("ok");
+
+    });
+    function playSVG() {
+        this.play();
+    }
+</script>
+
+<!--<script>-->
+    <!--new Vivus('my-div',{-->
+        <!--file : 'http://data.mazii.net/kanji/0516c.svg'-->
+    <!--});-->
+
+
+<!--</script>-->
+
+<!--<script>-->
+    <!--var hi = new Vivus('hi-there', {type: 'scenario-sync', duration: 20, start: 'autostart', dashGap: 20, forceRender: false},-->
+        <!--function () {-->
+            <!--if (window.console) {-->
+                <!--console.log('Animation finished. [log triggered from callback]');-->
+            <!--}-->
+        <!--}),-->
+        <!--obt1 = new Vivus('obturateur1', {type: 'delayed', duration: 150}),-->
+        <!--obt2 = new Vivus('obturateur2', {type: 'sync', duration: 150}),-->
+        <!--obt3 = new Vivus('obturateur3', {type: 'oneByOne', duration: 150}),-->
+        <!--pola = new Vivus('polaroid', {type: 'scenario-sync', duration: 20, forceRender: false});-->
+<!--</script>-->
+</body>
+</html>

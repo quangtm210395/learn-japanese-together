@@ -50,6 +50,7 @@
                     }
                 } else {
                     localStorage.setItem('user',JSON.stringify(data.result));
+                    changeTab(0);
                     setStatusLoginHtml();
                     toastr.success('Cập nhật thành công');
                 }
