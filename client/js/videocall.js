@@ -38,6 +38,15 @@ $(document).ready(function () {
             peer_id_sender: JSON.parse(localStorage.getItem('user'))._id
         });
 
+        socket.on('joined call', function (data) {
+            console.log(data);
+            if (data.joined) {
+                dataTempplate.isConnect = true;
+                var subcriberHtml = subcriberTemplate(dataTempplate);
+                $('#subscriber').html(subcriberHtml);
+            }
+        });
+
         socket.on('reply access call', function (data) {
             if (data.accepted) {
                 dataTempplate.isConnect = true;
@@ -77,9 +86,6 @@ function initializeSession(apiKey, sessionId, token) {
     });
 
     session.on('streamCreated', function (event) {
-        if (dataTempplate.isDisconnect){
-            session.disconnect();
-        }
         $('.container-bg').hide();
         var subscriber = session.subscribe(event.stream, 'subscriber', {
             insertMode: 'append',
@@ -93,6 +99,7 @@ function initializeSession(apiKey, sessionId, token) {
         $('.container-bg').show();
         dataTempplate.isDisconnect = true;
         socket.disconnect();
+        session.disconnect();
         var subcriberHtml = subcriberTemplate(dataTempplate);
         $('#subscriber').html(subcriberHtml);
     })

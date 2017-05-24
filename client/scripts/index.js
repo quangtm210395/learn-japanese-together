@@ -16,6 +16,10 @@ $(document).ready(function () {
     audioElement = document.createElement("audio");
     videoCallSoundElement = document.createElement("audio");
     videoCallSoundElement.setAttribute('src', 'sound/videocallSound.mp3');
+    videoCallSoundElement.addEventListener('ended', function() {
+        this.currentTime = 0;
+        this.play();
+    }, false);
     $("#search-text-box").focus();
 
     templates.vocabResult = Handlebars.compile($("#template-vocab-result").html());
@@ -44,7 +48,6 @@ $(document).ready(function () {
 
     Handlebars.registerHelper('searchResultWord', function (found, data, word) {
         var result = "";
-        console.log(found);
         if (found) {
             result += templates.vocabResult(data[0]);
             var related = {
@@ -53,7 +56,6 @@ $(document).ready(function () {
             };
             result += templates.vocabRelated(related);
         } else {
-            console.log(data);
             var related = {
                 word: word,
                 results: data

@@ -1,3 +1,4 @@
+var peerAfter;
 $(document).ready(function () {
     socket.on('chat', function (data) {
         var currentUser = JSON.parse(localStorage.getItem('user'));
@@ -14,14 +15,25 @@ $(document).ready(function () {
     socket.on('join call', function (data) {
         videoCallSoundElement.play();
         if ($('#incommingCallModal').hasClass('in')) {
-            socket.emit('access call', {
-                peer_id: data._id,
-                accepted: false
-            });
+            if (peerAfter && peerAfter._id !== data._id) {
+                socket.emit('access call', {
+                    peer_id: peerAfter._id,
+                    accepted: false
+                });
+                $('#incommingCallModal').modal('hide');
+                setTimeout(function () {
+                    $('#incommingCall').html(templates.incommingCall(data));
+                    $('#incommingCallModal').modal('show');
+                },300);
+            }
         } else {
             $('#incommingCall').html(templates.incommingCall(data));
             $('#incommingCallModal').modal('show');
         }
+
+        peerAfter = data;
+
+
     });
 
     socket.on('typing', function (data) {

@@ -82,9 +82,6 @@ function initializeSession(apiKey, sessionId, token) {
     session.on('streamCreated', function (event) {
         $("#mainContent").addClass("found");
         chat();
-        if (dataTempplate.isDisconnect){
-            session.disconnect();
-        }
         $('.container-bg').hide();
         var subscriber = session.subscribe(event.stream, 'subscriber', {
             insertMode: 'append',
@@ -99,6 +96,7 @@ function initializeSession(apiKey, sessionId, token) {
         $('.container-bg').show();
         dataTempplate.isDisconnect = true;
         socket.disconnect();
+        session.disconnect();
         var subcriberHtml = subcriberTemplate(dataTempplate);
         $('#subscriber').html(subcriberHtml);
     })
@@ -118,6 +116,8 @@ function sendMessage(e) {
             message: msg
         };
         socket.emit('randomchat', {
+            senderId: peer_id,
+            receiverId: peer_opponent,
             message: msg
         });
         $("#chatBox").append(templates.chatMySelf(message));

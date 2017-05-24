@@ -62,6 +62,14 @@ module.exports = (io) => {
                         }
                     });
                 });
+            } else {
+                io.sockets.clients(function (error, clients) {
+                    clients.forEach(function (client) {
+                        if (io.sockets.sockets[client].id === data.peer_id_sender) {
+                            io.sockets.sockets[client].emit('joined call', {joined: true});
+                        }
+                    });
+                });
             }
         });
 
@@ -96,6 +104,10 @@ module.exports = (io) => {
                 });
             });
         });
+
+        socket.on('randomchat', function (data) {
+            randomChat(data);
+        })
     });
 
     function checkJoinedCall(socket) {
@@ -212,6 +224,16 @@ module.exports = (io) => {
                         });
                     }
                 });
+            });
+        });
+    }
+
+    function randomChat(data) {
+        io.sockets.clients(function (error, clients) {
+            clients.forEach(function (client) {
+                if (io.sockets.sockets[client].id === data.receiverId) {
+                    io.sockets.sockets[client].emit('randomchat', data);
+                }
             });
         });
     }
