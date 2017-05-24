@@ -1,11 +1,15 @@
 var socket;
+var templates = {};
 var dataTempplate = {};
 var sourceSubcriber;
 var subcriberTemplate;
+var peer_opponent;
 
 $(document).ready(function () {
+    templates.chatMySelf = Handlebars.compile($('#template-chat-myself').html());
+    templates.chatFriend = Handlebars.compile($('#template-chat-friend').html());
+
     socket = io.connect();
-    var peer_opponent;
     dataTempplate.isSearch = true;
     sourceSubcriber = $("#template-subcriber").html();
     subcriberTemplate = Handlebars.compile(sourceSubcriber);
@@ -36,7 +40,7 @@ $(document).ready(function () {
 
             });
         }
-    })
+    });
 
     socket.on('get room data', function () {
         $.post('/api/videocall/room-random', {
@@ -58,15 +62,13 @@ $(document).ready(function () {
 
 function initializeSession(apiKey, sessionId, token) {
     var session = OT.initSession(apiKey, sessionId);
-    var uPublisher = JSON.parse(localStorage.getItem('user'));
-    // Subscribe to a newly created stream
+        // Subscribe to a newly created stream
 
     // Connect to the session
     session.connect(token, function (error) {
         // If the connection is successful, initialize a publisher and publish to the session
         if (!error) {
             var publisher = OT.initPublisher('publisher', {
-                name: uPublisher.name,
                 fitMode: "contain",
                 width: '20%',
                 height: '30%'
@@ -78,6 +80,8 @@ function initializeSession(apiKey, sessionId, token) {
     });
 
     session.on('streamCreated', function (event) {
+        $("#mainContent").addClass("found");
+        chat();
         if (dataTempplate.isDisconnect){
             session.disconnect();
         }
@@ -91,12 +95,43 @@ function initializeSession(apiKey, sessionId, token) {
     });
 
     session.on('connectionDestroyed', function (event) {
+        $("#mainContent").removeClass("found");
         $('.container-bg').show();
         dataTempplate.isDisconnect = true;
         socket.disconnect();
         var subcriberHtml = subcriberTemplate(dataTempplate);
         $('#subscriber').html(subcriberHtml);
     })
+}
+
+function chat(){
+    socket.on('randomchat', function(data) {
+        $("#chatBox").append(templates.chatFriend(data));
+        scrollToBottom();
+    });
+}
+
+function sendMessage(e) {
+    var msg = $('#sendBox').val().trim();
+    if (e.keyCode === 13 && msg != "") {
+        var message = {
+            message: msg
+        };
+        socket.emit('randomchat', {
+            message: msg
+        });
+        $("#chatBox").append(templates.chatMySelf(message));
+        $('#sendBox').val("");
+        scrollToBottom();
+    }
+}
+
+chatFocus = function () {
+    $("#sendBox").focus();
+}
+
+scrollToBottom = function () {
+    $("#nubBox").scrollTop($("#nubBox").prop("scrollHeight"));
 }
 
 function closeWindow() {
