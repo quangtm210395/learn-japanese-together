@@ -36,6 +36,14 @@ $(document).ready(function () {
 
     });
 
+    socket.on('hide modal access call', function (data) {
+        if (data.peer_opponent === peerAfter._id && $('#incommingCallModal').hasClass('in')) {
+            $('#incommingCallModal').modal('hide');
+            videoCallSoundElement.pause();
+            videoCallSoundElement.currentTime = 0
+        }
+    });
+
     socket.on('typing', function (data) {
         if (data.isTyping == true) {
             if ($("#chatTab" + data.senderId).length != 0) {
