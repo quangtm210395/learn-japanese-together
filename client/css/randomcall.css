@@ -95,7 +95,6 @@ body div {
     right: 0;
     width: 300px;
     z-index: 1000;
-    background-color: yellow;
 }
 
 .hidden {
@@ -184,7 +183,7 @@ button:active {
 }
 
 .fbNubChatBody {
-    background-color: #fff;
+    background-color: transparent;
     border: 0;
     background-clip: padding-box;
 }
