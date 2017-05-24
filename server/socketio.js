@@ -51,6 +51,7 @@ module.exports = (io) => {
             socket.id = data.peer_id_sender;
             socket.peer_id1 = data.peer_id_receive;
             socket.peer_id2 = data.peer_id_sender;
+            checkHideModalAccessCall(socket);
             // kiêm tra đã có ai join cuộc gọi chưa. nếu chưa thì sẽ emit đến thằng đối phương để yêu cầu chập nhận cuộc gọi
             if (!checkJoinedCall(socket)) {
                 io.sockets.clients(function (error, clients) {
@@ -236,5 +237,30 @@ module.exports = (io) => {
                 }
             });
         });
+    }
+
+    function checkHideModalAccessCall(socket) {
+        var peer_id1 = socket.peer_id1;
+        var peer_id2 = socket.peer_id2;
+        var roomName = (peer_id1 < peer_id2) ? peer_id1 + "@" + peer_id2 : peer_id2 + "@" + peer_id1;
+        if (!room[roomName]) return;
+
+        // kiểm tra đã có id của thằng được gọi có trong room chưa peer_id1 tương đương với thằng được gọi
+        if (room[roomName].peer_id1 && room[roomName].peer_id2) {
+            io.sockets.clients(function (error, clients) {
+                clients.forEach(function (client) {
+                    if (io.sockets.sockets[client].id === room[roomName].peer_id1) {
+                        io.sockets.sockets[client].emit('hide modal access call', {
+                            peer_opponent: room[roomName].peer_id2
+                        })
+                    }
+                    if (io.sockets.sockets[client].id === room[roomName].peer_id2) {
+                        io.sockets.sockets[client].emit('hide modal access call', {
+                            peer_opponent: room[roomName].peer_id1
+                        })
+                    }
+                });
+            });
+        }
     }
 };
