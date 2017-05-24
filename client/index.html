@@ -418,9 +418,9 @@
                 <div class="fbNubFlyoutBody chat-body" onclick="chatFocus('{{friend._id}}')">
                     <div class="fbNubChatBody" id="nub{{friend._id}}">
                         <div class="fbNubFlyoutBodyContent">
-                            <table class="conversationContainer chatContent">
-                                <tbody>
-                                    <tr class="vBot">
+                            <div class="table conversationContainer chatContent">
+                                <div class="tbody">
+                                    <div class="tr vBot">
                                         <div style="height:176px">
                                             <div id="chat{{friend._id}}">
                                                 {{generateChatContent this}}
@@ -429,9 +429,9 @@
                                                 <span>{{friend.name}} is typing ...</span>
                                             </div>
                                         </div>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="fbNubChatFooter">
@@ -799,7 +799,6 @@
     <!-- user template -->
     <script id="users-status-template" type="text/x-handlebars-template">
         <div class="chatSidebar">
-            <div style="height: 62px"></div>
             <ul>
                 {{#each users}} {{#if isOnline}}
                 <li id="{{_id}}" onclick="regisChat('{{_id}}', '{{name}}')">
