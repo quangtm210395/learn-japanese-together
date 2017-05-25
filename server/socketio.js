@@ -171,18 +171,10 @@ module.exports = (io) => {
             var index1 = Math.floor(Math.random() * (peerRandom.length - 1));
             peer_1 = peerRandom[index1];
             peerRandom.splice(index1, 1);
-            var count = 0;
             var index2 = Math.floor(Math.random() * (peerRandom.length - 1));
-            // while (count < peerRandom.length) {
-            //     count++;
-            //     var tmp = Math.floor(Math.random() * (peerRandom.length - 1));
-            //     if (peerRandom[tmp].ipAddress !== peer_1.ipAddress) {
-            //         index2 = tmp;
-            //     }
-            // }
-            if (index2 === -1) return;
             peer_2 = peerRandom[index2];
             peerRandom.splice(index2, 1);
+            console.log("connect random call" + peer_1 + " " + peer_2);
             io.sockets.clients(function (error, clients) {
                 clients.forEach(function (client) {
                     if (io.sockets.sockets[client].id === peer_1.id) {
