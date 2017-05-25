@@ -130,7 +130,7 @@ isTypingEffect = function (id, isTyping) {
 }
 
 randomCall = function () {
-    var myWindow = window.open("/random-call", "", "width=1280,height=720,top=43,left=24,screenX=43,screenY=24");
+    var myWindow = window.open("/random-call", "", "width=1200,height=650,top=43,left=24,screenX=43,screenY=24");
 }
 
 chatFocus = function (id) {
