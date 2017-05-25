@@ -22,9 +22,11 @@ module.exports = (io) => {
 
         socket.on('disconnect', function () {
             disconnectVideoCall(socket);
+            deletePeerRandom(socket);
             socket.username = undefined;
             socket.id = undefined;
             updateStatusUsers(io);
+            
         });
 
         socket.on('logout', function () {
@@ -254,5 +256,14 @@ module.exports = (io) => {
                 });
             });
         }
+    }
+    
+    function deletePeerRandom(socket) {
+        peerRandom.forEach(function (peer, index) {
+            if (peer.id === socket.id){
+                peerRandom.splice(index, 1);
+                return;
+            }
+        })
     }
 };
