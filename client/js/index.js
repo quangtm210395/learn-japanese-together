@@ -173,3 +173,10 @@ showWordDetail = function(id) {
     $("#"+id).addClass("hide");
     $("#detail_"+id).removeClass("hide");
 }
+
+removeChatTab = function() {
+    if ($("#chatTabs").children().length > 3) {
+    console.log(true);
+        $("#chatTabs").children(".chatTab:first").remove();
+    }
+}

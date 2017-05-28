@@ -302,6 +302,7 @@ function regisChat(id, name) {
             if (!$("#send" + id).is(":focus"))
                 chatFocus(id);
         }
+        removeChatTab();
     } else {
         toastr.warning("Vui lòng đăng nhập để chat");
     }
