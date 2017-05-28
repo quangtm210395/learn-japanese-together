@@ -176,7 +176,6 @@ showWordDetail = function(id) {
 
 removeChatTab = function() {
     if ($("#chatTabs").children().length > 3) {
-    console.log(true);
         $("#chatTabs").children(".chatTab:first").remove();
     }
 }
