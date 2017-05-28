@@ -213,6 +213,7 @@ a {
 
 #navbar {
     height: 56px;
+    min-width: 780px!important;
 }
 
 .navbar-fixed-top {
@@ -1641,4 +1642,11 @@ input::placeholder {
 
 #kanji-detail-result {
     padding: 0;
+}
+
+.text-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 160px;
 }

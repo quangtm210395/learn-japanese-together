@@ -31,7 +31,7 @@
 
     <nav class="navbar navbar-fixed-top">
         <div class="container-content">
-            <div id="#navbar" class="navbar-collapse ">
+            <div id="navbar" class="navbar-collapse ">
                 <ul class="nav navbar-nav">
                     <li class="active" id="nav0" onclick="changeTab(0)">
                         <a>
@@ -850,7 +850,7 @@
     <script id="status-login-template" type="text/x-handlebars-template">
         {{#if token}}
         <!-- <li><a id="click-profile" id="nav0" onclick="changeTab(0)">{{user.name}}</a></li> -->
-        <li id="nav3" onclick="changeTab(3)"><a>{{user.name}}</a></li>
+        <li id="nav3" onclick="changeTab(3)"><a class="text-ellipsis">{{user.name}}</a></li>
         <li><a id="click-logout">Đăng xuất</a></li>
         {{else}}
         <li><a data-toggle="modal" data-target="#loginModal" id="click-login">Đăng nhập</a></li>
