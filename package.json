@@ -25,6 +25,7 @@
   },
   "scripts": {
     "dev": "nodemon --watch ../* server/index.js",
+    "prestart": "npm install",
     "start": "node server/index.js"
   }
 }
